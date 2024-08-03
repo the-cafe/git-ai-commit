@@ -1,0 +1,17 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: '^.*\.(bin|exe|jpg|png|gif|md)$'
+      - id: check-yaml
+      - id: check-json
+
+  # - repo: local
+  #   hooks:
+  #   -   id: ai-commit-message
+  #       name: AI Commit Message
+  #       description: Generate commit message using AI
+  #       entry: generate_commit_message
+  #       language: python
+
