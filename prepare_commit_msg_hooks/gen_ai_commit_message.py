@@ -54,6 +54,13 @@ Only respond with a short sentence no longer than 50 characters that I can use f
     return ai_gen_commit_msg.strip()
 
 def main(argv: Sequence[str] | None = None) -> str:
+
+    parser = argparse.ArgumentParser(description='Generate AI commit message.')
+    parser.add_argument('--openai_key', required=True, help='OpenAI API key')
+    args = parser.parse_args(argv)
+
+    print("🔑 OpenAI API key: " + args.openai_key)
+
     commit_message = generate_commit_message()
 
     print("✨AI: " + commit_message)
