@@ -9,9 +9,10 @@ repos:
 
   # - repo: local
   #   hooks:
-  #   -   id: ai-commit-message
+  #   -   id: gen_ai_commit_message
   #       name: AI Commit Message
   #       description: Generate commit message using AI
-  #       entry: generate_commit_message
+  #       entry: gen_ai_commit_message
   #       language: python
+        # args: [--openai_key, 'your-openai-key']
 
