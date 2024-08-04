@@ -3,7 +3,9 @@
 **Tl;DR**
 
 - An pre-commit hook that generates the perfect commit message for you
+
 - Supports all projects and programming language, built on the [`pre-commit`](https://pre-commit.com/) git hooks framework
+
 - Works alongside all your other git hooks
 
 ## Usage
@@ -23,7 +25,8 @@ pre-commit --version
 
 ```yaml
 repos:
-  - repo: TODO - insert public github repo
+  - repo: https://github.com/ming1in/ai-commit-msg
+    rev: v0.0.1
     hooks:
     -   id: gen_ai_commit_message
 ```
