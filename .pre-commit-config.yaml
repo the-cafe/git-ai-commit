@@ -14,5 +14,5 @@ repos:
         description: Generate commit message using AI
         entry: gen_ai_commit_message
         language: python
-        args: [--openai_key, 'your-openai-key']
+        args: [--openai_key, 'sk-proj-pPkf0GH5LzbVFno8Eyc1T3BlbkFJY628EJOBgGN6wNMN494j']
 

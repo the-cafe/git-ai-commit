@@ -4,5 +4,5 @@
     entry: gen_ai_commit_message
     language: python
     # language_version: python3.9
-    # always_run: true
+    always_run: true
     stages: [prepare-commit-msg]
