@@ -26,8 +26,6 @@ def execute_cli_command(cmd_string_list, cwd=None):
 def get_staged_diff():
     script_directory =  execute_cli_command(['git', 'rev-parse', '--git-dir']).stdout.rstrip()
 
-    print('script_directory: ' + script_directory)
-
     # git diff --cached is used to get the staged changes to give to the AI to generate commit message
     return execute_cli_command(['git', 'diff', '--staged'], script_directory)
 

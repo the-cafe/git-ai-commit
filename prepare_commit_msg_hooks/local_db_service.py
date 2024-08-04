@@ -14,7 +14,7 @@ class LocalDbService:
       current_file_directory = os.path.dirname(os.path.abspath(__file__))
 
       self.db_path = os.path.join(current_file_directory, '.ai-commit-msg','local_db.json')
-      print("db_path: ", self.db_path)
+
       # Ensure the directory exists
       os.makedirs(os.path.dirname(self.db_path), exist_ok=True)
 
