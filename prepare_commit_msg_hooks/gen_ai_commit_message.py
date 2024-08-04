@@ -1,9 +1,35 @@
 from __future__ import annotations
 
-import argparse
+import os
+import sys
 import subprocess
+
 from prepare_commit_msg_hooks.openai_service import OpenAiService
-from typing import Sequence
+# from prepare_commit_msg_hooks.utils import Utils
+from datetime import datetime, timedelta, timezone
+
+def get_file_directory():
+    return os.path.dirname(os.path.realpath(__file__))
+
+def get_current_time():
+  EST = timezone(timedelta(hours=-5))  # Adjusted to UTC-5 for Eastern Standard Time
+  now_utc = datetime.now(timezone.utc)  # Get the current time in UTC
+  now_est = now_utc.astimezone(EST)  # Convert UTC to Eastern Standard Time
+
+  # Format the datetime object to exclude milliseconds
+  current_time = now_est.strftime('%Y-%m-%dT%H:%M:%S%z')  # ISO 8601 format without milliseconds
+
+  return str(current_time)
+
+def write_to_logs(message, log_path):
+  new_line = "" if message.endswith('\n') else "\n"
+  logged_string = "[" + get_current_time() + "] " + str(message) + new_line
+  print(logged_string)
+
+  open_mode = "a" if os.path.exists(log_path) else "w"
+
+  with open(log_path, open_mode) as file:
+    file.write(logged_string)
 
 
 def execute_cli_command(cmd_string_list, cwd=None):
@@ -31,7 +57,7 @@ def get_staged_diff():
     # git diff --cached is used to get the staged changes to give to the AI to generate commit message
     return execute_cli_command(['git', 'diff', '--staged'], script_directory)
 
-def generate_commit_message():
+def generate_commit_message(openai_key: str) -> str:
     staged_diff = get_staged_diff()
 
     COMMIT_MSG_SYSTEM_MESSAGE = '''
@@ -46,26 +72,23 @@ Instead of and, use a comma to save characters.
 Only respond with a short sentence no longer than 50 characters that I can use for my commit message
     '''
 
-    ai_gen_commit_msg = OpenAiService().chat_with_openai([
+    ai_gen_commit_msg = OpenAiService(openai_key).chat_with_openai([
         {"role": "system", "content": COMMIT_MSG_SYSTEM_MESSAGE},
         {"role": "user", "content": staged_diff.stdout},
     ])
 
     return ai_gen_commit_msg.strip()
 
-def main(argv: Sequence[str] | None = None) -> str:
+def main() -> int:
+    script_directory = get_file_directory()
+    log_path = script_directory + "/ai_commit_msg_logs.txt"
+    write_to_logs("Starting AI commit message generation in:" + script_directory , log_path)
 
-    parser = argparse.ArgumentParser(description='Generate AI commit message.')
-    parser.add_argument('--openai_key', required=True, help='OpenAI API key')
-    args = parser.parse_args(argv)
-
-    print("🔑 OpenAI API key: " + args.openai_key)
-
-    commit_message = generate_commit_message()
+    commit_message = generate_commit_message("sk-proj-pPkf0GH5LzbVFno8Eyc1T3BlbkFJY628EJOBgGN6wNMN494j")
 
     print("✨AI: " + commit_message)
 
     return 0
 
 if __name__ == '__main__':
-    raise SystemExit(main())
+    sys.exit(main())

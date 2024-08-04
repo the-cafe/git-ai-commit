@@ -6,3 +6,4 @@
     # language_version: python3.9
     # always_run: true
     stages: [prepare-commit-msg]
+    args: [--openai-key=sk-proj-pPkf0GH5LzbVFno8Eyc1T3BlbkFJY628EJOBgGN6wNMN494j]
