@@ -42,7 +42,7 @@ gen_ai_commit_message_cli config --openai-key=<insert-your-key>
 
 ## CLI
 
-TODO - add document on your CLI interface and options
+TODO - add document on our CLI interface and options
 
 ## Fun Facts
 
