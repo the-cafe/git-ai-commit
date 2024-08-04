@@ -1,10 +1,8 @@
 from __future__ import annotations
 
-import argparse
 import subprocess
 from prepare_commit_msg_hooks.openai_service import OpenAiService
 from typing import Sequence
-
 
 def execute_cli_command(cmd_string_list, cwd=None):
     try:
