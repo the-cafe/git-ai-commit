@@ -1,6 +1,12 @@
 # AI Commit Message
 
-Tl;DR - An pre-commit hook that generates the perfect commit message for you
+**Tl;DR**
+
+- An pre-commit hook that generates the perfect commit message for you
+- Supports all projects and programming language, built on the [`pre-commit`](https://pre-commit.com/) git hooks framework
+- Works alongside all your other git hooks
+
+## Usage
 
 TODO - Insert video of usage
 
@@ -22,13 +28,13 @@ repos:
     -   id: gen_ai_commit_message
 ```
 
-3. Based on the config above, install al your git hooks
+3. Based on the config above, install your git hooks script
 
 ```bash
 pre-commit install
 ```
 
-4. Setup your openai key
+1. Setup your OpenAI key, [see their docs for help](https://platform.openai.com/docs/quickstart)
 
 ```bash
 gen_ai_commit_message_cli config --openai-key=<insert-your-key>
