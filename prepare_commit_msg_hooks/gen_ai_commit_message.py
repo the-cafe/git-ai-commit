@@ -59,8 +59,17 @@ def main(argv: Sequence[str] | None = None) -> str:
     print("script_directory: " + script_directory)
 
     # open COMMIT_EDITMSG file to add the generated commit message
+
+    commit_editmsg_file = script_directory + '/COMMIT_EDITMSG'
+
+    with open(commit_editmsg_file, 'r') as file:
+        existing_content = file.read()
+
+    # Prepend the new content
+    new_content = commit_message + '\n' + existing_content
+
     with open(script_directory + '/COMMIT_EDITMSG', 'w') as file:
-        file.write(commit_message)
+        file.write(new_content)
 
     return 0
 
