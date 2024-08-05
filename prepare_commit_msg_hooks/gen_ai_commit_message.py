@@ -9,16 +9,11 @@ from typing import Sequence
 
 
 def get_staged_diff():
-    script_directory = get_repo_root_directory()
-
     # git diff --cached is used to get the staged changes to give to the AI to generate commit message
-    print("cwd: " + os.getcwd())
-    return execute_cli_command(['git', 'diff', '--staged'], os.getcwd())
+    return execute_cli_command(['git', 'diff', '--staged'], get_repo_root_directory())
 
 def generate_commit_message():
     staged_diff = get_staged_diff()
-
-    Logger().log("staged_diff: " + staged_diff.stdout)
 
     COMMIT_MSG_SYSTEM_MESSAGE = '''
 You will be provided with a set of code changes in diff format.
@@ -46,15 +41,18 @@ def main(argv: Sequence[str] | None = None) -> str:
 
     Logger().log("✨AI: " + commit_message)
 
-    git_directory =  get_git_directory()
-    Logger().log("script_directory: " + git_directory)
-
+    git_directory = get_repo_root_directory()
     # open COMMIT_EDITMSG file to add the generated commit message
+    commit_editmsg_file = git_directory + '/.git/COMMIT_EDITMSG'
+    Logger().log("commit_editmsg_file: " + commit_editmsg_file)
 
-    commit_editmsg_file = git_directory + '/COMMIT_EDITMSG'
+    existing_content = ""
 
-    with open(commit_editmsg_file, 'r') as file:
-        existing_content = file.read()
+    try:
+        with open(commit_editmsg_file, 'r') as file:
+            existing_content = file.read()
+    except FileNotFoundError:
+        pass
 
     # Prepend the new content
     new_content = commit_message + '\n' + existing_content
