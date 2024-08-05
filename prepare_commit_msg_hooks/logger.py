@@ -14,7 +14,7 @@ def get_current_time():
 
 class Logger:
   def __init__(self):
-    cwd =  get_git_directory()
+    cwd = get_git_directory()
     self.log_file = cwd + "/ai_commit_message.log"
 
   def log(self, message):
