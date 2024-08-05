@@ -59,13 +59,8 @@ def main(argv: Sequence[str] | None = None) -> str:
     print("script_directory: " + script_directory)
 
     # open COMMIT_EDITMSG file to add the generated commit message
-
-
-
     with open(script_directory + '/COMMIT_EDITMSG', 'w') as file:
         file.write(commit_message)
-
-
 
     return 0
 
