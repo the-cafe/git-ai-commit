@@ -1,34 +1,24 @@
 from __future__ import annotations
 
 import subprocess
+import os
 from prepare_commit_msg_hooks.openai_service import OpenAiService
+from prepare_commit_msg_hooks.utils import execute_cli_command, get_repo_root_directory, get_git_directory
+from prepare_commit_msg_hooks.logger import Logger
 from typing import Sequence
 
-def execute_cli_command(cmd_string_list, cwd=None):
-    try:
-        result = subprocess.run(
-            cmd_string_list,
-            cwd=cwd,
-            check=True,
-            text=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            timeout=60  # timeout in 1m/60s
-        )
-        return result
-    except subprocess.CalledProcessError as e:
-        cmd_string = " ".join(cmd_string_list)
-        error_msg = f"🚨 Total failure to call: {cmd_string}\n{e.stderr}"
-        raise Exception(error_msg)
 
 def get_staged_diff():
-    script_directory =  execute_cli_command(['git', 'rev-parse', '--git-dir']).stdout.rstrip()
+    script_directory = get_repo_root_directory()
 
     # git diff --cached is used to get the staged changes to give to the AI to generate commit message
-    return execute_cli_command(['git', 'diff', '--staged'], script_directory)
+    print("cwd: " + os.getcwd())
+    return execute_cli_command(['git', 'diff', '--staged'], os.getcwd())
 
 def generate_commit_message():
     staged_diff = get_staged_diff()
+
+    Logger().log("staged_diff: " + staged_diff.stdout)
 
     COMMIT_MSG_SYSTEM_MESSAGE = '''
 You will be provided with a set of code changes in diff format.
@@ -54,14 +44,14 @@ Only respond with a short sentence no longer than 50 characters that I can use f
 def main(argv: Sequence[str] | None = None) -> str:
     commit_message = "✨" + generate_commit_message()
 
-    print("✨AI: " + commit_message)
+    Logger().log("✨AI: " + commit_message)
 
-    script_directory =  execute_cli_command(['git', 'rev-parse', '--git-dir']).stdout.rstrip()
-    print("script_directory: " + script_directory)
+    git_directory =  get_git_directory()
+    Logger().log("script_directory: " + git_directory)
 
     # open COMMIT_EDITMSG file to add the generated commit message
 
-    commit_editmsg_file = script_directory + '/COMMIT_EDITMSG'
+    commit_editmsg_file = git_directory + '/COMMIT_EDITMSG'
 
     with open(commit_editmsg_file, 'r') as file:
         existing_content = file.read()
@@ -69,7 +59,7 @@ def main(argv: Sequence[str] | None = None) -> str:
     # Prepend the new content
     new_content = commit_message + '\n' + existing_content
 
-    with open(script_directory + '/COMMIT_EDITMSG', 'w') as file:
+    with open(commit_editmsg_file, 'w') as file:
         file.write(new_content)
 
     return 0
