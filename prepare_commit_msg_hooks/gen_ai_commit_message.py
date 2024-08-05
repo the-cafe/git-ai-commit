@@ -24,6 +24,7 @@ def execute_cli_command(cmd_string_list, cwd=None):
 def get_staged_diff():
     script_directory =  execute_cli_command(['git', 'rev-parse', '--git-dir']).stdout.rstrip()
 
+
     # git diff --cached is used to get the staged changes to give to the AI to generate commit message
     return execute_cli_command(['git', 'diff', '--staged'], script_directory)
 
@@ -53,6 +54,18 @@ def main(argv: Sequence[str] | None = None) -> str:
     commit_message = generate_commit_message()
 
     print("✨AI: " + commit_message)
+
+    script_directory =  execute_cli_command(['git', 'rev-parse', '--git-dir']).stdout.rstrip()
+    print("script_directory: " + script_directory)
+
+    # open COMMIT_EDITMSG file to add the generated commit message
+
+
+
+    with open(script_directory + '/COMMIT_EDITMSG', 'w') as file:
+        file.write(commit_message)
+
+
 
     return 0
 
