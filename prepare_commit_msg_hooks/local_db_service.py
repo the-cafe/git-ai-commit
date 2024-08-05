@@ -5,7 +5,8 @@ CONFIG_COLLECTION_KEY = "config"
 
 default_db = {
     CONFIG_COLLECTION_KEY: {
-      "openai_api_key": ""
+      "openai_api_key": "",
+      "logger_enabled": False
     }
 }
 

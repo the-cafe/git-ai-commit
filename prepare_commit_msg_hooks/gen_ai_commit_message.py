@@ -60,6 +60,8 @@ def main(argv: Sequence[str] | None = None) -> str:
     with open(commit_editmsg_file, 'w') as file:
         file.write(new_content)
 
+    sleep
+
     return 0
 
 if __name__ == '__main__':
