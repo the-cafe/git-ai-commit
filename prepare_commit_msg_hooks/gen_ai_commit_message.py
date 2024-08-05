@@ -51,7 +51,7 @@ Only respond with a short sentence no longer than 50 characters that I can use f
     return ai_gen_commit_msg.strip()
 
 def main(argv: Sequence[str] | None = None) -> str:
-    commit_message = generate_commit_message()
+    commit_message = "✨" + generate_commit_message()
 
     print("✨AI: " + commit_message)
 
