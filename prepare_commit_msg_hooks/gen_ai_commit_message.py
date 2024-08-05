@@ -24,7 +24,6 @@ def execute_cli_command(cmd_string_list, cwd=None):
 def get_staged_diff():
     script_directory =  execute_cli_command(['git', 'rev-parse', '--git-dir']).stdout.rstrip()
 
-
     # git diff --cached is used to get the staged changes to give to the AI to generate commit message
     return execute_cli_command(['git', 'diff', '--staged'], script_directory)
 
@@ -42,6 +41,8 @@ You don't need to add any punctuation or capitalization.
 Instead of and, use a comma to save characters.
 Only respond with a short sentence no longer than 50 characters that I can use for my commit message
     '''
+
+    print(staged_diff.stdout)
 
     ai_gen_commit_msg = OpenAiService().chat_with_openai([
         {"role": "system", "content": COMMIT_MSG_SYSTEM_MESSAGE},
