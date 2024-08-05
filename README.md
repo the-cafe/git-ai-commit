@@ -37,7 +37,7 @@ repos:
 pre-commit install
 ```
 
-1. Setup your OpenAI key, [see their docs for help](https://platform.openai.com/docs/quickstart)
+4. Setup your OpenAI key, [see their docs for help](https://platform.openai.com/docs/quickstart)
 
 ```bash
 gen_ai_commit_message_cli config --openai-key=<insert-your-key>
