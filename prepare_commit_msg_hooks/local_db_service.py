@@ -1,26 +1,28 @@
 import os
 import json
+from prepare_commit_msg_hooks.utils import get_git_directory
 
 CONFIG_COLLECTION_KEY = "config"
 
 default_db = {
     CONFIG_COLLECTION_KEY: {
-      "openai_api_key": ""
+      "openai_api_key": "",
+      "logger_enabled": False
     }
 }
 
 class LocalDbService:
     def __init__(self):
-      current_file_directory = os.path.dirname(os.path.abspath(__file__))
+        repo_git_directory = get_git_directory()
 
-      self.db_path = os.path.join(current_file_directory, '.ai-commit-msg','local_db.json')
+        self.db_path = os.path.join(repo_git_directory, '.ai_commit_msg_config.json')
 
-      # Ensure the directory exists
-      os.makedirs(os.path.dirname(self.db_path), exist_ok=True)
+        # Ensure the directory exists
+        os.makedirs(os.path.dirname(self.db_path), exist_ok=True)
 
-      # check if file exist
-      if not os.path.exists(self.db_path):
-          self.create_db()
+        # check if file exist
+        if not os.path.exists(self.db_path):
+            self.create_db()
 
     def create_db(self):
         with open(self.db_path, 'w') as db:

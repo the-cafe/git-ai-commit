@@ -1,31 +1,12 @@
 from __future__ import annotations
 
-import subprocess
 from prepare_commit_msg_hooks.openai_service import OpenAiService
-from typing import Sequence
-
-def execute_cli_command(cmd_string_list, cwd=None):
-    try:
-        result = subprocess.run(
-            cmd_string_list,
-            cwd=cwd,
-            check=True,
-            text=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            timeout=60  # timeout in 1m/60s
-        )
-        return result
-    except subprocess.CalledProcessError as e:
-        cmd_string = " ".join(cmd_string_list)
-        error_msg = f"🚨 Total failure to call: {cmd_string}\n{e.stderr}"
-        raise Exception(error_msg)
+from prepare_commit_msg_hooks.utils import execute_cli_command, get_repo_root_directory
+from prepare_commit_msg_hooks.logger import Logger
 
 def get_staged_diff():
-    script_directory =  execute_cli_command(['git', 'rev-parse', '--git-dir']).stdout.rstrip()
-
     # git diff --cached is used to get the staged changes to give to the AI to generate commit message
-    return execute_cli_command(['git', 'diff', '--staged'], script_directory)
+    return execute_cli_command(['git', 'diff', '--staged'], get_repo_root_directory())
 
 def generate_commit_message():
     staged_diff = get_staged_diff()
@@ -49,10 +30,29 @@ Only respond with a short sentence no longer than 50 characters that I can use f
 
     return ai_gen_commit_msg.strip()
 
-def main(argv: Sequence[str] | None = None) -> str:
-    commit_message = generate_commit_message()
+def main() -> str:
+    commit_message = "✨" + generate_commit_message()
 
-    print("✨AI: " + commit_message)
+    Logger().log("AI: " + commit_message)
+
+    git_directory = get_repo_root_directory()
+    # open COMMIT_EDITMSG file to add the generated commit message
+    commit_editmsg_file = git_directory + '/.git/COMMIT_EDITMSG'
+    Logger().log("commit_editmsg_file: " + commit_editmsg_file)
+
+    existing_content = ""
+
+    try:
+        with open(commit_editmsg_file, 'r') as file:
+            existing_content = file.read()
+    except FileNotFoundError:
+        pass
+
+    # Prepend the new content
+    new_content = commit_message + '\n' + existing_content
+
+    with open(commit_editmsg_file, 'w') as file:
+        file.write(new_content)
 
     return 0
 
