@@ -23,11 +23,10 @@ pre-commit --version
 
 2. Create a `.pre-commit-config.yaml` files and add the following config
 
-🚨 Make sure you have the default_install_hook_types set to pre-commit and prepare-commit-msg 🚨
+🚨 Make sure you have the `default_install_hook_types` that includes `prepare-commit-msg` 🚨
 
 ```yaml
 default_install_hook_types: 
-  - pre-commit
   - prepare-commit-msg
 repos:
   - repo: https://github.com/ming1in/ai-commit-msg
