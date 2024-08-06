@@ -20,12 +20,9 @@ def execute_cli_command(cmd_string_list, cwd=None):
 def get_repo_root_directory():
     git_directory = execute_cli_command(['git', 'rev-parse', '--show-toplevel']).stdout.rstrip()
 
-    print("git_directory: " + git_directory)
     return git_directory
 
 def get_git_directory():
     script_directory= execute_cli_command(['git', 'rev-parse', '--git-dir']).stdout.rstrip()
-
-    print("script_directory: " + script_directory)
     return script_directory
 

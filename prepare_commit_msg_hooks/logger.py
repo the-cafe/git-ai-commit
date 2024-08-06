@@ -24,6 +24,8 @@ class Logger:
 
     new_line = "" if message.endswith('\n') else "\n"
     log_line = self.get_prefix() + message + new_line
+
+    print(log_line)
     with open(self.log_file, 'a') as file:
       file.write(log_line)
 
