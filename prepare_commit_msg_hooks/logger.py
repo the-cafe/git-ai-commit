@@ -31,7 +31,6 @@ class Logger:
 
   def get_prefix(self):
     logged_string = "[" + get_current_time() + "] "
-
     return logged_string
 
   def is_enabled(self):
