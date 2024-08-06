@@ -78,14 +78,13 @@ gen_ai_commit_message_cli config --openai-key=<insert-your-key>
   ```
 
 - **update**: ⬆️
-  This command checks for the latest version of the package and updates it if a newer version is available, ensuring you have the latest features and fixes.
-
+  This command checks for the latest version of the package and updates it if a newer version is available.
   ```bash
   gen_ai_commit_message_cli update
   ```
 
 - **uninstall**: 🗑️
-  This command removes the package from your system, effectively stopping any further use of the CLI.
+  This command removes the package from your system 😢.
 
   ```bash
   gen_ai_commit_message_cli uninstall
