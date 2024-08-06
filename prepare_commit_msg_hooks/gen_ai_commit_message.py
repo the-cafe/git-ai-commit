@@ -42,20 +42,18 @@ def main(argv: Sequence[str] | None = None) -> str:
     Logger().log("✨AI: " + commit_message)
 
     git_directory = get_repo_root_directory()
-    # open COMMIT_EDITMSG file to add the generated commit message
-    commit_editmsg_file = git_directory + '/.git/COMMIT_EDITMSG'
+    commit_editmsg_file = os.path.join(git_directory, '.git', 'COMMIT_EDITMSG')
     Logger().log("commit_editmsg_file: " + commit_editmsg_file)
 
     existing_content = ""
-
     try:
         with open(commit_editmsg_file, 'r') as file:
             existing_content = file.read()
     except FileNotFoundError:
-        pass
+        Logger().log("COMMIT_EDITMSG file not found. Creating a new one.")
 
-    # Prepend the new content
-    new_content = commit_message + '\n' + existing_content
+    new_content = commit_message + '\n\n' + existing_content
+    Logger().log("new_content: " + new_content)
 
     with open(commit_editmsg_file, 'w') as file:
         file.write(new_content)
