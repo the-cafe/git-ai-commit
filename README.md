@@ -49,7 +49,47 @@ gen_ai_commit_message_cli config --openai-key=<insert-your-key>
 
 ## CLI
 
-TODO - add document on our CLI interface and options
+- **add-config**: ✨
+  This command allows you to set a new OpenAI API key for the CLI to use. Replace `<your-new-key>` with your actual API key to enable the functionality.
+
+  ```bash
+  gen_ai_commit_message_cli add-config --openai-key=<your-new-key>
+  ```
+
+- **delete-config**: ❌
+  Use this command to remove the current OpenAI API key from the configuration.
+
+  ```bash
+  gen_ai_commit_message_cli delete-config
+  ```
+
+- **update-config**: 🔄
+  This command updates the existing OpenAI API key. Make sure to provide the new key to ensure continued access to the API.
+
+  ```bash
+  gen_ai_commit_message_cli update-config --openai-key=<your-updated-key>
+  ```
+
+- **help**: ❓
+  This command displays a list of all available commands and their usage, helping users understand how to interact with the CLI.
+
+  ```bash
+  gen_ai_commit_message_cli help
+  ```
+
+- **update**: ⬆️
+  This command checks for the latest version of the package and updates it if a newer version is available, ensuring you have the latest features and fixes.
+
+  ```bash
+  gen_ai_commit_message_cli update
+  ```
+
+- **uninstall**: 🗑️
+  This command removes the package from your system, effectively stopping any further use of the CLI.
+
+  ```bash
+  gen_ai_commit_message_cli uninstall
+  ```
 
 ## Fun Facts
 
