@@ -1,5 +1,6 @@
 import subprocess
 
+# TODO - get repo root directory without using git command
 def execute_cli_command(cmd_string_list, cwd=None):
     try:
         result = subprocess.run(
