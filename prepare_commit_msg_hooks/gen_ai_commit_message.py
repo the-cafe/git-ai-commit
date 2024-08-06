@@ -1,10 +1,8 @@
 from __future__ import annotations
 
 from prepare_commit_msg_hooks.openai_service import OpenAiService
-from prepare_commit_msg_hooks.utils import execute_cli_command, get_repo_root_directory, get_git_directory
+from prepare_commit_msg_hooks.utils import execute_cli_command, get_repo_root_directory
 from prepare_commit_msg_hooks.logger import Logger
-from typing import Sequence
-
 
 def get_staged_diff():
     # git diff --cached is used to get the staged changes to give to the AI to generate commit message
@@ -24,8 +22,6 @@ You don't need to add any punctuation or capitalization.
 Instead of and, use a comma to save characters.
 Only respond with a short sentence no longer than 50 characters that I can use for my commit message
     '''
-
-    print(staged_diff.stdout)
 
     ai_gen_commit_msg = OpenAiService().chat_with_openai([
         {"role": "system", "content": COMMIT_MSG_SYSTEM_MESSAGE},
