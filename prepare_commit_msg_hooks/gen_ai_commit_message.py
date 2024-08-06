@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import subprocess
-import os
 from prepare_commit_msg_hooks.openai_service import OpenAiService
 from prepare_commit_msg_hooks.utils import execute_cli_command, get_repo_root_directory, get_git_directory
 from prepare_commit_msg_hooks.logger import Logger
@@ -59,8 +57,6 @@ def main(argv: Sequence[str] | None = None) -> str:
 
     with open(commit_editmsg_file, 'w') as file:
         file.write(new_content)
-
-    sleep
 
     return 0
 
