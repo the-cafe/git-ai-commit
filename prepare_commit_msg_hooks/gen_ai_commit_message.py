@@ -33,7 +33,7 @@ Only respond with a short sentence no longer than 50 characters that I can use f
 def main() -> str:
     commit_message = "✨" + generate_commit_message()
 
-    Logger().log("✨AI: " + commit_message)
+    Logger().log("AI: " + commit_message)
 
     git_directory = get_repo_root_directory()
     # open COMMIT_EDITMSG file to add the generated commit message
