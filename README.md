@@ -23,7 +23,7 @@ pre-commit --version
 
 2. Create a `.pre-commit-config.yaml` files and add the following config
 
-🚨 Make sure you have the `default_install_hook_types` that includes `prepare-commit-msg` 🚨
+🚨 Make sure you include `prepare-commit-msg` in `default_install_hook_types`🚨
 
 ```yaml
 default_install_hook_types: 
