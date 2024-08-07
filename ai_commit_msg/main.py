@@ -20,7 +20,7 @@ def args_has_supported_command():
     return command in SUPPORTED_COMMANDS
 
 def main(argv: Sequence[str] | None = None) -> int:
-    if(argv is None and not args_has_supported_command()):
+    if not args_has_supported_command():
         prepare_commit_msg_hook()
         return 0
 
