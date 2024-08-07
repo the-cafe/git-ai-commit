@@ -1,6 +1,6 @@
 from ai_commit_msg.utils.utils import get_git_directory
 from datetime import datetime, timedelta, timezone
-from ai_commit_msg.service.config_service import ConfigServiceSingleton
+from ai_commit_msg.services.config_service import ConfigServiceSingleton
 
 def get_current_time():
   EST = timezone(timedelta(hours=-5))  # Adjusted to UTC-5 for Eastern Standard Time
