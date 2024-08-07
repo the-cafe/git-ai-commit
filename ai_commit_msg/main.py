@@ -20,11 +20,6 @@ def args_has_supported_command():
     return command in SUPPORTED_COMMANDS
 
 def main(argv: Sequence[str] | None = None) -> int:
-
-    sys_argv = sys.argv
-    Logger().log("argv: " + str(argv) + ", sys.argv: " + str(sys_argv))
-
-
     if(argv is None and not args_has_supported_command()):
         prepare_commit_msg_hook()
         return 0
@@ -37,8 +32,6 @@ def main(argv: Sequence[str] | None = None) -> int:
     config_parser.add_argument('--openai-key', required=True, help='Open AI API key, this will only be stored locally')
 
     args = parser.parse_args(argv)
-
-    Logger().log("args: " + str(args))
 
     if args.command == 'config':
         config_handler(args)
