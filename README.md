@@ -70,7 +70,7 @@ gen_ai_commit_message_cli config --openai-key=<insert-your-key>
   gen_ai_commit_message_cli update-config --openai-key=<your-updated-key>
   ```
 
-- **help**: ❓
+- **help**: 📚
   This command displays a list of all available commands and their usage, helping users understand how to interact with the CLI.
 
   ```bash
@@ -81,6 +81,13 @@ gen_ai_commit_message_cli config --openai-key=<insert-your-key>
   This command checks for the latest version of the package and updates it if a newer version is available.
   ```bash
   gen_ai_commit_message_cli update
+  ```
+
+- **Info**: 📚
+  This command displays information about the package.
+
+  ```bash
+  gen_ai_commit_message_cli info
   ```
 
 - **uninstall**: 🗑️
