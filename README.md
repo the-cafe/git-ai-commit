@@ -64,10 +64,26 @@ gen_ai_commit_message_cli config --openai-key=<insert-your-key>
   ```
 
 - **update-config**: 🔄
-  This command updates the existing OpenAI API key. Make sure to provide the new key to ensure continued access to the API.
+  This command updates the **existing** OpenAI API key. Make sure to provide the new key to ensure continued access to the API.
 
   ```bash
   gen_ai_commit_message_cli update-config --openai-key=<your-updated-key>
+
+
+- **generate**: 🔄
+  This command generates a desired number of commit messages
+
+  ```bash
+  gen_ai_commit_message_cli generate <int>
+  ```
+
+- **conventional**: 🔄
+  This command generates a [conventional](https://www.conventionalcommits.org/en/v1.0.0/) commit message.
+  
+  This will prompt gen_ai_commit_message to format the commit message according to the Conventional Commits specification
+
+  ```bash
+  gen_ai_commit_message_cli --t conventional  #or --type conventional
   ```
 
 - **help**: 📚
