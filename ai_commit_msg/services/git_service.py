@@ -14,3 +14,8 @@ class GitService:
     git_directory = execute_cli_command(['git', 'rev-parse', '--show-toplevel']).stdout.rstrip()
 
     return git_directory
+
+  @staticmethod
+  def get_git_directory():
+    script_directory = execute_cli_command(['git', 'rev-parse', '--git-dir']).stdout.rstrip()
+    return script_directory

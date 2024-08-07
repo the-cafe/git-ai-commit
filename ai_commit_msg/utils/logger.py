@@ -1,6 +1,7 @@
-from ai_commit_msg.utils.utils import get_git_directory
 from datetime import datetime, timedelta, timezone
+
 from ai_commit_msg.services.config_service import ConfigServiceSingleton
+from ai_commit_msg.services.git_service import GitService
 
 def get_current_time():
   EST = timezone(timedelta(hours=-5))  # Adjusted to UTC-5 for Eastern Standard Time
@@ -14,7 +15,7 @@ def get_current_time():
 
 class Logger:
   def __init__(self):
-    repo_git_directory = get_git_directory()
+    repo_git_directory = GitService.get_git_directory()
     self.log_file = repo_git_directory + "/ai_commit_message.log"
 
   def log(self, message):

@@ -1,6 +1,7 @@
 import os
 import json
-from ai_commit_msg.utils.utils import get_git_directory
+
+from ai_commit_msg.services.git_service import GitService
 
 CONFIG_COLLECTION_KEY = "config"
 
@@ -13,7 +14,7 @@ default_db = {
 
 class LocalDbService:
     def __init__(self):
-        repo_git_directory = get_git_directory()
+        repo_git_directory = GitService.get_git_directory()
 
         self.db_path = os.path.join(repo_git_directory, '.ai_commit_msg_config.json')
 
