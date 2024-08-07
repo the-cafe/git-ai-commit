@@ -2,10 +2,7 @@ from __future__ import annotations
 
 import argparse
 from typing import Sequence
-from prepare_commit_msg_hooks.openai_service import OpenAiService
-
-def handle_config(args):
-    OpenAiService.set_openai_api_key(args.openai_key)
+from ai_commit_msg.cli_handler.config_handler import config_handler
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="CLI tool")
@@ -18,7 +15,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     if args.command == 'config':
-        handle_config(args)
+        config_handler(args)
 
     return 0
 
