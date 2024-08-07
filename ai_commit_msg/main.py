@@ -4,8 +4,13 @@ import argparse
 from typing import Sequence
 from ai_commit_msg.cli.config_handler import config_handler
 from ai_commit_msg.prepare_commit_msg_hook import prepare_commit_msg_hook
+from ai_commit_msg.utils.logger import Logger
 
 def main(argv: Sequence[str] | None = None) -> int:
+    if(argv is None):
+        prepare_commit_msg_hook()
+        return 0
+
     parser = argparse.ArgumentParser(description="CLI tool")
     subparsers = parser.add_subparsers(dest='command', required=False)
 
@@ -17,8 +22,6 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     if args.command == 'config':
         config_handler(args)
-    else:
-        prepare_commit_msg_hook()
 
     return 0
 
