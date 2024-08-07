@@ -70,14 +70,14 @@ gen_ai_commit_message_cli config --openai-key=<insert-your-key>
   gen_ai_commit_message_cli update-config --openai-key=<your-updated-key>
 
 
-- **generate**: 🔄
+- **generate**: 🤖
   This command generates a desired number of commit messages
 
   ```bash
   gen_ai_commit_message_cli generate <int>
   ```
 
-- **conventional**: 🔄
+- **conventional**: 📝
   This command generates a [conventional](https://www.conventionalcommits.org/en/v1.0.0/) commit message.
   
   This will prompt gen_ai_commit_message to format the commit message according to the Conventional Commits specification
