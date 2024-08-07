@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 from typing import Sequence
-from ai_commit_msg.cli_handler import config_handler
+from ai_commit_msg.cli_handler.config_handler import config_handler
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="CLI tool")
