@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from prepare_commit_msg_hooks.openai_service import OpenAiService
-from prepare_commit_msg_hooks.utils import execute_cli_command, get_repo_root_directory
-from prepare_commit_msg_hooks.logger import Logger
+from ai_commit_msg.openai_service import OpenAiService
+from ai_commit_msg.utils import execute_cli_command, get_repo_root_directory
+from ai_commit_msg.logger import Logger
 
 def get_staged_diff():
     # git diff --cached is used to get the staged changes to give to the AI to generate commit message

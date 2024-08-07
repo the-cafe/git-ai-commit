@@ -1,6 +1,6 @@
 import os
 import json
-from prepare_commit_msg_hooks.utils import get_git_directory
+from ai_commit_msg.utils import get_git_directory
 
 CONFIG_COLLECTION_KEY = "config"
 
