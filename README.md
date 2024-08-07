@@ -1,6 +1,6 @@
 # AI Commit Message
 
-**Tl;DR**
+## Tl;DR
 
 - An pre-commit hook that generates the perfect commit message for you
 
