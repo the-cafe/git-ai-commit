@@ -1,4 +1,4 @@
-from ai_commit_msg.local_db_service import LocalDbService, CONFIG_COLLECTION_KEY
+from ai_commit_msg.services.local_db_service import LocalDbService, CONFIG_COLLECTION_KEY
 
 class ConfigService:
     openai_api_key = ""

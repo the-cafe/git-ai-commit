@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 from typing import Sequence
-from prepare_commit_msg_hooks.openai_service import OpenAiService
+from prepare_commit_msg_hooks.services.openai_service import OpenAiService
 
 def handle_config(args):
     OpenAiService.set_openai_api_key(args.openai_key)

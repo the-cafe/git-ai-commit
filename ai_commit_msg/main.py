@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from ai_commit_msg.openai_service import OpenAiService
+from ai_commit_msg.services.openai_service import OpenAiService
 from ai_commit_msg.utils.utils import execute_cli_command, get_repo_root_directory
 from ai_commit_msg.utils.logger import Logger
 
