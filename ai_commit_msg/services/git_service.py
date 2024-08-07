@@ -19,3 +19,25 @@ class GitService:
   def get_git_directory():
     script_directory = execute_cli_command(['git', 'rev-parse', '--git-dir']).stdout.rstrip()
     return script_directory
+
+  @staticmethod
+  def update_commit_message(commit_message):
+    git_directory = GitService.get_repo_root_directory()
+
+    # open COMMIT_EDITMSG file to add the generated commit message
+    commit_editmsg_file = git_directory + '/.git/COMMIT_EDITMSG'
+
+    existing_content = ""
+
+    try:
+      with open(commit_editmsg_file, 'r') as file:
+        existing_content = file.read()
+    except FileNotFoundError:
+      pass
+
+    new_content = commit_message + '\n' + existing_content
+
+    with open(commit_editmsg_file, 'w') as file:
+      file.write(new_content)
+
+    return 0

@@ -24,31 +24,9 @@ Only respond with a short sentence no longer than 50 characters that I can use f
 
   return ai_gen_commit_msg.strip()
 
-def update_commit_message(commit_message):
-  git_directory = GitService.get_repo_root_directory()
-    # open COMMIT_EDITMSG file to add the generated commit message
-  commit_editmsg_file = git_directory + '/.git/COMMIT_EDITMSG'
-  Logger().log("commit_editmsg_file: " + commit_editmsg_file)
-
-  existing_content = ""
-
-  try:
-      with open(commit_editmsg_file, 'r') as file:
-          existing_content = file.read()
-  except FileNotFoundError:
-      pass
-
-  # Prepend the new content
-  new_content = commit_message + '\n' + existing_content
-
-  with open(commit_editmsg_file, 'w') as file:
-      file.write(new_content)
-
-  return 0
-
 def prepare_commit_msg_hook():
   commit_message = "✨" + generate_commit_message()
 
-  update_commit_message(commit_message)
+  GitService.update_commit_message(commit_message)
 
   return 0
