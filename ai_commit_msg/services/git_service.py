@@ -1,6 +1,5 @@
 from ai_commit_msg.utils.utils import execute_cli_command
 
-
 class GitService:
   def __init__(self):
     return
