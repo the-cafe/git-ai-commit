@@ -1,6 +1,6 @@
 # AI Commit Message
 
-**Tl;DR**
+## Tl;DR
 
 - An pre-commit hook that generates the perfect commit message for you
 
@@ -44,12 +44,17 @@ pre-commit install
 4. Setup your OpenAI key, [see their docs for help](https://platform.openai.com/docs/quickstart)
 
 ```bash
-gen_ai_commit_message_cli config --openai-key=<insert-your-key>
+gen_ai_commit_message config --openai-key=<insert-your-key>
 ```
 
 ## CLI
 
 TODO - add document on our CLI interface and options
+
+## Contributing
+
+If you would like to contribute code and improve our product, please read our
+[Local Development Wiki](./wiki/local_development.md)
 
 ## Fun Facts
 

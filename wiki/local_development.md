@@ -25,3 +25,13 @@ After a local change to the hook, the follow command will build and install it
 ```bash
 pip install . && pre-commit install && pre-commit autoupdate
 ```
+
+## Directory Structure
+
+- `/cli` - contains logic for handling CLI command
+
+- `/core` - contains LLM and prompting logic
+
+- `/services` - contains logic that interacts with external dependencies
+
+- `/utils` - standard utility functions
