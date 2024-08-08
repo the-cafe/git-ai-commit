@@ -28,7 +28,13 @@ def main(argv: Sequence[str] | None = None) -> int:
     if argv is None:
         argv = sys.argv[1:]
 
-    if not argv or (len(argv) == 1 and argv[0] == '-h'):
+    # If no arguments are provided, run the prepare_commit_msg_hook
+    if not argv:
+        prepare_commit_msg_hook()
+        return 0
+
+    # If only '-h' is provided, display help
+    if len(argv) == 1 and argv[0] == '-h':
         display_help()
         return 0
 

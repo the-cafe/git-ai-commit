@@ -33,6 +33,9 @@ def config_handler(args):
             else:
                 print("Logging is now disabled. No log file found to remove.")
     else:
-        Logger().log("No valid configuration option provided")
+        Logger().log("No valid configuration option provided you can use:")
+        Logger().log("     -k, --openai-key Set OpenAI API key")
+        Logger().log("     -r, --reset Reset the OpenAI API key")
+        Logger().log("     -l, --logger Enable or disable logging (true/false)")
 
     return 0
