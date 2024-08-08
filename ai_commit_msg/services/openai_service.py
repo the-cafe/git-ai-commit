@@ -29,3 +29,9 @@ gen_ai_commit_message_cli config --openai-key=<insert-your-key>
         raw_json_db = LocalDbService().get_db()
         raw_json_db[CONFIG_COLLECTION_KEY]["openai_api_key"] = api_key
         LocalDbService().set_db(raw_json_db)
+
+    @staticmethod
+    def reset_openai_api_key():
+        raw_json_db = LocalDbService().get_db()
+        raw_json_db[CONFIG_COLLECTION_KEY]["openai_api_key"] = ""
+        LocalDbService().set_db(raw_json_db)
