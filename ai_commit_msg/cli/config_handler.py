@@ -11,6 +11,9 @@ def config_handler(args):
     elif args.reset:
         OpenAiService.reset_openai_api_key()
         Logger().log("OpenAI API key has been reset")
+    elif args.logger:
+        ConfigServiceSingleton.set_logger_enabled(args.logger)
+        Logger().log(f"Logger {'enabled' if args.logger else 'disabled'}")
     else:
         Logger().log("No valid configuration option provided")
 

@@ -31,6 +31,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     config_parser = subparsers.add_parser('config', help='Configure the tool')
     config_parser.add_argument('-k', '--openai-key', dest='openai_key', help='Set OpenAI API key')
     config_parser.add_argument('-r', '--reset', action='store_true', help='Reset the OpenAI API key')
+    config_parser.add_argument('-l', '--loggger', action='store_true', help='Show the CLI Logs')
 
     args = parser.parse_args(argv)
 
