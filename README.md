@@ -100,6 +100,13 @@ gen_ai_commit_message config --openai-key=<insert-your-key>
   gen_ai_commit_message info
   ```
 
+  **logger**: 🖨️
+  This command displays the log status for the CLI
+
+  ```bash
+  gen_ai_commit_message --log # or -l
+  ```
+
 - **uninstall**: 🗑️
   This command removes the package from your system 😢.
 
