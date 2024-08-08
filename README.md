@@ -80,14 +80,14 @@ gen_ai_commit_message config --openai-key=<insert-your-key>
   This subcommand displays a list of all available commands and their usage, helping users understand how to interact with the CLI.
 
   ```bash
-  gen_ai_commit_message help # or h
+  gen_ai_commit_message help # or -h
   ```
 
 - **generate**: 🤖
   This subcommand generates a desired number of commit messages
 
   ```bash
-  gen_ai_commit_message generate <int> # or g <int>
+  gen_ai_commit_message generate <int> # or -g <int>
   ```
 
 
