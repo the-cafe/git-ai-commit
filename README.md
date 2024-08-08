@@ -62,14 +62,14 @@ gen_ai_commit_message config --openai-key=<insert-your-key>
   ```bash
   gen_ai_commit_message config --openai-key=<your-new-key> 
   ```
-  **--reset**: ❌
+  - **--reset**: ❌
   Use this flag to remove the current OpenAI API key from the configuration.
 
   ```bash
   gen_ai_commit_message config --reset # or --r
   ```
 
-  **--logger**: 🖨️
+  -**--logger**: 🖨️
   This flag displays the log status for the CLI
 
   ```bash
