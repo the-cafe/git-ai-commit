@@ -69,7 +69,7 @@ gen_ai_commit_message config --openai-key=<insert-your-key>
   gen_ai_commit_message config --reset # or -r
   ```
 
-  -**--logger**: 🖨️
+  - **--logger**: 🖨️
   This flag displays the log status for the CLI
 
   ```bash
