@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta, timezone
+import os
 
 from ai_commit_msg.services.config_service import ConfigServiceSingleton
 from ai_commit_msg.services.git_service import GitService
@@ -37,3 +38,4 @@ class Logger:
 
   def is_enabled(self):
     return ConfigServiceSingleton.logger_enabled
+

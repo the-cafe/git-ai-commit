@@ -1,6 +1,8 @@
 from ai_commit_msg.services.openai_service import OpenAiService
 from ai_commit_msg.services.config_service import ConfigServiceSingleton
 from ai_commit_msg.utils.logger import Logger
+from ai_commit_msg.services.git_service import GitService
+import os
 
 def config_handler(args):
     if args.openai_key is not None:
@@ -11,9 +13,25 @@ def config_handler(args):
     elif args.reset:
         OpenAiService.reset_openai_api_key()
         Logger().log("OpenAI API key has been reset")
-    elif args.logger:
+    elif args.logger is not None:
         ConfigServiceSingleton.set_logger_enabled(args.logger)
-        Logger().log(f"Logger {'enabled' if args.logger else 'disabled'}")
+        git_dir = GitService.get_git_directory()
+        log_file = os.path.join(git_dir, "ai_commit_message.log")
+
+        if args.logger:
+            Logger().log("Logger enabled")
+            if not os.path.exists(log_file):
+                open(log_file, 'a').close()
+                print(f"Logging is now enabled. New log file created at: {log_file}")
+            else:
+                print(f"Logging is now enabled. You can find the logs at: {log_file}")
+        else:
+            Logger().log("Logger disabled")
+            if os.path.exists(log_file):
+                os.remove(log_file)
+                print(f"Logging is now disabled. Log file removed: {log_file}")
+            else:
+                print("Logging is now disabled. No log file found to remove.")
     else:
         Logger().log("No valid configuration option provided")
 

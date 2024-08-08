@@ -13,10 +13,10 @@ class ConfigService:
     def get_config():
         raw_json_db = LocalDbService().get_db()[CONFIG_COLLECTION_KEY]
         return raw_json_db
+
     @staticmethod
-    def set_logger_enabled(self, enabled):
-        self.logger_enabled = enabled
-        config = self.get_config()
+    def set_logger_enabled(enabled):
+        config = ConfigService.get_config()
         config["logger_enabled"] = enabled
         LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
 
