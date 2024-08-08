@@ -55,14 +55,14 @@ gen_ai_commit_message config --openai-key=<insert-your-key>
   This subcommand allows you to configure various settings for the CLI. 
 
   - **--openai-key**: 🔑
-    **-k**: 
+  - **-k**: 
     This flag allows you to set a new or update the OpenAI API key for the CLI to use. Replace `<your-new-key>` with your actual API key to enable the functionality.
 
   ```bash
   gen_ai_commit_message config --openai-key=<your-new-key> 
   ```
   - **--reset**: ❌
-    **-r**: 
+  - **-r**: 
   Use this flag to remove the current OpenAI API key from the configuration.
 
   ```bash
@@ -70,7 +70,7 @@ gen_ai_commit_message config --openai-key=<insert-your-key>
   ```
 
   - **--logger**: 🖨️
-    **-l**: 
+  - **-l**: 
   This flag displays the log status for the CLI
 
   ```bash
@@ -78,7 +78,7 @@ gen_ai_commit_message config --openai-key=<insert-your-key>
 
   ```
 - **help**: 📚
-  **-h**: 
+- **-h**: 
   This subcommand displays a list of all available commands and their usage, helping users understand how to interact with the CLI.
 
   ```bash
@@ -86,7 +86,7 @@ gen_ai_commit_message config --openai-key=<insert-your-key>
   ```
 
 - **generate**: 🤖
-  **-g**: 
+- **-g**: 
   This subcommand generates a desired number of commit messages
 
   ```bash
