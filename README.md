@@ -52,15 +52,30 @@ gen_ai_commit_message config --openai-key=<insert-your-key>
 - **config**: ✨
   This command allows you to set a new or update the OpenAI API key for the CLI to use. Replace `<your-new-key>` with your actual API key to enable the functionality.
 
+
+
   ```bash
   gen_ai_commit_message config --openai-key=<your-new-key> 
   ```
-
-- **reset**: ❌
+  **reset**: ❌
   Use this command to remove the current OpenAI API key from the configuration.
 
   ```bash
   gen_ai_commit_message config --reset
+  ```
+
+  **logger**: 🖨️
+  This command displays the log status for the CLI
+
+  ```bash
+  gen_ai_commit_message logger
+
+  ```
+- **help**: 📚
+  This command displays a list of all available commands and their usage, helping users understand how to interact with the CLI.
+
+  ```bash
+  gen_ai_commit_message help # or --h or --help
   ```
 
 - **generate**: 🤖
@@ -70,48 +85,6 @@ gen_ai_commit_message config --openai-key=<insert-your-key>
   gen_ai_commit_message generate <int>
   ```
 
-- **conventional**: 📝
-  This command generates a [conventional](https://www.conventionalcommits.org/en/v1.0.0/) commit message.
-  
-  This will prompt gen_ai_commit_message to format the commit message according to the Conventional Commits specification
-
-  ```bash
-  gen_ai_commit_message --t conventional  #or --type conventional
-  ```
-
-- **help**: 📚
-  This command displays a list of all available commands and their usage, helping users understand how to interact with the CLI.
-
-  ```bash
-  gen_ai_commit_message help # or --h or --help
-  ```
-
-- **update**: ⬆️
-  This command checks for the latest version of the package and updates it if a newer version is available.
-  ```bash
-  gen_ai_commit_message update
-  ```
-
-- **info**: 📚
-  This command displays information about the package.
-
-  ```bash
-  gen_ai_commit_message info
-  ```
-
-  **logger**: 🖨️
-  This command displays the log status for the CLI
-
-  ```bash
-  gen_ai_commit_message --log # or -l
-  ```
-
-- **uninstall**: 🗑️
-  This command removes the package from your system 😢.
-
-  ```bash
-  gen_ai_commit_message uninstall
-  ```
 
 ## Fun Facts
 
