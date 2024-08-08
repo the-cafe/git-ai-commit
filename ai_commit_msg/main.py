@@ -16,7 +16,6 @@ def args_has_supported_command():
     return command in SUPPORTED_COMMANDS or command == '-h'
 
 def display_help():
-    print("Usage: ai_commit_msg [command] [options]")
     print("\nAvailable commands:")
     print(" config Configure the tool")
     print("     -k, --openai-key Set OpenAI API key")
