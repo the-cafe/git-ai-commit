@@ -93,7 +93,7 @@ gen_ai_commit_message config --openai-key=<insert-your-key>
   gen_ai_commit_message update
   ```
 
-- **Info**: 📚
+- **info**: 📚
   This command displays information about the package.
 
   ```bash
