@@ -50,19 +50,18 @@ gen_ai_commit_message config --openai-key=<insert-your-key>
 ## CLI
 
 - **config**: ✨
-  This command allows you to set a new/update OpenAI API key for the CLI to use. Replace `<your-new-key>` with your actual API key to enable the functionality.
+  This command allows you to set a new or update the OpenAI API key for the CLI to use. Replace `<your-new-key>` with your actual API key to enable the functionality.
 
   ```bash
-  gen_ai_commit_message config --openai-key=<your-new-key>
+  gen_ai_commit_message config --openai-key=<your-new-key> 
   ```
 
-- **delete-config**: ❌
+- **reset**: ❌
   Use this command to remove the current OpenAI API key from the configuration.
 
   ```bash
-  gen_ai_commit_message delete-config
+  gen_ai_commit_message config --reset
   ```
-
 
 - **generate**: 🤖
   This command generates a desired number of commit messages
