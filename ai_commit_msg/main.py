@@ -16,12 +16,15 @@ def args_has_supported_command():
     return command in SUPPORTED_COMMANDS or command == '-h'
 
 def display_help():
-    print("\nAvailable commands:")
-    print(" config Configure the tool")
-    print("     -k, --openai-key Set OpenAI API key")
-    print("     -r, --reset Reset the OpenAI API key")
-    print("     -l, --logger Enable or disable logging (true/false)")
-    print(" help, -h Display this help message")
+    help_text = f"""
+    Available commands:
+    config Configure the tool
+        -k, --openai-key Set OpenAI API key
+        -r, --reset Reset the OpenAI API key
+        -l, --logger Enable or disable logging (true/false)
+    help, -h Display this help message
+"""
+    print(help_text)
 
 def main(argv: Sequence[str] | None = None) -> int:
     if argv is None:
