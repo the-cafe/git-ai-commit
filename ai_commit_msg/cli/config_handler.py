@@ -17,7 +17,7 @@ def config_handler(args):
         Logger().log("OpenAI API key has been reset")
         return None
 
-    if args.logger:
+    if args.logger is not None:
         config_service.set_logger_enabled(args.logger)
         Logger().log(f"Logger {'enabled' if args.logger else 'disabled'}")
         return None
