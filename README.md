@@ -23,6 +23,10 @@ pre-commit --version
 
 2. Create a `.pre-commit-config.yaml` files and add the following config
 
+```bash
+touch .pre-commit-config.yaml 
+```
+
 🚨 Make sure you include `prepare-commit-msg` in `default_install_hook_types`🚨
 
 ```yaml
@@ -32,7 +36,7 @@ repos:
   - repo: https://github.com/ming1in/ai-commit-msg
     rev: v0.0.1
     hooks:
-    -   id: gen_ai_commit_message
+    -   id: git_ai_commit
 ```
 
 3. Based on the config above, install your git hooks script
