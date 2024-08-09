@@ -30,14 +30,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
 
     # Check for help command before parsing arguments
-    if '-h' in argv or '--help' in argv or 'help' in argv:
+    if '-h' in argv or 'help' in argv:
         custom_help()
 
     parser = argparse.ArgumentParser(description="CLI tool", add_help=False)
     subparsers = parser.add_subparsers(dest='command', required=False)
 
     # Config command
-    config_parser = subparsers.add_parser('config', help='Configure the tool', add_help=False)
+    config_parser = subparsers.add_parser('config', help='Configure the tool', add_help=True)
     config_parser.add_argument('-k', '--openai-key', dest='openai_key', help='Set OpenAI API key')
     config_parser.add_argument('-r', '--reset', action='store_true', help='Reset the OpenAI API key')
     config_parser.add_argument('-l', '--logger', type=lambda x: (str(x).lower() == 'true'), help='Enable or disable logging (true/false)')
