@@ -14,7 +14,8 @@ def execute_cli_command(cmd_string_list, cwd=None, output=False):
         )
 
         if output:
-            print(result.stdout)
+            print("RESULT: " + result.stdout)
+
 
         return result
     except subprocess.CalledProcessError as e:
