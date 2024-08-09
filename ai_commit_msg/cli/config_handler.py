@@ -1,4 +1,3 @@
-from ai_commit_msg.services.config_service import ConfigServiceSingleton
 from ai_commit_msg.services.openai_service import OpenAiService
 from ai_commit_msg.utils.logger import Logger
 
@@ -29,4 +28,4 @@ def config_handler(args):
         "     -h, --help Display this help message"
     )
     Logger().log(help_message)
-    return 0
+    return None
