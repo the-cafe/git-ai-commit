@@ -29,7 +29,8 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     # Config command
     config_parser = subparsers.add_parser('config', help='Configure the tool')
-    config_parser.add_argument('--openai-key', required=True, help='Open AI API key, this will only be stored locally')
+    config_parser.add_argument('-k', '--openai-key', dest='openai_key', help='Set OpenAI API key')
+    config_parser.add_argument('-r', '--reset', action='store_true',help='Reset the OpenAI API key')
 
     args = parser.parse_args(argv)
 
