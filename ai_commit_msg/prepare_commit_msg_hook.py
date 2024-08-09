@@ -9,4 +9,4 @@ def prepare_commit_msg_hook():
 
   GitService.update_commit_message(commit_message)
 
-  return 0
+  return

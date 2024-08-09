@@ -1,6 +1,10 @@
 
+from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.services.git_service import GitService
+from ai_commit_msg.services.ollama_service import LlamaChatService
 from ai_commit_msg.services.openai_service import OpenAiService
+from ai_commit_msg.utils.logger import Logger
+from ai_commit_msg.utils.models import OPEN_AI_MODEL_LIST
 
 def generate_commit_message():
   staged_diff = GitService.get_staged_diff()
@@ -17,9 +21,27 @@ Instead of and, use a comma to save characters.
 Only respond with a short sentence no longer than 50 characters that I can use for my commit message
     '''
 
-  ai_gen_commit_msg = OpenAiService().chat_with_openai([
-        {"role": "system", "content": COMMIT_MSG_SYSTEM_MESSAGE},
-        {"role": "user", "content": staged_diff.stdout},
-    ])
+  Logger().log("Staged diff: " + staged_diff.stdout)
+  select_model = ConfigService.get_model()
+  Logger().log("Selected model: " + select_model)
 
-  return ai_gen_commit_msg.strip()
+  Logger().log("selected model is in openai model list: " + str(select_model in OPEN_AI_MODEL_LIST))
+  if str(select_model) in ["gpt-4-32k",
+      "gpt-4-32k-0314",
+      "gpt-4-32k-0613",
+      "gpt-4o",
+      "gpt-4o-2024-05-13",
+      "gpt-4o-mini"] :
+    Logger().log("Using OpenAI model")
+    ai_gen_commit_msg = OpenAiService().chat_with_openai([
+          {"role": "system", "content": COMMIT_MSG_SYSTEM_MESSAGE},
+          {"role": "user", "content": staged_diff.stdout},
+      ])
+    return ai_gen_commit_msg.strip()
+
+  if(select_model.startswith("ollama")):
+    Logger().log("Using OLlama model")
+    response = LlamaChatService().chat_with_llama()
+    return response.strip()
+
+  return ""
