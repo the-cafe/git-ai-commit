@@ -23,6 +23,7 @@ Only respond with a short sentence no longer than 50 characters that I can use f
 
   select_model = ConfigService.get_model()
 
+  # TODO - create a factory with a shared interface for calling the LLM models, this will make it easier to add new models
   if str(select_model) in OPEN_AI_MODEL_LIST :
     ai_gen_commit_msg = OpenAiService().chat_with_openai([
           {"role": "system", "content": COMMIT_MSG_SYSTEM_MESSAGE},

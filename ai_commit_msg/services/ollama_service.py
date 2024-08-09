@@ -58,5 +58,4 @@ class OLlamaService:
 
         response = requests.post(self.url, headers=headers, json=data)
         answer = response.json()["message"]["content"]
-        print(answer)
         return answer
