@@ -10,7 +10,6 @@ from ai_commit_msg.prepare_commit_msg_hook import prepare_commit_msg_hook
 from ai_commit_msg.utils.logger import Logger
 
 def called_from_git_hook():
-    print("called_from_git_hook")
     return os.environ.get('PRE_COMMIT') == '1'
 
 def main(argv: Sequence[str] = sys.argv[1:]) -> int:
@@ -20,14 +19,17 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
     if len(argv) == 0:
         return gen_ai_commit_message_handler()
 
-    parser = argparse.ArgumentParser(description="CLI tool")
+    parser = argparse.ArgumentParser(description="🚀 AI-powered CLI tool that revolutionizes your Git workflow by automatically generating commit messages!")
     subparsers = parser.add_subparsers(dest='command', required=False)
 
     # Config command
-    config_parser = subparsers.add_parser('config', help='Configure the tool')
-    config_parser.add_argument('-k', '--openai-key', dest='openai_key', help='Set OpenAI API key')
-    config_parser.add_argument('-r', '--reset', action='store_true', help='Reset the OpenAI API key')
-    config_parser.add_argument('-l', '--logger', type=lambda x: (str(x).lower() == 'true'), help='Enable or disable logging (true/false)')
+    config_parser = subparsers.add_parser('config', help='🛠️ Configure the tool settings')
+    config_parser.add_argument('-k', '--openai-key', dest='openai_key',
+                               help='🔑 Set your OpenAI API key for AI-powered commit messages')
+    config_parser.add_argument('-r', '--reset', action='store_true',
+                               help='🔄 Reset the OpenAI API key to default')
+    config_parser.add_argument('-l', '--logger', type=lambda x: (str(x).lower() == 'true'),
+                               help='📝 Enable or disable logging (true/false) for debugging')
 
     # Help command
     subparsers.add_parser('help', help='Display this help message')
