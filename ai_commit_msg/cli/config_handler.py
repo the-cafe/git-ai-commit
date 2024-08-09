@@ -1,5 +1,4 @@
 from ai_commit_msg.services.openai_service import OpenAiService
-from ai_commit_msg.services.config_service import ConfigServiceSingleton
 from ai_commit_msg.utils.logger import Logger
 
 def config_handler(args):
