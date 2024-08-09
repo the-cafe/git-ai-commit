@@ -85,14 +85,6 @@ git_ai_commit config --openai-key=<insert-your-key>
   ```bash
   git_ai_commit help
   ```
-
-🤖 **generate**, **-g**:
-  This subcommand generates a desired number of commit messages
-
-  ```bash
-  git_ai_commit generate <int> 
-  ```
-
 ## Contributing
 
 If you would like to contribute code and improve our product, please read our
