@@ -18,8 +18,8 @@ def config_handler(args):
         return None
 
     if args.logger is not None:
-        config_service.logger_enabled(args.logger)
-        Logger().log(f"Logger {'enabled' if args.logger else 'disabled'}")
+        config_service.set_logger_enabled(args.logger)
+        Logger().log("Logger " + ("enabled" if args.logger else "disabled"))
         return None
 
     help_message = (
