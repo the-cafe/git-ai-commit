@@ -37,8 +37,6 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
         config_handler(args)
     elif args.command == 'help':
         parser.print_help()
-    elif not args.command:
-        prepare_commit_msg_hook()
 
     ## Only in main script, we return zero instead of None when the return value is unused
     return 0
