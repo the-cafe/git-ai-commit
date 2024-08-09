@@ -3,8 +3,9 @@ from __future__ import annotations
 import argparse
 import sys
 from typing import Sequence
-
+import os
 from ai_commit_msg.cli.config_handler import config_handler
+from ai_commit_msg.cli.gen_ai_commit_message_handler import gen_ai_commit_message_handler
 from ai_commit_msg.prepare_commit_msg_hook import prepare_commit_msg_hook
 from ai_commit_msg.utils.logger import Logger
 
@@ -19,9 +20,23 @@ def args_has_supported_command():
     command = sys_argv[1]
     return command in SUPPORTED_COMMANDS
 
+# def log_environment_variables():
+#     Logger().log("Logging environment variables:")
+#     for key, value in os.environ.items():
+#         Logger().log(f"{key}: {value}")
+
+def is_cli():
+    return os.environ.get('PRE_COMMIT') == '1'
+
 def main(argv: Sequence[str] | None = None) -> int:
-    if not args_has_supported_command():
+    # log_environment_variables()  # Log environment variables
+
+    if is_cli():
         prepare_commit_msg_hook()
+        return 0
+
+    if not args_has_supported_command():
+        gen_ai_commit_message_handler()
         return 0
 
     parser = argparse.ArgumentParser(description="CLI tool")
@@ -39,4 +54,4 @@ def main(argv: Sequence[str] | None = None) -> int:
     return 0
 
 if __name__ == '__main__':
-    raise SystemExit(main())
+    raise SystemExit(main(sys.argv[1:]))
