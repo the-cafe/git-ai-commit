@@ -1,7 +1,6 @@
 
 from ai_commit_msg.services.git_service import GitService
 from ai_commit_msg.services.openai_service import OpenAiService
-from ai_commit_msg.utils.utils import execute_cli_command
 
 def generate_commit_message():
   staged_diff = GitService.get_staged_diff()
@@ -22,6 +21,5 @@ Only respond with a short sentence no longer than 50 characters that I can use f
         {"role": "system", "content": COMMIT_MSG_SYSTEM_MESSAGE},
         {"role": "user", "content": staged_diff.stdout},
     ])
-
 
   return ai_gen_commit_msg.strip()
