@@ -13,7 +13,7 @@ def config_handler(args):
         handle_logger(args.logger)
     else:
         display_help()
-    return 0
+    return None
 
 def handle_openai_key(key):
     if key.strip() == "":
