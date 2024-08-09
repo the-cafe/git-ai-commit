@@ -36,5 +36,6 @@ Would you like to commit your changes? (y/n): """
     else:
       print(f"No upstream branch found. Setting upstream for branch '{current_branch}'")
       execute_cli_command(['git', 'push', '--set-upstream', 'origin', current_branch], output=True)
+      print(f"🔄 Upstream branch set for '{current_branch}'")
 
     return 0
