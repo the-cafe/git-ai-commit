@@ -65,12 +65,14 @@ git_ai_commit config --openai-key=<insert-your-key>
   git_ai_commit config --openai-key=<your-new-key> 
   ```
 
-- ❌ **--reset**, **-r**:
-  Use this flag to remove the current OpenAI API key from the configuration.
+- 🔄 **--reset**, **-r**:
+  Use this flag to reset the entire configuration database to its default state.
 
   ```bash
   git_ai_commit config --reset
   ```
+
+  This will reset all settings, including the OpenAI API key and logger status
 
 - 🖨️ **--logger**, **-l**:
   This flag displays the log status for the CLI
