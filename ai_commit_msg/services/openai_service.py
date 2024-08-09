@@ -3,15 +3,16 @@ from openai import OpenAI
 from ai_commit_msg.services.local_db_service import LocalDbService, CONFIG_COLLECTION_KEY
 
 class OpenAiService:
+    client = None
     def __init__(self):
       api_key = OpenAiService.get_openai_api_key()
 
       if(api_key is None or api_key == ""):
-        Logger().log("""OpenAI API key is not set. Run the following command to set the key:
+        raise Exception("""
+        OpenAI API key is not set. Run the following command to set the key:
 
-gen_ai_commit_message_cli config --openai-key=<insert-your-key>
-                        """)
-        return None
+        git_ai_commit config --openai-key=<insert-your-key>
+        """)
       self.client = OpenAI(api_key=api_key)
 
     def chat_with_openai(self, messages):
@@ -30,10 +31,4 @@ gen_ai_commit_message_cli config --openai-key=<insert-your-key>
     def set_openai_api_key(api_key):
         raw_json_db = LocalDbService().get_db()
         raw_json_db[CONFIG_COLLECTION_KEY]["openai_api_key"] = api_key
-        LocalDbService().set_db(raw_json_db)
-
-    @staticmethod
-    def reset_openai_api_key():
-        raw_json_db = LocalDbService().get_db()
-        raw_json_db[CONFIG_COLLECTION_KEY]["openai_api_key"] = ""
         LocalDbService().set_db(raw_json_db)
