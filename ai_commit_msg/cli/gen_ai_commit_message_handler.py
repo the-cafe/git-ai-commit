@@ -25,7 +25,7 @@ Would you like to commit your changes? (y/n): """
       print("🚨 Invalid input. Exiting.")
       return
 
-    execute_cli_command(['git', 'commit', '-m', "✨" + ai_gen_commit_msg])
+    execute_cli_command(['git', 'commit', '-m', ai_gen_commit_msg])
     execute_cli_command(['git', 'push'])
 
     return 0
