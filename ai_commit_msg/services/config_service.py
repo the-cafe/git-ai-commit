@@ -19,5 +19,3 @@ class ConfigService:
         config = ConfigService.get_config()
         config["logger_enabled"] = enabled
         LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
-
-ConfigServiceSingleton = ConfigService()

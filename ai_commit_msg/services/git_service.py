@@ -6,7 +6,8 @@ class GitService:
 
   @staticmethod
   def get_staged_diff():
-    return execute_cli_command(['git', 'diff', '--staged'], GitService.get_repo_root_directory())
+    return execute_cli_command(['git', 'diff', '--staged'],
+                               cwd=GitService.get_repo_root_directory(), output=False)
 
   @staticmethod
   def get_repo_root_directory():
@@ -40,3 +41,8 @@ class GitService:
       file.write(new_content)
 
     return 0
+
+  @staticmethod
+  def get_staged_files():
+    staged_files = execute_cli_command(['git', 'diff', '--name-only', '--cached']).stdout.splitlines()
+    return staged_files
