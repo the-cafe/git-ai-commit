@@ -39,7 +39,6 @@ def config_handler(args):
             "     -r, --reset Reset the OpenAI API key\n"
             "     -l, --logger Enable or disable logging (true/false)\n"
             "     -h, --help Display this help message\n"
-            "     fuck u"
         )
         Logger().log(help_message)
     return 0
