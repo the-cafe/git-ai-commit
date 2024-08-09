@@ -18,7 +18,7 @@ def config_handler(args):
 
     if args.logger:
         config_service.set_logger_enabled(args.logger)
-        print(f"Logger {'enabled' if args.logger else 'disabled'}")
+        Logger().log(f"Logger {'enabled' if args.logger else 'disabled'}")
         return None
 
     help_message = (
