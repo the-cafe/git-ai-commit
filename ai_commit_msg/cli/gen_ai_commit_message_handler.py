@@ -30,8 +30,9 @@ Would you like to commit your changes? (y/n): """
 
     if has_upstream:
         execute_cli_command(['git', 'push'], output=True)
-    else:
-        set_upstream = input(f"No upstream branch found for '{current_branch}'. Set upstream? (y/n): ")
+        return
+    if not has_upstream:
+        set_upstream = input(f"No upstream branch found for '{current_branch}'. This will run: 'git push --set-upstream origin {current_branch}'. Set upstream? (y/n): ")
         if set_upstream.lower() == 'y':
             execute_cli_command(['git', 'push', '--set-upstream', 'origin', current_branch], output=True)
             print(f"🔄 Upstream branch set for '{current_branch}'")
