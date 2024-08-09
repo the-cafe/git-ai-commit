@@ -40,3 +40,8 @@ class GitService:
       file.write(new_content)
 
     return 0
+
+  @staticmethod
+  def get_staged_files():
+    staged_files = execute_cli_command(['git', 'diff', '--name-only', '--cached']).stdout.splitlines()
+    return staged_files

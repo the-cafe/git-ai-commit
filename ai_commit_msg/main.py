@@ -20,17 +20,10 @@ def args_has_supported_command():
     command = sys_argv[1]
     return command in SUPPORTED_COMMANDS
 
-# def log_environment_variables():
-#     Logger().log("Logging environment variables:")
-#     for key, value in os.environ.items():
-#         Logger().log(f"{key}: {value}")
-
 def is_cli():
     return os.environ.get('PRE_COMMIT') == '1'
 
 def main(argv: Sequence[str] | None = None) -> int:
-    # log_environment_variables()  # Log environment variables
-
     if is_cli():
         prepare_commit_msg_hook()
         return 0
