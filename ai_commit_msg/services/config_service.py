@@ -14,5 +14,8 @@ class ConfigService:
         raw_json_db = LocalDbService().get_db()[CONFIG_COLLECTION_KEY]
         return raw_json_db
 
-ConfigServiceSingleton = ConfigService()
-
+    @staticmethod
+    def set_logger_enabled(enabled):
+        config = ConfigService.get_config()
+        config["logger_enabled"] = enabled
+        LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
