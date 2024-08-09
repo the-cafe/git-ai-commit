@@ -10,6 +10,7 @@ from ai_commit_msg.prepare_commit_msg_hook import prepare_commit_msg_hook
 from ai_commit_msg.utils.logger import Logger
 
 def called_from_git_hook():
+    print("called_from_git_hook")
     return os.environ.get('PRE_COMMIT') == '1'
 
 def main(argv: Sequence[str] = sys.argv[1:]) -> int:
