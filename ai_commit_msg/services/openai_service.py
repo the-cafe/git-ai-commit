@@ -19,8 +19,8 @@ gen_ai_commit_message_cli config --openai-key=<insert-your-key>
     def chat_with_openai(self, messages):
         select_model = ConfigService.get_model()
 
-        # if(select_model not in OPEN_AI_MODEL_LIST):
-        #     raise Exception(f"Attempted to cal OpenAI with an invalid model: {select_model}")
+        if(select_model not in OPEN_AI_MODEL_LIST):
+            raise Exception(f"Attempted to cal OpenAI with an invalid model: {select_model}")
 
         completion = self.client.chat.completions.create(
             model=select_model,
