@@ -6,13 +6,15 @@ def config_handler(args):
     if args.openai_key is not None:
         if args.openai_key.strip() == "":
             print("OpenAI API key is not set. Run the following command to set the key: gen_ai_commit_message config --openai-key=<insert-your-key>")
-            return;
+            return 0
         OpenAiService.set_openai_api_key(args.openai_key)
         Logger().log("OpenAI API key set successfully")
-    elif args.reset:
+        return 1
+
+    if args.reset:
         OpenAiService.reset_openai_api_key()
         Logger().log("OpenAI API key has been reset")
-    else:
-        Logger().log("No valid configuration option provided")
+        return 1
 
+    Logger().log("No valid configuration option provided")
     return 0
