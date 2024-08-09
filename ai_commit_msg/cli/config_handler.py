@@ -5,9 +5,10 @@ from ai_commit_msg.utils.logger import Logger
 
 def config_handler(args):
     config_service = ConfigService()
+
     if args.openai_key:
         OpenAiService.set_openai_api_key(args.openai_key)
-        Logger().log("OpenAI API key has been reset")
+        Logger().log("OpenAI API key set successfully")
         return None
 
     if args.reset:

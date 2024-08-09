@@ -1,9 +1,9 @@
-
 from ai_commit_msg.core.gen_commit_msg import generate_commit_message
 from ai_commit_msg.services.git_service import GitService
 from ai_commit_msg.utils.utils import execute_cli_command
 
 def gen_ai_commit_message_handler():
+
     if(len(GitService.get_staged_files()) == 0):
       print("🚨 No files are staged for commit. Run `git add` to stage some of your changes")
       return
