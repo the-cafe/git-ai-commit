@@ -1,6 +1,7 @@
 from __future__ import annotations
 import argparse
 import sys
+import os
 from typing import Sequence
 from ai_commit_msg.cli.config_handler import config_handler
 from ai_commit_msg.prepare_commit_msg_hook import prepare_commit_msg_hook
@@ -20,12 +21,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     if argv is None:
         argv = sys.argv[1:]
 
-    # If the first argument is the script name or a file path, remove it
-    if argv and (argv[0].endswith('main.py') or argv[0].endswith('COMMIT_EDITMSG')):
-        argv = argv[1:]
-
-    # If no arguments are provided, run the prepare_commit_msg_hook
-    if not argv:
+    # If no arguments are provided or if the first argument is a file path, run prepare_commit_msg_hook
+    if not argv or (argv and os.path.exists(argv[0])):
         prepare_commit_msg_hook()
         return 0
 
