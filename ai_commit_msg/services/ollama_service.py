@@ -1,6 +1,7 @@
 import requests
 
 from ai_commit_msg.services.config_service import ConfigService
+from ai_commit_msg.utils.logger import Logger
 
 class LlamaChatService:
     def __init__(self,):
@@ -8,17 +9,15 @@ class LlamaChatService:
 
     def chat_with_llama(self, prompt):
         select_model = ConfigService.get_model()
+
         # remove the ollama prefix
-        ollama_model = select_model[6:]
+        ollama_model = select_model.replace("ollama/", "")
+
+        Logger().log("Using Ollama model: " + ollama_model)
 
         data = {
             "model": ollama_model,
-            "messages": [
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            ],
+            "messages": prompt,
             "stream": False,
         }
 

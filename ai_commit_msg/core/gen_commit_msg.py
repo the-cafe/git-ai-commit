@@ -31,7 +31,10 @@ Only respond with a short sentence no longer than 50 characters that I can use f
 
   if(select_model.startswith("ollama")):
     Logger().log("Using OLlama model")
-    response = LlamaChatService().chat_with_llama()
+    response = LlamaChatService().chat_with_llama([
+          {"role": "system", "content": COMMIT_MSG_SYSTEM_MESSAGE},
+          {"role": "user", "content": staged_diff.stdout},
+      ])
     return response.strip()
 
   return ""

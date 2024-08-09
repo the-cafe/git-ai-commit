@@ -32,3 +32,9 @@ ANTHROPIC_MODEL_LIST = [
   'claude-3-sonnet-20240229',
   'claude-3-opus-20240229'
 ]
+
+OLLAMA_MODEL_LIST = [
+  'ollama/llama3',
+  'ollama/mistral',
+  'ollama/phi-3:medium'
+]
