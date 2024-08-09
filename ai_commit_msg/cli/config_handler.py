@@ -1,8 +1,9 @@
+from ai_commit_msg.services.config_service import ConfigServiceSingleton
 from ai_commit_msg.services.openai_service import OpenAiService
 from ai_commit_msg.utils.logger import Logger
 
 def config_handler(args):
-    if args.openai_key is not None:
+    if args.openai_key:
         if args.openai_key.strip() == "":
             OpenAiService.reset_openai_api_key()
             Logger().log("OpenAI API key has been reset")
@@ -16,7 +17,7 @@ def config_handler(args):
         Logger().log("OpenAI API key has been reset")
         return None
 
-    if args.logger is not None:
+    if args.logger:
         ConfigServiceSingleton.set_logger_enabled(args.logger)
         Logger().log(f"Logging {'enabled' if args.logger else 'disabled'}")
         return 1
