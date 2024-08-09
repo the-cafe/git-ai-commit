@@ -1,9 +1,9 @@
 from __future__ import annotations
-
 import argparse
 import sys
-from typing import Sequence
 import os
+from typing import Sequence
+
 from ai_commit_msg.cli.config_handler import config_handler
 from ai_commit_msg.cli.gen_ai_commit_message_handler import gen_ai_commit_message_handler
 from ai_commit_msg.prepare_commit_msg_hook import prepare_commit_msg_hook
@@ -19,21 +19,29 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
     if len(argv) == 0:
         return gen_ai_commit_message_handler()
 
-    parser = argparse.ArgumentParser(description="CLI tool")
+    parser = argparse.ArgumentParser(description="🚀 AI-powered CLI tool that revolutionizes your Git workflow by automatically generating commit messages!")
     subparsers = parser.add_subparsers(dest='command', required=False)
 
     # Config command
-    config_parser = subparsers.add_parser('config', help='Configure the tool')
-    config_parser.add_argument('-k', '--openai-key', dest='openai_key', help='Set OpenAI API key')
-    config_parser.add_argument('-r', '--reset', action='store_true', help='Reset the OpenAI API key')
-    # It's used to convert the input string into a bool
-    config_parser.add_argument('-l', '--logger', type=lambda x: (str(x).lower() == 'true'), help='Enable or disable logging (true/false)')
+    config_parser = subparsers.add_parser('config', help='🛠️ Configure the tool settings')
+    config_parser.add_argument('-k', '--openai-key', dest='openai_key',
+                               help='🔑 Set your OpenAI API key for AI-powered commit messages')
+    config_parser.add_argument('-r', '--reset', action='store_true',
+                               help='🔄 Reset the OpenAI API key to default')
+    config_parser.add_argument('-l', '--logger', type=lambda x: (str(x).lower() == 'true'),
+                               help='📝 Enable or disable logging (true/false) for debugging')
+
+    # Help command
+    subparsers.add_parser('help', help='Display this help message')
 
     args = parser.parse_args(argv)
 
     if args.command == 'config':
         config_handler(args)
+    elif args.command == 'help':
+        parser.print_help()
 
+    ## Only in main script, we return zero instead of None when the return value is unused
     return 0
 
 if __name__ == '__main__':
