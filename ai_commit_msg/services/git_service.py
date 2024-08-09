@@ -53,5 +53,8 @@ class GitService:
 
   @staticmethod
   def has_upstream_branch(branch_name):
-    result = execute_cli_command(['git', 'rev-parse', '--abbrev-ref', f'{branch_name}@{{u}}'], check=False)
-    return result.returncode == 0
+    try:
+        execute_cli_command(['git', 'rev-parse', '--abbrev-ref', f'{branch_name}@{{u}}'])
+        return True
+    except Exception:
+        return False
