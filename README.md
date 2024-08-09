@@ -12,6 +12,15 @@
 
 TODO - Insert video of usage
 
+This tool currently supports the following LLM source...
+
+- **Open AI**: gpt-4o-mini(default)
+
+- **Anthropic**: claude-3
+
+- **Local Ollama**: llama3, mistral
+  - [see steps for running local ollama model](./wiki/ollama.md)
+
 ## Getting Started
 
 1. Install the [`pre-commit`](https://pre-commit.com/) git hooks framework
