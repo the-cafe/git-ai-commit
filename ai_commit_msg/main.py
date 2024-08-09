@@ -14,7 +14,6 @@ def custom_help():
         -r, --reset Reset the OpenAI API key
         -l, --logger Enable or disable logging (true/false)
     help, -h Display this help message"""
-    print(help_text)
     sys.exit(0)
 
 def main(argv: Sequence[str] | None = None) -> int:
