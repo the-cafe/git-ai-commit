@@ -25,7 +25,16 @@ Would you like to commit your changes? (y/n): """
       print("🚨 Invalid input. Exiting.")
       return
 
+
     execute_cli_command(['git', 'commit', '-m', ai_gen_commit_msg], output=True)
-    execute_cli_command(['git', 'push'], output=True)
+
+    current_branch = GitService.get_current_branch()
+    has_upstream = GitService.has_upstream(current_branch)
+
+    if has_upstream:
+      execute_cli_command(['git', 'push'], output=True)
+    else:
+      print(f"No upstream branch found. Setting upstream for branch '{current_branch}'")
+      execute_cli_command(['git', 'push', '--set-upstream', 'origin', current_branch], output=True)
 
     return 0
