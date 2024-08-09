@@ -1,8 +1,6 @@
 from ai_commit_msg.services.openai_service import OpenAiService
 from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.utils.logger import Logger
-from ai_commit_msg.services.git_service import GitService
-import os
 
 def config_handler(args):
     if args.openai_key is not None:
