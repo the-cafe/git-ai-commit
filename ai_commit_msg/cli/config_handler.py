@@ -1,5 +1,5 @@
 from ai_commit_msg.services.openai_service import OpenAiService
-from ai_commit_msg.services.config_service import ConfigServiceSingleton
+from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.utils.logger import Logger
 from ai_commit_msg.services.git_service import GitService
 import os
@@ -14,7 +14,7 @@ def config_handler(args):
         OpenAiService.reset_openai_api_key()
         Logger().log("OpenAI API key has been reset")
     elif args.logger is not None:
-        ConfigServiceSingleton.set_logger_enabled(args.logger)
+        ConfigService.set_logger_enabled(args.logger)
         git_dir = GitService.get_git_directory()
         log_file = os.path.join(git_dir, "ai_commit_message.log")
 

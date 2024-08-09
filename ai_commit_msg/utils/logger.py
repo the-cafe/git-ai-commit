@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta, timezone
 
-from ai_commit_msg.services.config_service import ConfigServiceSingleton
+from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.services.git_service import GitService
 
 def get_current_time():
@@ -36,5 +36,4 @@ class Logger:
     return logged_string
 
   def is_enabled(self):
-    return ConfigServiceSingleton.logger_enabled
-
+    return ConfigService.logger_enabled
