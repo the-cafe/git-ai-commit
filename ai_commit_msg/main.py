@@ -44,7 +44,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         prepare_commit_msg_hook()
         return 0
 
-    parser = argparse.ArgumentParser(description="CLI tool", add_help=False)
+    parser = argparse.ArgumentParser(description="CLI tool", add_help=True)
     subparsers = parser.add_subparsers(dest='command', required=False)
 
     # Config command
@@ -63,10 +63,6 @@ def main(argv: Sequence[str] | None = None) -> int:
         display_help()
     elif args.command == 'config':
         config_handler(args)
-    else:
-        prepare_commit_msg_hook()
-
-    return 0
 
 if __name__ == '__main__':
     raise SystemExit(main())
