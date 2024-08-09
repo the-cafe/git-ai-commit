@@ -7,6 +7,7 @@ def config_handler(args):
         OpenAiService.set_openai_api_key(args.openai_key)
         Logger().log("OpenAI API key set successfully")
         print("OpenAI API key set successfully")
+        print("printing")
         return
 
     return 0
