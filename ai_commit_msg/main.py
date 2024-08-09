@@ -45,4 +45,4 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
 
 if __name__ == '__main__':
     Logger().log("sys.argv: " + str(sys.argv))
-    raise SystemExit(main(sys.argv[1:]))
+    raise SystemExit(main())
