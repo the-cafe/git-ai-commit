@@ -29,7 +29,7 @@ Would you like to commit your changes? (y/n): """
     execute_cli_command(['git', 'commit', '-m', ai_gen_commit_msg], output=True)
 
     current_branch = GitService.get_current_branch()
-    has_upstream = GitService.has_upstream(current_branch)
+    has_upstream = GitService.has_upstream_branch(current_branch)
 
     if has_upstream:
       execute_cli_command(['git', 'push'], output=True)
