@@ -1,23 +1,23 @@
+from ai_commit_msg.services.config_service import ConfigService
+from ai_commit_msg.services.local_db_service import LocalDbService
 from ai_commit_msg.services.openai_service import OpenAiService
 from ai_commit_msg.utils.logger import Logger
 
 def config_handler(args):
-    if args.openai_key is None:
-        Logger().log("No OpenAI API key provided")
-        return None
-
-    if args.openai_key.strip() == "":
-        OpenAiService.reset_openai_api_key()
-        Logger().log("OpenAI API key has been reset")
-        return None
-    elif args.openai_key:
+    config_service = ConfigService()
+    if args.openai_key:
         OpenAiService.set_openai_api_key(args.openai_key)
-        Logger().log("OpenAI API key set successfully")
+        Logger().log("OpenAI API key has been reset")
         return None
 
     if args.reset:
-        OpenAiService.reset_openai_api_key()
+        LocalDbService().reset_db();
         Logger().log("OpenAI API key has been reset")
+        return None
+
+    if args.logger is not None:
+        config_service.set_logger_enabled(args.logger)
+        print(f"Logger {'enabled' if args.logger else 'disabled'}")
         return None
 
     help_message = (

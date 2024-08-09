@@ -40,3 +40,6 @@ class LocalDbService:
     def append_db(self, data):
         with open(self.db_path, 'a') as db:
             db.write(data)
+
+    def reset_db(self):
+        self.set_db(default_db)
