@@ -12,6 +12,7 @@ def config_handler(args):
         return None
 
     if args.reset:
+        # reset the db the entire db
         LocalDbService().reset_db();
         Logger().log("OpenAI API key has been reset")
         return None
