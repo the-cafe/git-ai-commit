@@ -9,12 +9,12 @@ def config_handler(args):
         else:
             OpenAiService.set_openai_api_key(args.openai_key)
             Logger().log("OpenAI API key set successfully")
-        return 1
+        return None
 
     if args.reset:
         OpenAiService.reset_openai_api_key()
         Logger().log("OpenAI API key has been reset")
-        return 1
+        return None
 
     if args.logger is not None:
         ConfigServiceSingleton.set_logger_enabled(args.logger)
