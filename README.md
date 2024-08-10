@@ -19,8 +19,6 @@
 
 - 🔗 Works alongside all your other git hooks
 
-testing
-
 ## 📺 Usage
 
 TODO - Insert video of usage
