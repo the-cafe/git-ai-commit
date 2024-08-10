@@ -123,7 +123,7 @@ This flag allows you to set or update the Anthropic API key for AI-powered commi
   git_ai_commit config --model=<model-name>
   ```
 
-📚 **help**, **-h**:
+- 📚 **help**, **-h**:
   This subcommand displays a list of all available commands and their usage, helping users understand how to interact with the CLI.
 
   ```bash
