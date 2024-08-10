@@ -7,6 +7,7 @@ from typing import Sequence
 from ai_commit_msg.cli.config_handler import config_handler
 from ai_commit_msg.cli.gen_ai_commit_message_handler import gen_ai_commit_message_handler
 from ai_commit_msg.prepare_commit_msg_hook import prepare_commit_msg_hook
+from ai_commit_msg.services.local_db_service import LocalDbService
 from ai_commit_msg.utils.logger import Logger
 
 def called_from_git_hook():
