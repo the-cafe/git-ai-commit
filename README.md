@@ -2,27 +2,13 @@
 
 <a href="https://pypi.org/project/git-ai-commit"><img src="https://img.shields.io/pypi/v/git-ai-commit" alt="Current version"></a>
 
-## 📚 Table of Contents
-
-- [🤖 AI Commit Message](#-ai-commit-message)
-  - [📚 Table of Contents](#-table-of-contents)
-  - [🚀 Tl;DR](#-tldr)
-  - [📺 Usage](#-usage)
-  - [🚀 Let's Get Started](#-lets-get-started)
-    - [🤖 Auto Setup](#-auto-setup)
-    - [🛠️ Integrate with `pre-commit` framework](#️-integrate-with-pre-commit-framework)
-  - [🛠️ CLI](#️-cli)
-    - [Subcommands](#subcommands)
-  - [🤝 Wanna Contribute?](#-wanna-contribute)
-  - [🎉 Fun Facts](#-fun-facts)
-
 ## 🚀 Tl;DR
 
-- 🤖 An pre-commit hook that generates the perfect commit message for you
+- Generates the perfect commit message every time you run `git commit`
 
-- 🌐 Supports all projects and programming languages, built on the [`pre-commit`](https://pre-commit.com/) git hooks framework
+- Integrates with the [`pre-commit`](https://pre-commit.com/) framework, works alongside all your git hooks
 
-- 🔗 Works alongside all your other git hooks
+- Supports all projects and programming languages, its open source!
 
 ## 📺 Usage
 
@@ -30,12 +16,12 @@
 
 This tool currently supports the following LLM source...
 
-- **Open AI**: gpt-4o-mini(default), gpt-4o, gpt-3.5
+- **Open AI**: gpt-4o-mini(default), gpt-4, gpt-3.5, and more
 
 - **Anthropic**: claude-3-haiku, claude-3-sonnet, claude-3-opus
   - [Wiki: Setup Anthropic Model](./wiki/anthropic.md)
 
-- **Local Ollama**: llama3, mistral, phi-3, gemma
+- **Local Ollama**: llama3, mistral, phi-3, gemma, and more
   - [Wiki: Using local Ollama LLM model](./wiki/ollama.md)
 
 ## 🚀 Let's Get Started
@@ -46,24 +32,10 @@ To install the AI Commit Message tool, run:
 pip install git-ai-commit
 ```
 
-### 🤖 Auto Setup
-
-1. Run the auto setup command:
+1. Run the command to start the new user setup:
 
 ```bash
-git-ai-commit hook --setup
-```
-
-2. Set your OpenAI key:
-
-```bash
-git-ai-commit config --openai-key=<insert-your-key>
-```
-
-To uninstall the hook, run:
-
-```bash
-git-ai-commit hook --remove
+git-ai-commit config --setup
 ```
 
 ### 🛠️ Integrate with `pre-commit` framework
