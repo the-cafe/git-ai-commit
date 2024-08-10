@@ -54,6 +54,12 @@ class ConfigService:
         LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
         self.anthropic_api_key = api_key
 
+    def set_openai_api_key(self, api_key):
+        config = ConfigService.get_config()
+        config["openai_api_key"] = api_key
+        LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
+        self.openai_api_key = api_key
+
     def set_model(self, model):
         if not ConfigService.is_supported_model(model) and model is not "":
             raise Exception(f"Model {model} is not supported")
