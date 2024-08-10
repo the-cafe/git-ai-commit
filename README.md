@@ -1,5 +1,16 @@
 # AI Commit Message
 
+## Table of Contents
+- [AI Commit Message](#ai-commit-message)
+  - [Table of Contents](#table-of-contents)
+  - [Tl;DR](#tldr)
+  - [Usage](#usage)
+  - [Getting Started](#getting-started)
+  - [CLI](#cli)
+    - [Subcommands](#subcommands)
+  - [Contributing](#contributing)
+  - [Fun Facts](#fun-facts)
+
 ## Tl;DR
 
 - An pre-commit hook that generates the perfect commit message for you
