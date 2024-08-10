@@ -1,3 +1,4 @@
+from ai_commit_msg.utils.logger import Logger
 from ai_commit_msg.utils.models import ANTHROPIC_MODEL_LIST
 import anthropic
 from ai_commit_msg.services.config_service import ConfigService
@@ -25,12 +26,23 @@ class AnthropicService:
     if(select_model not in ANTHROPIC_MODEL_LIST):
         raise Exception(f"Attempted to call Anthropic with an invalid model: {select_model}")
 
-    message = self.client.messages.create(
+    #filter messages with system role
+    system_message = list(filter(lambda message: message["role"] == "system", messages))
+    user_message = list(filter(lambda message: message["role"] == "user", messages))
+
+    if len(system_message) == 0:
+        raise Exception("No system message provided")
+
+    if len(user_message) == 0:
+        raise Exception("No user message provided")
+
+    system_message = system_message[0]["content"]
+
+    ai_gen_message = self.client.messages.create(
         model=select_model,
         max_tokens=1024,
-        system=messages[0]["content"],
-        messages=[messages[1]],
+        system=system_message,
+        messages=user_message,
     )
 
-
-    return message.content[0].text
+    return ai_gen_message.content[0].text
