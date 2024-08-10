@@ -43,3 +43,9 @@ class ConfigService:
         self.anthropic_api_key = raw_config["anthropic_api_key"]
 
         return self.anthropic_api_key
+
+    def set_model(self, model):
+        config = ConfigService.get_config()
+        config["model"] = model
+        LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
+        self.model = model

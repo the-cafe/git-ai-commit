@@ -22,6 +22,11 @@ def config_handler(args):
         Logger().log("Logger " + ("enabled" if args.logger else "disabled"))
         return None
 
+    if args.model:
+        config_service.set_model(args.model)
+        Logger().log("Model set to " + args.model)
+        return None
+
     help_message = (
         "No valid configuration option provided. You can use:\n"
         "     -k, --openai-key Set OpenAI API key (or reset if empty)\n"
