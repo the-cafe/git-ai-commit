@@ -10,7 +10,7 @@ def prepare_commit_msg_hook():
 
   Logger().log("Filtered content: " + filtered_content)
 
-  if(existing_content != ""):
+  if(filtered_content != ""):
     Logger().log("Commit message already exists, skipping AI commit message generation")
     return
 
