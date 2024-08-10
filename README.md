@@ -4,7 +4,7 @@
   - [🚀 Tl;DR](#-tldr)
   - [📺 Usage](#-usage)
   - [🚀 Let's Get Started](#-lets-get-started)
-  - [CLI](#cli)
+  - [🛠️ CLI](#️-cli)
     - [Subcommands](#subcommands)
   - [🤝 Wanna Contribute?](#-wanna-contribute)
   - [🎉 Fun Facts](#-fun-facts)
@@ -70,7 +70,7 @@ pre-commit install
 git_ai_commit config --openai-key=<insert-your-key>
 ```
 
-## CLI
+## 🛠️ CLI
 
 ### Subcommands
 
