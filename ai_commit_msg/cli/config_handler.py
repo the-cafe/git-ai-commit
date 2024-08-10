@@ -34,4 +34,4 @@ def config_handler(args):
         display_config_db = LocalDbService().display_db()
         Logger().log(display_config_db)
 
-    return None
+    return
