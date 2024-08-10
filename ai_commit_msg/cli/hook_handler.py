@@ -11,13 +11,14 @@ if ! grep -v "^#" "$1" | grep -q -v "^$"; then
 fi
 """
 
-def handle_setup_hook():
-    print("Setting up prepare-commit-msg hook")
-
+def get_prepare_commit_msg_hook_path():
     git_repo_path = GitService.get_git_directory()
-    file_path = git_repo_path + '/hooks/prepare-commit-msg'
+    return git_repo_path + '/hooks/prepare-commit-msg'
 
-    # check if a prepare-commit-msg hook already exists
+def handle_setup_hook():
+    Logger().log("Setting up prepare-commit-msg hook")
+
+    file_path = get_prepare_commit_msg_hook_path()
 
     hook_content = ""
     if os.path.exists(file_path):
@@ -25,7 +26,7 @@ def handle_setup_hook():
           hook_content = file.read()
 
     if hook_content == PREPARE_COMMIT_MSG_BASH_SCRIPT:
-        print("prepare-commit-msg hook already exists")
+        Logger().log("prepare-commit-msg hook already exists")
         return
 
     if hook_content:
@@ -34,26 +35,25 @@ def handle_setup_hook():
       if override_content.lower() == 'n':
         return
       elif override_content.lower() != 'y':
-        print("Invalid input. Exiting.")
-
-    print("file_path: " + file_path)
+        Logger().log("Invalid input. Exiting.")
 
     ## create the prepare-commit-msg file and write the hook code
     with open(file_path, 'w') as file:
         file.write(PREPARE_COMMIT_MSG_BASH_SCRIPT)
 
+    # make the file executable
     os.chmod(file_path, 0o755)
 
 def handle_remove_hook():
-    print("Removing prepare-commit-msg hook")
-    git_repo_path = GitService.get_git_directory()
-    file_path = git_repo_path + '/hooks/prepare-commit-msg'
+    Logger().log("Removing prepare-commit-msg hook")
+
+    file_path = get_prepare_commit_msg_hook_path()
 
     try:
         os.remove(file_path)
-        print("prepare-commit-msg hook removed")
+        Logger().log("prepare-commit-msg hook removed")
     except FileNotFoundError:
-        print("prepare-commit-msg hook does not exist")
+        Logger().log("prepare-commit-msg hook does not exist")
 
     return
 
