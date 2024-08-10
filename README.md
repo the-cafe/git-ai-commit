@@ -57,6 +57,12 @@ git_ai_commit hook --setup
 git_ai_commit config --openai-key=<insert-your-key>
 ```
 
+To uninstall the hook, run:
+
+```bash
+git_ai_commit hook --remove
+```
+
 ### 🛠️ Manual Setup
 
 1. Install the [`pre-commit`](https://pre-commit.com/) git hooks framework
