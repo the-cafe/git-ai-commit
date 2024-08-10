@@ -66,7 +66,6 @@ class ConfigService:
         LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
         self.ollama_url = url
 
-
     @staticmethod
     def is_supported_model(model):
         # check if the model has ollama prefix
