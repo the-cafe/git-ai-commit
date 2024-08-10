@@ -48,4 +48,6 @@ class LocalDbService:
         self.set_db(default_db)
 
     def display_db(self):
-        print(self.get_db())
+        db_contents = self.get_db()
+        formatted_db = json.dumps(db_contents, indent=2)
+        return f"Current Database Contents:\n{formatted_db}"
