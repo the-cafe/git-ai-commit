@@ -1,6 +1,8 @@
 # 🤖 AI Commit Message
 
 ## 📚 Table of Contents
+- [🤖 AI Commit Message](#-ai-commit-message)
+  - [📚 Table of Contents](#-table-of-contents)
   - [🚀 Tl;DR](#-tldr)
   - [📺 Usage](#-usage)
   - [🚀 Let's Get Started](#-lets-get-started)
@@ -75,8 +77,14 @@ git_ai_commit config --openai-key=<insert-your-key>
 ### Subcommands
 
 ✨ **config**:
-  This subcommand allows you to configure various settings for the CLI.
+  This subcommand allows you to show your current config settings
 
+  ```bash
+  git_ai_commit config
+  ```
+
+  Config flags are used to configure various settings in your configuration.
+  
 - 🔑 **--openai-key**, **-k**:
     This flag allows you to set a new or update the OpenAI API key for the CLI to use. Replace `<your-new-key>` with your actual API key to enable the functionality.
 
