@@ -85,6 +85,20 @@ git_ai_commit config --openai-key=<insert-your-key>
   ```bash
   git_ai_commit config --openai-key=<your-new-key> 
   ```
+  
+- 🔑 **--anthropic-key**, **-a**:
+This flag allows you to set or update the Anthropic API key for AI-powered commit messages.
+
+  ```bash
+  git_ai_commit config --anthropic-key=<your-anthropic-key>
+  ```
+  
+- 🌐 **--ollama-url**, **-ou**:
+  This flag allows you to set the Ollama URL for local LLM models.
+
+  ```bash
+  git_ai_commit config --ollama-url=<ollama-url>
+  ```
 
 - 🔄 **--reset**, **-r**:
   Use this flag to reset the entire configuration database to its default state.
@@ -102,25 +116,11 @@ git_ai_commit config --openai-key=<insert-your-key>
   git_ai_commit config --logger=<boolean>
   ```
 
-- 🌐 **--ollama-url**, **-ou**:
-  This flag allows you to set the Ollama URL for local LLM models.
-
-  ```bash
-  git_ai_commit config --ollama-url=<ollama-url>
-  ```
-
 - 🧠 **--model**, **-m**:
   This flag allows you to set the OpenAI model to use for generating commit messages.
 
   ```bash
   git_ai_commit config --model=<model-name>
-  ```
-
-- 🔑 **--anthropic-key**, **-a**:
-  This flag allows you to set or update the Anthropic API key for AI-powered commit messages.
-
-  ```bash
-  git_ai_commit config --anthropic-key=<your-anthropic-key>
   ```
 
 📚 **help**, **-h**:
@@ -129,6 +129,7 @@ git_ai_commit config --openai-key=<insert-your-key>
   ```bash
   git_ai_commit help
   ```
+
 
 ## 🤝 Wanna Contribute?
 
