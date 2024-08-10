@@ -22,7 +22,7 @@ PyPI has certain required meta-data that the setup.py should provide. If nothing
 python setup.py check
 ```
 
-This creates a dist/ directory containing a compressed archive of the package - `ai-commit-msg/dist/git-ai-commit-0.1.0.tar.gz`. This file is our source distribution.
+This creates a dist/ directory containing a compressed archive of the package - `ai-commit-msg/dist/git_ai_commit-0.1.0.tar.gz`. This file is our source distribution.
 
 ```bash
 python setup.py sdist # Generates dist/<PACKAGE_NAME>-<VERSION>.tar.gz
@@ -47,17 +47,17 @@ To upload to test Pypi
 twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 
 # Upload a specific version
-twine upload --repository-url https://test.pypi.org/legacy/ ./dist/git-ai-commit-<version>.tar.gz
+twine upload --repository-url https://test.pypi.org/legacy/ ./dist/git_ai_commit-<version>.tar.gz
 ```
 
 To upload to production Pypi
 
 ```bash
-# Upload all your generated distributions
+# Upload all your generated distributionsg
 twine upload dist/*
 
 # Upload a specific version
-twine upload ./dist/git-ai-commit-<version>.tar.gz
+twine upload ./dist/git_ai_commit-<version>.tar.gz
 ```
 
 ## FAQ
