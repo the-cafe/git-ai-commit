@@ -2,31 +2,10 @@ from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.services.local_db_service import LocalDbService
 from ai_commit_msg.services.openai_service import OpenAiService
 from ai_commit_msg.utils.logger import Logger
+from ai_commit_msg.services.onboarding_service import onboarding_flow
 
 def handle_config_setup():
-    Logger().log("\nWelcome to `git-ai-commit` - never write a commit message again!\n")
-
-    selected_model = input("""
-Select the AI model you would like to use, we support the following providers:
-    1. OpenAI GPT-4o-mini (default)
-    2. Anthropics
-    3. Ollama
-
-Select another model (press enter to skip): """
-    )
-
-    open_ai_key = input("Enter your OpenAI API key (press enter to skip): ")
-    anthropic_key = input("Enter your Anthropics API key (press enter to skip): ")
-
-    if selected_model is not "":
-        ConfigService().set_model(selected_model)
-    if open_ai_key is not "":
-        OpenAiService.set_openai_api_key(open_ai_key)
-    if anthropic_key is not "":
-        ConfigService().set_anthropic_api_key(anthropic_key)
-
-    ConfigService().set_last_updated_at()
-    Logger().log("Configuration setup complete")
+    onboarding_flow()
     return
 
 

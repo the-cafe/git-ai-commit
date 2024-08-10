@@ -66,3 +66,19 @@ class GitService:
         return True
     except Exception:
         return False
+
+  @staticmethod
+  def is_git_installed():
+    try:
+        execute_cli_command(['git', '--version'])
+        return True
+    except Exception:
+        return False
+
+  @staticmethod
+  def is_git_repository():
+    try:
+        execute_cli_command(['git', 'rev-parse', '--is-inside-work-tree'])
+        return True
+    except Exception:
+        return False
