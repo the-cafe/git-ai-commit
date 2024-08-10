@@ -1,3 +1,4 @@
+import time
 import os
 import json
 
@@ -11,7 +12,8 @@ default_db = {
       "openai_api_key": "",
       "logger_enabled": False,
       "model": "gpt-4o-mini",
-      "ollama_url": "http://localhost:11434/api/chat"
+      "ollama_url": "http://localhost:11434/api/chat",
+      "last_updated_at": ""
     }
 }
 
@@ -37,6 +39,7 @@ class LocalDbService:
             return json.load(db)
 
     def set_db(self, data):
+        data["config"]["last_updated_at"] = int(time.time())
         with open(self.db_path, 'w') as db:
             json.dump(data, db)
 
