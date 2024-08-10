@@ -27,12 +27,7 @@ def config_handler(args):
         Logger().log("Model set to " + args.model)
         return None
 
-    help_message = (
-        "No valid configuration option provided. You can use:\n"
-        "     -k, --openai-key Set OpenAI API key (or reset if empty)\n"
-        "     -r, --reset Reset the OpenAI API key\n"
-        "     -l, --logger Enable or disable logging (true/false)\n"
-        "     -h, --help Display this help message"
-    )
-    Logger().log(help_message)
+    display_config_db = LocalDbService().display_db()
+    Logger().log(display_config_db)
+
     return None
