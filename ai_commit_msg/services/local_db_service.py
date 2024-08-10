@@ -8,7 +8,9 @@ CONFIG_COLLECTION_KEY = "config"
 default_db = {
     CONFIG_COLLECTION_KEY: {
       "openai_api_key": "",
-      "logger_enabled": False
+      "logger_enabled": False,
+      "model": "gpt-4o-mini",
+      "ollama_url": "http://localhost:11434/api/chat"
     }
 }
 
