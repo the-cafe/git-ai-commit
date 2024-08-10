@@ -21,14 +21,17 @@ class GitService:
     return script_directory
 
   @staticmethod
-  def read_commit_editmsg_file():
+  def get_commit_editmsg_file_path():
     git_directory = GitService.get_repo_root_directory()
     commit_editmsg_file = git_directory + '/.git/COMMIT_EDITMSG'
+    return commit_editmsg_file
 
+  @staticmethod
+  def read_commit_editmsg_file():
     existing_content = ""
 
     try:
-      with open(commit_editmsg_file, 'r') as file:
+      with open(GitService.get_commit_editmsg_file_path(), 'r') as file:
         existing_content = file.read()
     except FileNotFoundError:
       pass
@@ -37,16 +40,12 @@ class GitService:
 
   @staticmethod
   def update_commit_message(commit_message):
-    git_directory = GitService.get_repo_root_directory()
-
     # open COMMIT_EDITMSG file to add the generated commit message
-    commit_editmsg_file = git_directory + '/.git/COMMIT_EDITMSG'
-
     existing_content = GitService.read_commit_editmsg_file()
 
     new_content = commit_message + '\n' + existing_content
 
-    with open(commit_editmsg_file, 'w') as file:
+    with open(GitService.get_commit_editmsg_file_path(), 'w') as file:
       file.write(new_content)
 
     return 0
