@@ -91,6 +91,13 @@ git_ai_commit config --openai-key=<insert-your-key>
   git_ai_commit config --logger=<boolean>
   ```
 
+- 🌐 **--ollama-url**, **-ou**:
+  This flag allows you to set the Ollama URL for local LLM models.
+
+  ```bash
+  git_ai_commit config --ollama-url=<ollama-url>
+  ```
+
 📚 **help**, **-h**:
   This subcommand displays a list of all available commands and their usage, helping users understand how to interact with the CLI.
 
