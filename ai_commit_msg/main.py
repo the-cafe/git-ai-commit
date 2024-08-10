@@ -6,6 +6,7 @@ from typing import Sequence
 
 from ai_commit_msg.cli.config_handler import config_handler
 from ai_commit_msg.cli.gen_ai_commit_message_handler import gen_ai_commit_message_handler
+from ai_commit_msg.cli.hook_handler import hook_handler
 from ai_commit_msg.prepare_commit_msg_hook import prepare_commit_msg_hook
 from ai_commit_msg.services.local_db_service import LocalDbService
 from ai_commit_msg.utils.logger import Logger
@@ -35,12 +36,19 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
     # Help command
     subparsers.add_parser('help', help='Display this help message')
 
+    # Hook command
+    hook_parser = subparsers.add_parser('hook', help='🪝 Run the prepare-commit-msg hook to generate commit messages')
+    hook_parser.add_argument('--setup', action='store_true', help='🔧 Setup the prepare-commit-msg hook')
+    hook_parser.add_argument('--remove', action='store_true', help='🔧 Setup the prepare-commit-msg hook')
+    hook_parser.add_argument('--run', action='store_true', help='🔧 Setup the prepare-commit-msg hook')
     args = parser.parse_args(argv)
 
     if args.command == 'config':
         config_handler(args)
     elif args.command == 'help':
         parser.print_help()
+    elif args.command == 'hook':
+        hook_handler(args)
 
     ## Only in main script, we return zero instead of None when the return value is unused
     return 0
