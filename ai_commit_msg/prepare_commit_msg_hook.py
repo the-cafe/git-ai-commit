@@ -7,6 +7,10 @@ def prepare_commit_msg_hook():
 
   Logger().log("Existing content: " + existing_content)
 
+  if(existing_content != ""):
+    Logger().log("Commit message already exists, skipping AI commit message generation")
+    return
+
   commit_message = "✨" + generate_commit_message()
 
   Logger().log("Generated commit message: " + commit_message)
