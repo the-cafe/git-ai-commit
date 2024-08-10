@@ -134,7 +134,5 @@ def onboarding_flow():
         box=box.ROUNDED
     )
 
+    ConfigService().set_last_updated_at()
     console.print(panel)
-
-if __name__ == "__main__":
-    onboarding_flow()
