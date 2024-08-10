@@ -8,7 +8,7 @@ def prepare_commit_msg_hook():
 
   filtered_content = "\n".join([line for line in existing_content.splitlines() if not line.strip().startswith('#')])
 
-  Logger().log("Filtered content: " + filtered_content)
+  Logger().log("Filtered content: " + filtered_content.strip())
 
   if(filtered_content != ""):
     Logger().log("Commit message already exists, skipping AI commit message generation")
