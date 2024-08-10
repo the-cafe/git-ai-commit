@@ -29,6 +29,7 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
     config_parser.add_argument('-r', '--reset', action='store_true',help='🔄 Reset the OpenAI API key to default')
     config_parser.add_argument('-l', '--logger', type=lambda x: (str(x).lower() == 'true'),help='📝 Enable or disable logging (true/false) for debugging')
     config_parser.add_argument('-m', '--model',help= '🧠 Set the OpenAI model to use for generating commit messages')
+    config_parser.add_argument('-ou', '--ollama-url', help='🌐 Set the Ollama URL for local LLM models')
     config_parser.add_argument('-a', '--anthropic-key', dest='anthropic_key', help='🔑 Set your Anthropic API key for AI-powered commit messages')
 
     # Help command

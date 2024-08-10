@@ -34,6 +34,11 @@ def config_handler(args):
         Logger().log("Model set to " + args.model)
         has_updated = True
 
+    if args.ollama_url:
+        config_service.set_ollama_url(args.ollama_url)
+        Logger().log("Ollama URL set to " + args.ollama_url)
+        has_updated = True
+
     if not has_updated:
         display_config_db = LocalDbService().display_db()
         Logger().log(display_config_db)

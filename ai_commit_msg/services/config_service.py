@@ -60,6 +60,12 @@ class ConfigService:
         LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
         self.model = model
 
+    def set_ollama_url(self, url):
+        config = ConfigService.get_config()
+        config["ollama_url"] = url
+        LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
+        self.ollama_url = url
+
 
     @staticmethod
     def is_supported_model(model):
