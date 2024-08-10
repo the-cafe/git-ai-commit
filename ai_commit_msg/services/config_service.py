@@ -7,6 +7,8 @@ class ConfigService:
     logger_enabled = False
     model = "gpt-4o-mini"
     ollama_url = "http://localhost:11434/api/chat"
+    last_updated_at = ""
+
 
     def __init__(self):
         config = ConfigService.get_config()
@@ -16,7 +18,7 @@ class ConfigService:
         if "logger_enabled" in config: self.logger_enabled = config["logger_enabled"]
         if "model" in config: self.model = config["model"]
         if "ollama_url" in config: self.ollama_url = config["ollama_url"]
-
+        if "last_updated_at" in config: self.last_updated_at = config["last_updated_at"]
 
     @staticmethod
     def get_config():
@@ -52,7 +54,7 @@ class ConfigService:
         self.anthropic_api_key = api_key
 
     def set_model(self, model):
-        if not ConfigService.is_supported_model(model):
+        if not ConfigService.is_supported_model(model) and model is not "":
             raise Exception(f"Model {model} is not supported")
 
         config = ConfigService.get_config()

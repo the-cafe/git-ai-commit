@@ -4,11 +4,11 @@ import sys
 import os
 from typing import Sequence
 
-from ai_commit_msg.cli.config_handler import config_handler
+from ai_commit_msg.cli.config_handler import config_handler, handle_config_setup
 from ai_commit_msg.cli.gen_ai_commit_message_handler import gen_ai_commit_message_handler
 from ai_commit_msg.cli.hook_handler import hook_handler
 from ai_commit_msg.prepare_commit_msg_hook import prepare_commit_msg_hook
-from ai_commit_msg.services.local_db_service import LocalDbService
+from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.utils.logger import Logger
 
 def called_from_git_hook():
@@ -19,6 +19,10 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
         return prepare_commit_msg_hook()
 
     if len(argv) == 0:
+        if(ConfigService().last_updated_at == ""):
+            handle_config_setup()
+            return 0
+
         return gen_ai_commit_message_handler()
 
     parser = argparse.ArgumentParser(description="🚀 AI-powered CLI tool that revolutionizes your Git workflow by automatically generating commit messages!")
@@ -32,6 +36,7 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
     config_parser.add_argument('-m', '--model',help= '🧠 Set the OpenAI model to use for generating commit messages')
     config_parser.add_argument('-ou', '--ollama-url', help='🌐 Set the Ollama URL for local LLM models')
     config_parser.add_argument('-a', '--anthropic-key', dest='anthropic_key', help='🔑 Set your Anthropic API key for AI-powered commit messages')
+    config_parser.add_argument('-as', '--setup', action='store_true', help='🔧 Setup the tool')
 
     # Help command
     subparsers.add_parser('help', help='Display this help message')
