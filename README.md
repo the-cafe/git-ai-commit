@@ -1,11 +1,11 @@
 # 🤖 AI Commit Message
 
 ## 📚 Table of Contents
-- [🤖 AI Commit Message](#-ai-commit-message)
-  - [📚 Table of Contents](#-table-of-contents)
   - [🚀 Tl;DR](#-tldr)
   - [📺 Usage](#-usage)
   - [🚀 Let's Get Started](#-lets-get-started)
+    - [🤖 Auto Setup](#-auto-setup)
+    - [🛠️ Manual Setup](#️-manual-setup)
   - [🛠️ CLI](#️-cli)
     - [Subcommands](#subcommands)
   - [🤝 Wanna Contribute?](#-wanna-contribute)
@@ -34,6 +34,22 @@ This tool currently supports the following LLM source...
   - [Wiki: Using local Ollama LLM model](./wiki/ollama.md)
 
 ## 🚀 Let's Get Started
+
+### 🤖 Auto Setup 
+
+1. Run the auto setup command:
+
+```bash
+git_ai_commit hook --setup
+```
+
+2. Set your OpenAI key:
+
+```bash
+git_ai_commit config --openai-key=<insert-your-key>
+```
+
+### 🛠️ Manual Setup
 
 1. Install the [`pre-commit`](https://pre-commit.com/) git hooks framework
 
