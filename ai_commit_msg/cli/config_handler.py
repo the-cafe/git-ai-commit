@@ -25,6 +25,7 @@ Select another model (press enter to skip): """
     if anthropic_key is not "":
         ConfigService().set_anthropic_api_key(anthropic_key)
 
+    ConfigService().set_last_updated_at()
     Logger().log("Configuration setup complete")
     return
 
@@ -66,8 +67,7 @@ def config_handler(args):
         has_updated = True
 
     if args.setup:
-        handle_config_setup(config_service)
-
+        handle_config_setup()
         has_updated = True
 
 
