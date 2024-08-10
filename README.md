@@ -1,6 +1,8 @@
 # 🤖 AI Commit Message
 
 ## 📚 Table of Contents
+- [🤖 AI Commit Message](#-ai-commit-message)
+  - [📚 Table of Contents](#-table-of-contents)
   - [🚀 Tl;DR](#-tldr)
   - [📺 Usage](#-usage)
   - [🚀 Let's Get Started](#-lets-get-started)
@@ -34,6 +36,12 @@ This tool currently supports the following LLM source...
   - [Wiki: Using local Ollama LLM model](./wiki/ollama.md)
 
 ## 🚀 Let's Get Started
+
+To install the AI Commit Message tool, run:
+
+```bash
+pip install git-ai-commit
+```
 
 ### 🤖 Auto Setup 
 
