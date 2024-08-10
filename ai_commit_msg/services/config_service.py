@@ -16,6 +16,7 @@ class ConfigService:
         if "model" in config: self.model = config["model"]
         if "ollama_url" in config: self.ollama_url = config["ollama_url"]
 
+
     @staticmethod
     def get_config():
         raw_json_db = LocalDbService().get_db()[CONFIG_COLLECTION_KEY]
