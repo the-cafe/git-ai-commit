@@ -14,12 +14,13 @@ TODO - Insert video of usage
 
 This tool currently supports the following LLM source...
 
-- **Open AI**: gpt-4o-mini(default)
+- **Open AI**: gpt-4o-mini(default), gpt-4o, gpt-3.5
 
-- **Anthropic**: claude-3
+- **Anthropic**: claude-3-haiku, claude-3-sonnet, claude-3-opus
+  - [Wiki: Setup Anthropic Model](./wiki/anthropic.md)
 
-- **Local Ollama**: llama3, mistral
-  - [see steps for running local ollama model](./wiki/ollama.md)
+- **Local Ollama**: llama3, mistral, phi-3, gemma
+  - [Wiki: Using local Ollama LLM model](./wiki/ollama.md)
 
 ## Getting Started
 
@@ -96,6 +97,7 @@ git_ai_commit config --openai-key=<insert-your-key>
   ```bash
   git_ai_commit help
   ```
+
 ## Contributing
 
 If you would like to contribute code and improve our product, please read our
