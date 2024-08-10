@@ -53,7 +53,7 @@ twine upload --repository-url https://test.pypi.org/legacy/ ./dist/git_ai_commit
 To upload to production Pypi
 
 ```bash
-# Upload all your generated distributionsg
+# Upload all your generated distributions
 twine upload dist/*
 
 # Upload a specific version
