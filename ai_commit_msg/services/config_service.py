@@ -45,6 +45,12 @@ class ConfigService:
 
         return self.anthropic_api_key
 
+    def set_anthropic_api_key(self, api_key):
+        config = ConfigService.get_config()
+        config["anthropic_api_key"] = api_key
+        LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
+        self.anthropic_api_key = api_key
+
     def set_model(self, model):
         if not ConfigService.is_supported_model(model):
             raise Exception(f"Model {model} is not supported")
@@ -53,6 +59,7 @@ class ConfigService:
         config["model"] = model
         LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
         self.model = model
+
 
     @staticmethod
     def is_supported_model(model):
