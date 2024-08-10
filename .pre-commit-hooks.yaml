@@ -3,4 +3,5 @@
     description: Generate commit message using AI
     entry: git_ai_commit
     language: python
+    always_run: true
     stages: [prepare-commit-msg]
