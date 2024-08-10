@@ -9,11 +9,13 @@ class ConfigService:
 
     def __init__(self):
         config = ConfigService.get_config()
-        self.openai_api_key = config["openai_api_key"]
-        self.logger_enabled = config["logger_enabled"]
-        self.model = config["model"]
-        self.ollama_url = config["ollama_url"]
-        self.anthropic_api_key = config["anthropic_api_key"]
+
+        if "anthropic_api_key" in config: self.anthropic_api_key = config["anthropic_api_key"]
+        if "openai_api_key" in config: self.openai_api_key = config["openai_api_key"]
+        if "logger_enabled" in config: self.logger_enabled = config["logger_enabled"]
+        if "model" in config: self.model = config["model"]
+        if "ollama_url" in config: self.ollama_url = config["ollama_url"]
+
 
     @staticmethod
     def get_config():
