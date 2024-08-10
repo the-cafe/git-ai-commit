@@ -35,6 +35,12 @@ This tool currently supports the following LLM source...
 
 ## 🚀 Let's Get Started
 
+To install the AI Commit Message tool, run:
+
+```bash
+pip install git-ai-commit
+```
+
 ### 🤖 Auto Setup 
 
 1. Run the auto setup command:
@@ -47,6 +53,12 @@ git_ai_commit hook --setup
 
 ```bash
 git_ai_commit config --openai-key=<insert-your-key>
+```
+
+To uninstall the hook, run:
+
+```bash
+git_ai_commit hook --remove
 ```
 
 ### 🛠️ Manual Setup
