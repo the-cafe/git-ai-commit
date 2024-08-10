@@ -46,3 +46,15 @@ class GitService:
   def get_staged_files():
     staged_files = execute_cli_command(['git', 'diff', '--name-only', '--cached']).stdout.splitlines()
     return staged_files
+
+  @staticmethod
+  def get_current_branch():
+    return execute_cli_command(['git', 'rev-parse', '--abbrev-ref', 'HEAD']).stdout.strip()
+
+  @staticmethod
+  def has_upstream_branch(branch_name):
+    try:
+        execute_cli_command(['git', 'rev-parse', '--abbrev-ref', f'{branch_name}@{{u}}'])
+        return True
+    except Exception:
+        return False

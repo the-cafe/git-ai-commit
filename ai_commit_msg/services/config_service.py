@@ -28,8 +28,8 @@ class ConfigService:
         raw_json_db = LocalDbService().get_db()[CONFIG_COLLECTION_KEY]
         return raw_json_db["ollama_url"]
 
-    @staticmethod
-    def set_logger_enabled(enabled):
+    def set_logger_enabled(self, enabled):
         config = ConfigService.get_config()
         config["logger_enabled"] = enabled
         LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
+        self.logger_enabled = enabled

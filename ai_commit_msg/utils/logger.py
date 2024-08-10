@@ -36,4 +36,4 @@ class Logger:
     return logged_string
 
   def is_enabled(self):
-    return ConfigService.logger_enabled
+    return ConfigService().logger_enabled
