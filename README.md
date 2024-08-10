@@ -3,23 +3,25 @@
 ## Table of Contents
 - [AI Commit Message](#ai-commit-message)
   - [Table of Contents](#table-of-contents)
-  - [Tl;DR](#tldr)
-  - [Usage](#usage)
-  - [Getting Started](#getting-started)
+  - [🚀 Tl;DR](#-tldr)
+  - [📺 Usage](#-usage)
+  - [🚀 Let's Get Started](#-lets-get-started)
   - [CLI](#cli)
     - [Subcommands](#subcommands)
-  - [Contributing](#contributing)
+  - [🤝 Wanna Contribute?](#-wanna-contribute)
   - [Fun Facts](#fun-facts)
 
-## Tl;DR
+## 🚀 Tl;DR
 
-- An pre-commit hook that generates the perfect commit message for you
+- 🤖 An pre-commit hook that generates the perfect commit message for you
 
-- Supports all projects and programming language, built on the [`pre-commit`](https://pre-commit.com/) git hooks framework
+- 🌐 Supports all projects and programming languages, built on the [`pre-commit`](https://pre-commit.com/) git hooks framework
 
-- Works alongside all your other git hooks
+- 🔗 Works alongside all your other git hooks
 
-## Usage
+testing
+
+## 📺 Usage
 
 TODO - Insert video of usage
 
@@ -33,7 +35,7 @@ This tool currently supports the following LLM source...
 - **Local Ollama**: llama3, mistral, phi-3, gemma
   - [Wiki: Using local Ollama LLM model](./wiki/ollama.md)
 
-## Getting Started
+## 🚀 Let's Get Started
 
 1. Install the [`pre-commit`](https://pre-commit.com/) git hooks framework
 
@@ -130,7 +132,7 @@ git_ai_commit config --openai-key=<insert-your-key>
   git_ai_commit help
   ```
 
-## Contributing
+## 🤝 Wanna Contribute?
 
 If you would like to contribute code and improve our product, please read our
 [Local Development Wiki](./wiki/local_development.md)
