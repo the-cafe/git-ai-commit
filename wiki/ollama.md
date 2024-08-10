@@ -16,7 +16,7 @@ Set the following configuration for tool to use the local Ollama model.
 - default value for `ollama_url` is `http://localhost:11434/api/chat`
 
 ```bash
-ai_git_commit config --model=ollama/...
+ai-git-commit config --model=ollama/...
 
-ai_git_commit config --ollama_url=http://localhost:11434/api/chat
+ai-git-commit config --ollama_url=http://localhost:11434/api/chat
 ```

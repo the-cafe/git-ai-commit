@@ -1,7 +1,7 @@
 -   id: gen_ai_commit_message
     name: AI Commit Message
     description: Generate commit message using AI
-    entry: git_ai_commit
+    entry: git-ai-commit
     language: python
     always_run: true
     stages: [prepare-commit-msg]

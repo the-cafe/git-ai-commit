@@ -13,7 +13,7 @@ class OpenAiService:
         raise Exception("""
         OpenAI API key is not set. Run the following command to set the key:
 
-        git_ai_commit config --openai-key=<insert-your-key>
+        git-ai-commit config --openai-key=<insert-your-key>
         """)
       self.client = OpenAI(api_key=api_key)
 

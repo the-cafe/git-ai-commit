@@ -49,24 +49,24 @@ pip install git-ai-commit
 1. Run the auto setup command:
 
 ```bash
-git_ai_commit hook --setup
+git-ai-commit hook --setup
 ```
 
 2. Set your OpenAI key:
 
 ```bash
-git_ai_commit config --openai-key=<insert-your-key>
+git-ai-commit config --openai-key=<insert-your-key>
 ```
 
 To uninstall the hook, run:
 
 ```bash
-git_ai_commit hook --remove
+git-ai-commit hook --remove
 ```
 
 ### 🛠️ Integrate with `pre-commit` framework
 
-`git_ai_commit` integrated easily with your other git hook using the `pre-commit` framework.
+`git-ai-commit` integrated easily with your other git hook using the `pre-commit` framework.
 
 1. Install the [`pre-commit`](https://pre-commit.com/) git hooks framework
 
@@ -90,7 +90,7 @@ repos:
   - repo: https://github.com/ming1in/ai-commit-msg
     rev: v1.0.0
     hooks:
-    -   id: git_ai_commit
+    -   id: git-ai-commit
 ```
 
 3. Based on the config above, install your git hooks script
@@ -102,7 +102,7 @@ pre-commit install
 4. Setup your OpenAI key, [see their docs for help](https://platform.openai.com/docs/quickstart)
 
 ```bash
-git_ai_commit config --openai-key=<insert-your-key>
+git-ai-commit config --openai-key=<insert-your-key>
 ```
 
 ## 🛠️ CLI
@@ -113,7 +113,7 @@ git_ai_commit config --openai-key=<insert-your-key>
   This subcommand allows you to show your current config settings
 
   ```bash
-  git_ai_commit config
+  git-ai-commit config
   ```
 
   Config flags are used to configure various settings in your configuration.
@@ -122,28 +122,28 @@ git_ai_commit config --openai-key=<insert-your-key>
     This flag allows you to set a new or update the OpenAI API key for the CLI to use. Replace `<your-new-key>` with your actual API key to enable the functionality.
 
   ```bash
-  git_ai_commit config --openai-key=<your-new-key> 
+  git-ai-commit config --openai-key=<your-new-key> 
   ```
   
 - 🔑 **--anthropic-key**, **-a**:
 This flag allows you to set or update the Anthropic API key for AI-powered commit messages.
 
   ```bash
-  git_ai_commit config --anthropic-key=<your-anthropic-key>
+  git-ai-commit config --anthropic-key=<your-anthropic-key>
   ```
   
 - 🌐 **--ollama-url**, **-ou**:
   This flag allows you to set the Ollama URL for local LLM models.
 
   ```bash
-  git_ai_commit config --ollama-url=<ollama-url>
+  git-ai-commit config --ollama-url=<ollama-url>
   ```
 
 - 🔄 **--reset**, **-r**:
   Use this flag to reset the entire configuration database to its default state.
 
   ```bash
-  git_ai_commit config --reset
+  git-ai-commit config --reset
   ```
 
   This will reset all settings, including the OpenAI API key and logger status
@@ -152,21 +152,21 @@ This flag allows you to set or update the Anthropic API key for AI-powered commi
   This flag displays the log status for the CLI
 
   ```bash
-  git_ai_commit config --logger=<boolean>
+  git-ai-commit config --logger=<boolean>
   ```
 
 - 🧠 **--model**, **-m**:
   This flag allows you to set the OpenAI model to use for generating commit messages.
 
   ```bash
-  git_ai_commit config --model=<model-name>
+  git-ai-commit config --model=<model-name>
   ```
 
 - 📚 **help**, **-h**:
   This subcommand displays a list of all available commands and their usage, helping users understand how to interact with the CLI.
 
   ```bash
-  git_ai_commit help
+  git-ai-commit help
   ```
 
 ## 🤝 Wanna Contribute?
