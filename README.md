@@ -23,7 +23,7 @@
 
 ## 📺 Usage
 
-TODO - Insert video of usage
+[![Usage Demo](assets/videos/ai-commit-msg.gif)
 
 This tool currently supports the following LLM source...
 
