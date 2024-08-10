@@ -1,5 +1,4 @@
-from __future__ import annotations
-
+from ai_commit_msg.core.prompt import get_prompt
 from ai_commit_msg.services.anthropic_service import AnthropicService
 from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.services.git_service import GitService
@@ -13,25 +12,9 @@ def generate_commit_message(diff: str = None) -> str:
   if diff is None:
     raise ValueError("Diff is required to generate a commit message")
 
-  COMMIT_MSG_SYSTEM_MESSAGE = '''
-You will be provided with a set of code changes in diff format.
-Your task is to read each file and explain every major change in a concise way.
-
-Be sure to include details of major changes
-
-You don't need to add any punctuation or capitalization.
-
-Instead of and, use a comma to save characters.
-
-Only respond with a short sentence no longer than 50 characters that I can use for my commit message
-    '''
-
   select_model = ConfigService.get_model()
 
-  prompt = [
-          {"role": "system", "content": COMMIT_MSG_SYSTEM_MESSAGE},
-          {"role": "user", "content": diff},
-      ]
+  prompt = get_prompt(staged_diff.stdout)
 
   # TODO - create a factory with a shared interface for calling the LLM models, this will make it easier to add new models
   ai_gen_commit_msg = None
