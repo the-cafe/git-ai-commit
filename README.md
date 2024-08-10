@@ -1,11 +1,14 @@
 # 🤖 AI Commit Message
 
 ## 📚 Table of Contents
+
+- [🤖 AI Commit Message](#-ai-commit-message)
+  - [📚 Table of Contents](#-table-of-contents)
   - [🚀 Tl;DR](#-tldr)
   - [📺 Usage](#-usage)
   - [🚀 Let's Get Started](#-lets-get-started)
     - [🤖 Auto Setup](#-auto-setup)
-    - [🛠️ Manual Setup](#️-manual-setup)
+    - [🛠️ Integrate with `pre-commit` framework](#️-integrate-with-pre-commit-framework)
   - [🛠️ CLI](#️-cli)
     - [Subcommands](#subcommands)
   - [🤝 Wanna Contribute?](#-wanna-contribute)
@@ -41,7 +44,7 @@ To install the AI Commit Message tool, run:
 pip install git-ai-commit
 ```
 
-### 🤖 Auto Setup 
+### 🤖 Auto Setup
 
 1. Run the auto setup command:
 
@@ -61,7 +64,9 @@ To uninstall the hook, run:
 git_ai_commit hook --remove
 ```
 
-### 🛠️ Manual Setup
+### 🛠️ Integrate with `pre-commit` framework
+
+`git_ai_commit` integrated easily with your other git hook using the `pre-commit` framework.
 
 1. Install the [`pre-commit`](https://pre-commit.com/) git hooks framework
 
@@ -83,7 +88,7 @@ default_install_hook_types:
   - prepare-commit-msg
 repos:
   - repo: https://github.com/ming1in/ai-commit-msg
-    rev: v0.0.1
+    rev: v1.0.0
     hooks:
     -   id: git_ai_commit
 ```
@@ -91,7 +96,7 @@ repos:
 3. Based on the config above, install your git hooks script
 
 ```bash
-pre-commit install
+pre-commit install 
 ```
 
 4. Setup your OpenAI key, [see their docs for help](https://platform.openai.com/docs/quickstart)
@@ -163,7 +168,6 @@ This flag allows you to set or update the Anthropic API key for AI-powered commi
   ```bash
   git_ai_commit help
   ```
-
 
 ## 🤝 Wanna Contribute?
 
