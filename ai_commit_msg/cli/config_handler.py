@@ -13,10 +13,15 @@ def config_handler(args):
         Logger().log("OpenAI API key set successfully")
         has_updated = True
 
+    if args.anthropic_key:
+        config_service.set_anthropic_api_key(args.anthropic_key)
+        Logger().log("Anthropic API key set successfully")
+        has_updated = True
+
     if args.reset:
-        # reset the db the entire db
-        LocalDbService().reset_db();
-        Logger().log("OpenAI API key has been reset")
+        #reset the db the entire db
+        LocalDbService().reset_db()
+        Logger().log("Configuration has been reset")
         has_updated = True
 
     if args.logger is not None:
@@ -34,7 +39,6 @@ def config_handler(args):
         Logger().log("Ollama URL set to " + args.ollama_url)
         has_updated = True
 
-    #if there are not args, display the current config
     if not has_updated:
         display_config_db = LocalDbService().display_db()
         Logger().log(display_config_db)
