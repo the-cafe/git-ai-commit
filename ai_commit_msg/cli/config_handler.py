@@ -22,6 +22,11 @@ def config_handler(args):
         Logger().log("Logger " + ("enabled" if args.logger else "disabled"))
         return None
 
+    if args.model:
+        config_service.set_model(args.model)
+        Logger().log("Model set to " + args.model)
+        return None
+
     display_config_db = LocalDbService().display_db()
     Logger().log(display_config_db)
 

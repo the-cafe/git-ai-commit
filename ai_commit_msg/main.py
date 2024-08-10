@@ -28,6 +28,7 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
     config_parser.add_argument('-k', '--openai-key', dest='openai_key',help='🔑 Set your OpenAI API key for AI-powered commit messages')
     config_parser.add_argument('-r', '--reset', action='store_true',help='🔄 Reset the OpenAI API key to default')
     config_parser.add_argument('-l', '--logger', type=lambda x: (str(x).lower() == 'true'),help='📝 Enable or disable logging (true/false) for debugging')
+    config_parser.add_argument('-m', '--model',help= '🧠 Set the OpenAI model to use for generating commit messages')
 
     # Help command
     subparsers.add_parser('help', help='Display this help message')
