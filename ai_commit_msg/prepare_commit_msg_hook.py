@@ -3,9 +3,16 @@ from ai_commit_msg.services.git_service import GitService
 from ai_commit_msg.utils.logger import Logger
 
 def prepare_commit_msg_hook():
-  commit_message = "✨" + generate_commit_message()
+  existing_content = GitService.read_commit_editmsg_file()
 
-  Logger().log("Generated commit message: " + commit_message)
+  # filter out any lines that start with a "#"
+  filtered_content = "\n".join([line for line in existing_content.splitlines() if not line.strip().startswith('#')])
+
+  if(filtered_content != ""):
+    Logger().log("Commit message already exists, skipping AI commit message generation")
+    return
+
+  commit_message = "✨" + generate_commit_message()
 
   GitService.update_commit_message(commit_message)
 
