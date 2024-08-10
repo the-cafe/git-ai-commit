@@ -1,4 +1,7 @@
+anthropic==0.33.0
+inquirer==3.3.0
 openai==1.37.1
-pre-commit==3.8.0
+pyfiglet==1.0.2
+prompt_toolkit==3.0.47
 requests==2.32.3
-anthropic=0.33.0
+rich==13.7.1
