@@ -91,6 +91,20 @@ git_ai_commit config --openai-key=<insert-your-key>
   git_ai_commit config --logger=<boolean>
   ```
 
+- 🧠 **--model**, **-m**:
+  This flag allows you to set the OpenAI model to use for generating commit messages.
+
+  ```bash
+  git_ai_commit config --model=<model-name>
+  ```
+
+- 🔑 **--anthropic-key**, **-a**:
+  This flag allows you to set or update the Anthropic API key for AI-powered commit messages.
+
+  ```bash
+  git_ai_commit config --anthropic-key=<your-anthropic-key>
+  ```
+
 📚 **help**, **-h**:
   This subcommand displays a list of all available commands and their usage, helping users understand how to interact with the CLI.
 
