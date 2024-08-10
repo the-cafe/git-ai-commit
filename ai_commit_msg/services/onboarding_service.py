@@ -116,12 +116,12 @@ def onboarding_flow():
         Text("\nTo generate a commit message:", style="italic"),
         Text("1. Stage your changes", style="cyan"),
         Text("2. Run the command:", style="cyan"),
-        Text("\n   git_ai_commit", style="yellow", justify="center"),
+        Text("\n   git-ai-commit", style="yellow", justify="center"),
         Text("\n"),
         Text("\nFor more information:", style="italic"),
         Text("• Check our documentation", style="cyan"),
         Text("• Run the command:", style="cyan"),
-        Text("\n   git_ai_commit help", style="yellow", justify="center"),
+        Text("\n   git-ai-commit help", style="yellow", justify="center"),
         Text("\n"),
     )
 

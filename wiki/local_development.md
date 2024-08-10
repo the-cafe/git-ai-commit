@@ -17,7 +17,7 @@ Run the pre-commit hook locally
 TODO - make this command more versatile and work on other peoples laptops
 
 ```bash
-pre-commit try-repo /Users/seifmamdouh/ai-commit-msg git_ai_commit --verbose --all-files --hook-stage prepare-commit-msg --commit-msg-filename /Users/seifmamdouh/ai-commit-msg/.git/COMMIT_EDITMSG  
+pre-commit try-repo /Users/seifmamdouh/ai-commit-msg git-ai-commit --verbose --all-files --hook-stage prepare-commit-msg --commit-msg-filename /Users/seifmamdouh/ai-commit-msg/.git/COMMIT_EDITMSG  
 ```
 
 After a local change to the hook, the follow command will build and install it

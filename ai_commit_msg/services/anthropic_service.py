@@ -12,7 +12,7 @@ class AnthropicService:
     if(self.api_key is None or self.api_key == ""):
       raise Exception("""Anthropic API key is not set. Run the following command to set the key:
 
-                   git_ai_commit config --anthropic-key=<insert  your key>
+                   git-ai-commit config --anthropic-key=<insert  your key>
                    """)
 
     self.client = anthropic.Anthropic(
