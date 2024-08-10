@@ -46,3 +46,6 @@ class LocalDbService:
 
     def reset_db(self):
         self.set_db(default_db)
+
+    def display_db(self):
+        print(self.get_db())

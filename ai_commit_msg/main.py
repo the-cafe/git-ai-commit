@@ -7,6 +7,7 @@ from typing import Sequence
 from ai_commit_msg.cli.config_handler import config_handler
 from ai_commit_msg.cli.gen_ai_commit_message_handler import gen_ai_commit_message_handler
 from ai_commit_msg.prepare_commit_msg_hook import prepare_commit_msg_hook
+from ai_commit_msg.services.local_db_service import LocalDbService
 from ai_commit_msg.utils.logger import Logger
 
 def called_from_git_hook():
@@ -15,6 +16,11 @@ def called_from_git_hook():
 def main(argv: Sequence[str] = sys.argv[1:]) -> int:
     if called_from_git_hook():
         return prepare_commit_msg_hook()
+
+    if len(argv) == 1 and argv[0] == 'config':
+        local_db_service = LocalDbService()
+        local_db_service.display_db()
+        return 0
 
     if len(argv) == 0:
         return gen_ai_commit_message_handler()
@@ -34,6 +40,8 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
     args = parser.parse_args(argv)
 
     if args.command == 'config':
+        if len(argv) == 1:
+            return gen_ai_commit_message_handler()
         config_handler(args)
     elif args.command == 'help':
         parser.print_help()
