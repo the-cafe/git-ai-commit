@@ -25,13 +25,12 @@ class AnthropicService:
     if(select_model not in ANTHROPIC_MODEL_LIST):
         raise Exception(f"Attempted to call Anthropic with an invalid model: {select_model}")
 
-
     message = self.client.messages.create(
-        model="claude-3-5-sonnet-20240620",
+        model=select_model,
         max_tokens=1024,
         system=messages[0]["content"],
         messages=[messages[1]],
     )
-    print(message.content[0].text)
+
 
     return message.content[0].text
