@@ -2,11 +2,10 @@ from ai_commit_msg.prepare_commit_msg_hook import prepare_commit_msg_hook
 from ai_commit_msg.services.git_service import GitService
 from ai_commit_msg.utils.logger import Logger
 
-BASH_SCRIPT="""#!/usr/bin/env bash
+PREPARE_COMMIT_MSG_BASH_SCRIPT="""#!/usr/bin/env bash
 
 # check if commit message is empty
 if ! grep -v "^#" "$1" | grep -q -v "^$"; then
-    # call aicommits hook --setup
     git_ai_commit hook --run
 fi
 """
@@ -17,11 +16,29 @@ def handle_hook_setup():
     git_repo_path = GitService.get_git_directory()
     file_path = git_repo_path + '/hooks/prepare-commit-msg'
 
+    # check if a prepare-commit-msg hook already exists
+
+    hook_content = ""
+    with open(file_path, 'r') as file:
+        hook_content = file.read()
+
+    if hook_content == PREPARE_COMMIT_MSG_BASH_SCRIPT:
+        print("prepare-commit-msg hook already exists")
+        return
+
+    if hook_content:
+      override_content = input("prepare-commit-msg hook already exists. Would you like to overwrite it? (y/n): ")
+
+      if override_content.lower() == 'n':
+        return
+      elif override_content.lower() != 'y':
+        print("Invalid input. Exiting.")
+
     print("file_path: " + file_path)
 
     ## create the prepare-commit-msg file and write the hook code
     with open(file_path, 'w') as file:
-        file.write(BASH_SCRIPT)
+        file.write(PREPARE_COMMIT_MSG_BASH_SCRIPT)
 
 
 def hook_handler(args):
