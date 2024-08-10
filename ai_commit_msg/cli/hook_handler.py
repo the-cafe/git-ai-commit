@@ -7,7 +7,7 @@ PREPARE_COMMIT_MSG_BASH_SCRIPT="""#!/usr/bin/env bash
 
 # check if commit message is empty
 if ! grep -v "^#" "$1" | grep -q -v "^$"; then
-    git_ai_commit hook --run
+    git-ai-commit hook --run
 fi
 """
 
