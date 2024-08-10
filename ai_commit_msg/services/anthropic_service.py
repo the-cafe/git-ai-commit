@@ -16,7 +16,7 @@ class AnthropicService:
 
     self.client = anthropic.Anthropic(
     # defaults to os.environ.get("ANTHROPIC_API_KEY")
-    api_key=self.api_key,
+      api_key=self.api_key,
     )
 
   def chat_completion(self, messages):
