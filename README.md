@@ -3,9 +3,6 @@
 <a href="https://pypi.org/project/git-ai-commit"><img src="https://img.shields.io/pypi/v/git-ai-commit" alt="Current version"></a>
 
 ## 📚 Table of Contents
-
-- [🤖 AI Commit Message](#-ai-commit-message)
-  - [📚 Table of Contents](#-table-of-contents)
   - [🚀 Tl;DR](#-tldr)
   - [📺 Usage](#-usage)
   - [🚀 Let's Get Started](#-lets-get-started)
