@@ -4,7 +4,7 @@
 
 Tl;DR
 
-- Let AI write your commit messages
+- AI that writes your commit messages
 
 - A CLI and git hook that summarizes your changes every time you run `git commit`
 
