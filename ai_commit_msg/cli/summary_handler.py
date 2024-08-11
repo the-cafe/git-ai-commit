@@ -7,13 +7,15 @@ def print_summary(summary):
   Logger().log(f"""Here is a summary of your changes:
 
   {summary}
+
+to use this summary run: `git commit -m "{summary}"`
 """)
 
 def summary_handler(args):
   if args.unstaged:
     Logger().log("Fetching your unstaged changes...\n")
     unstaged_changes_diff = execute_cli_command(['git', 'diff'])
-    ai_commit_msg = generate_commit_message(unstaged_changes_diff)
+    ai_commit_msg = generate_commit_message(unstaged_changes_diff.stdout)
     print_summary(ai_commit_msg)
     return
 
@@ -24,6 +26,6 @@ def summary_handler(args):
     return
 
   staged_changes_diff = execute_cli_command(['git', 'diff', '--staged'])
-  ai_commit_msg = generate_commit_message(staged_changes_diff)
+  ai_commit_msg = generate_commit_message(staged_changes_diff.stdout)
 
   print_summary(ai_commit_msg)
