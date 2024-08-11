@@ -49,7 +49,7 @@ def config_handler(args):
         handle_config_setup()
         has_updated = True
 
-    if args.prefix:
+    if args.prefix is not None:
         config_service.set_prefix(args.prefix)
         Logger().log("Prefix set to " + args.prefix)
         has_updated = True
