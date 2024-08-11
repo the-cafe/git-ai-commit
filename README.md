@@ -8,7 +8,7 @@ Tl;DR
 
 - A CLI and git hook that summarizes your changes every time you run `git commit`
 
-- Integrates with the [`pre-commit`](https://pre-commit.com/) framework, works alongside all your git hooks
+- Integrates with the [`pre-commit`](https://pre-commit.com/) framework, working alongside all your git hooks
 
 ## 📺 Usage
 
