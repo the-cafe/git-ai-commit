@@ -52,5 +52,15 @@ class LocalDbService:
 
     def display_db(self):
         db_contents = self.get_db()
-        formatted_db = json.dumps(db_contents, indent=2)
-        return f"Current Database Contents:\n{formatted_db}"
+        config = db_contents.get("config", {})
+
+        output = "Settings\n"
+        output += "----------------------\n"
+        for key, value in config.items():
+            if key == "last_updated_at" and isinstance(value, int):
+                value = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(value))
+            elif key.endswith("_api_key") and value:
+                value = value[:8] + "..." + value[-4:]
+            output += f"{key.replace('_', ' ').title()}: {value}\n"
+
+        return output
