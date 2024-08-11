@@ -50,9 +50,9 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
 
     # Hook command
     hook_parser = subparsers.add_parser('hook', help='🪝 Run the prepare-commit-msg hook to generate commit messages')
-    hook_parser.add_argument('--setup', action='store_true', help='Setup the prepare-commit-msg hook')
-    hook_parser.add_argument('--remove', action='store_true', help='Remove the prepare-commit-msg hook')
-    hook_parser.add_argument('--run', action='store_true', help='Run the prepare-commit-msg hook')
+    hook_parser.add_argument('-s','--setup', action='store_true', help='Setup the prepare-commit-msg hook')
+    hook_parser.add_argument('-r','--remove', action='store_true', help='Remove the prepare-commit-msg hook')
+    hook_parser.add_argument('-x','--run', action='store_true', help='Run the prepare-commit-msg hook')
     args = parser.parse_args(argv)
 
     if args.command == 'config':
