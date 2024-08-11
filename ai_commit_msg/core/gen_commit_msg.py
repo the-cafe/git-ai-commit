@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from ai_commit_msg.services.anthropic_service import AnthropicService
 from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.services.git_service import GitService
@@ -6,9 +8,7 @@ from ai_commit_msg.services.openai_service import OpenAiService
 from ai_commit_msg.utils.logger import Logger
 from ai_commit_msg.utils.models import ANTHROPIC_MODEL_LIST, OPEN_AI_MODEL_LIST
 
-def generate_commit_message():
-  staged_diff = GitService.get_staged_diff()
-
+def generate_commit_message(diff: str = None) -> str:
   COMMIT_MSG_SYSTEM_MESSAGE = '''
 You will be provided with a set of code changes in diff format.
 Your task is to read each file and explain every major change in a concise way.
@@ -26,7 +26,7 @@ Only respond with a short sentence no longer than 50 characters that I can use f
 
   prompt = [
           {"role": "system", "content": COMMIT_MSG_SYSTEM_MESSAGE},
-          {"role": "user", "content": staged_diff.stdout},
+          {"role": "user", "content": diff},
       ]
 
   # TODO - create a factory with a shared interface for calling the LLM models, this will make it easier to add new models

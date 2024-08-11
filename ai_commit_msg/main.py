@@ -5,6 +5,7 @@ import os
 from typing import Sequence
 import pkg_resources
 
+from ai_commit_msg.cli.summary_handler import summary_handler
 from ai_commit_msg.cli.config_handler import config_handler, handle_config_setup
 from ai_commit_msg.cli.gen_ai_commit_message_handler import gen_ai_commit_message_handler
 from ai_commit_msg.cli.hook_handler import hook_handler
@@ -43,6 +44,7 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
     config_parser.add_argument('-a', '--anthropic-key', dest='anthropic_key', help='🔑 Set your Anthropic API key for AI-powered commit messages')
     config_parser.add_argument('-s', '--setup', action='store_true', help='🔧 Setup the tool')
     config_parser.add_argument('-p', '--prefix', help='🏷️ Set a prefix for the commit message')
+
     # Help command
     subparsers.add_parser('help', help='Display this help message')
 
@@ -51,6 +53,12 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
     hook_parser.add_argument('-s','--setup', action='store_true', help='Setup the prepare-commit-msg hook')
     hook_parser.add_argument('-r','--remove', action='store_true', help='Remove the prepare-commit-msg hook')
     hook_parser.add_argument('-x','--run', action='store_true', help='Run the prepare-commit-msg hook')
+
+    summarize_cmd_parser = subparsers.add_parser('summarize', help='🚀 Generate an AI commit message')
+    summary_cmd_parser = subparsers.add_parser('summary', help='🚀 Generate an AI commit message')
+    summarize_cmd_parser.add_argument('-u','--unstaged', action='store_true', help='Setup the prepare-commit-msg hook')
+    summary_cmd_parser.add_argument('-u','--unstaged', action='store_true', help='Setup the prepare-commit-msg hook')
+
     args = parser.parse_args(argv)
 
     if args.command == 'config':
@@ -59,6 +67,8 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
         parser.print_help()
     elif args.command == 'hook':
         hook_handler(args)
+    elif args.command == 'summarize' or args.command == 'summary':
+        summary_handler(args)
 
     ## Only in main script, we return zero instead of None when the return value is unused
     return 0
