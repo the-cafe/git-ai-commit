@@ -104,7 +104,7 @@ Set or update the Anthropic API key to access their Claude models
 
 *default:  "gpt-4o-mini"*
 
-Select a model to power our tool from our supported provider.
+Select a model to power our tool from our supported provider. To use a [Ollama](./wiki/ollama.md) model, prefix `ollama/<model>`.
 
 `-ou` `--ollama-url`
 
