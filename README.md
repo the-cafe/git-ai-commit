@@ -2,7 +2,7 @@
 
 <a href="https://pypi.org/project/git-ai-commit"><img src="https://img.shields.io/pypi/v/git-ai-commit" alt="Current version"></a>
 
-## Tl;DR
+Tl;DR
 
 - A CLI and git hook that generates the perfect commit message every time you run `git commit`
 
