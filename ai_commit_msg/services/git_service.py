@@ -41,7 +41,7 @@ class GitService:
   @staticmethod
   def update_commit_message(commit_message):
     header = "🎉 Commit Message crafted with love by the coffee brewers: Ming, Seif & Ali! ☕️\n" \
-             "Do you like it? Check it out: https://github.com/the-cafe/git-ai-commit\n\n"
+             "Check it out our repo: https://github.com/the-cafe/git-ai-commit\n\n"
     existing_content = GitService.read_commit_editmsg_file()
 
     new_content = header + commit_message + '\n' + existing_content
