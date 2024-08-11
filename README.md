@@ -79,9 +79,7 @@ pre-commit install
 git-ai-commit config --openai-key=<insert-your-key>
 ```
 
-## 🛠️ CLI
-
-### Subcommands
+## 🛠️ CLI Commands & Options
 
 ✨ `git-ai-commit  config`
 This subcommand allows you to show your current config settings. Config flags are used to configure various settings in your configuration. For example...
