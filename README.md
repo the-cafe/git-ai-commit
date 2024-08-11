@@ -31,7 +31,7 @@ Tl;DR
 ```bash
 pip install git-ai-commit
 
-git-ai-commit --version # Check the installed version 
+git-ai-commit --version # verify installation
 ```
 
 2. Start configuring your tool
@@ -58,12 +58,14 @@ touch .pre-commit-config.yaml
 ```
 
 ```yaml
+# .pre-commit-config.yaml 
+
 default_install_hook_types: 
   # make sure you include `prepare-commit-msg` in `default_install_hook_types`
   - prepare-commit-msg
 repos:
   - repo: https://github.com/ming1in/ai-commit-msg
-    rev: v1.0.0
+    rev: v1.0.5
     hooks:
     -   id: git-ai-commit
 ```
@@ -149,17 +151,17 @@ Manage and setup `git-ai-commit` as a [`prepare-commit-msg`](<https://git-scm.co
 git-ai-commit hook --setup
 ```
 
-`-s` `--setup`
+- `-s` `--setup`
 
-Adds a basic git hook by generating a `.git/hooks/prepare-commit-msg` script in your git repo.
+  Adds a basic git hook by generating a `.git/hooks/prepare-commit-msg` script in your git repo.
 
-`-r` `--remove`
+- `-r` `--remove`
 
-Removes the git hook.
+  Removes the git hook.
 
-`-x` `--run`
+- `-x` `--run`
 
-Executes the custom logic for our git hook. This option was intended to only run from the [`prepare-commit-msg`](https://git-scm.com/docs/githooks#_prepare_commit_msg) git hook.
+  Executes the custom logic for our git hook. This option was intended to only run from the [`prepare-commit-msg`](https://git-scm.com/docs/githooks#_prepare_commit_msg) git hook.
 
 ## 🤝 Wanna Contribute?
 
