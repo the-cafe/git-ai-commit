@@ -83,64 +83,45 @@ git-ai-commit config --openai-key=<insert-your-key>
 
 ### Subcommands
 
-✨ **config**:
-  This subcommand allows you to show your current config settings
+✨ `git-ai-commit  config`
+This subcommand allows you to show your current config settings. Config flags are used to configure various settings in your configuration. For example...
 
-  ```bash
-  git-ai-commit config
-  ```
-
-  Config flags are used to configure various settings in your configuration.
+```bash
+git-ai-commit config --openai-key=... --model=gpt-4o-mini
+```
   
-- 🔑 **--openai-key**, **-k**:
-    This flag allows you to set a new or update the OpenAI API key for the CLI to use. Replace `<your-new-key>` with your actual API key to enable the functionality.
+`--openai-key`
+`-k`
 
-  ```bash
-  git-ai-commit config --openai-key=<your-new-key> 
-  ```
-  
-- 🔑 **--anthropic-key**, **-a**:
+This flag allows you to set a new or update the OpenAI API key for the CLI to use. Replace `<your-new-key>` with your actual API key to enable the functionality.
+
+`--anthropic-key`
+`-a`
 This flag allows you to set or update the Anthropic API key for AI-powered commit messages.
-
-  ```bash
-  git-ai-commit config --anthropic-key=<your-anthropic-key>
-  ```
   
-- 🌐 **--ollama-url**, **-ou**:
-  This flag allows you to set the Ollama URL for local LLM models.
+`--ollama-url`
+`-ou`
+This flag allows you to set the Ollama URL for local LLM models.
+
+`--reset`,
+`-r`:
+Use this flag to reset the entire configuration database to its default state.
+
+This will reset all settings, including the OpenAI API key and logger status
+
+`--logger`
+`-l`
+This flag displays the log status for the CLI
+
+`--model`
+`-m`
+This flag allows you to set the OpenAI model to use for generating commit messages.
+
+📌 `git-ai-commit  help`, `-h`
+This subcommand displays a list of all available commands and their usage, helping users understand how to interact with the CLI.
 
   ```bash
-  git-ai-commit config --ollama-url=<ollama-url>
-  ```
-
-- 🔄 **--reset**, **-r**:
-  Use this flag to reset the entire configuration database to its default state.
-
-  ```bash
-  git-ai-commit config --reset
-  ```
-
-  This will reset all settings, including the OpenAI API key and logger status
-
-- 🖨️ **--logger**, **-l**:
-  This flag displays the log status for the CLI
-
-  ```bash
-  git-ai-commit config --logger=<boolean>
-  ```
-
-- 🧠 **--model**, **-m**:
-  This flag allows you to set the OpenAI model to use for generating commit messages.
-
-  ```bash
-  git-ai-commit config --model=<model-name>
-  ```
-
-- 📚 **help**, **-h**:
-  This subcommand displays a list of all available commands and their usage, helping users understand how to interact with the CLI.
-
-  ```bash
-  git-ai-commit help
+  git-ai-commit help # -h
   ```
 
 ## 🤝 Wanna Contribute?
