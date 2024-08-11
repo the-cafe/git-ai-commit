@@ -7,7 +7,7 @@ def gen_ai_commit_message_handler():
       print("🚨 No files are staged for commit. Run `git add` to stage some of your changes")
       return
 
-    ai_gen_commit_msg = "✨" + generate_commit_message()
+    ai_gen_commit_msg = generate_commit_message()
 
     command_string = f"""
 git commit -m "{ai_gen_commit_msg}"
