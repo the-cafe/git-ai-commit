@@ -1,4 +1,4 @@
--   id: gen_ai_commit_message
+-   id: git-ai-commit
     name: AI Commit Message
     description: Generate commit message using AI
     entry: git-ai-commit
