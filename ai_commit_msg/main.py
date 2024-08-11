@@ -44,7 +44,7 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
     config_parser.add_argument('-ou', '--ollama-url', help='🌐 Set the Ollama URL for local LLM models')
     config_parser.add_argument('-a', '--anthropic-key', dest='anthropic_key', help='🔑 Set your Anthropic API key for AI-powered commit messages')
     config_parser.add_argument('-s', '--setup', action='store_true', help='🔧 Setup the tool')
-
+    config_parser.add_argument('-p', '--prefix', help='🏷️ Set a prefix for the commit message')
     # Help command
     subparsers.add_parser('help', help='Display this help message')
 

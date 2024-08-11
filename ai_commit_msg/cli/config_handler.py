@@ -49,6 +49,10 @@ def config_handler(args):
         handle_config_setup()
         has_updated = True
 
+    if args.prefix:
+        config_service.set_prefix(args.prefix)
+        Logger().log("Prefix set to " + args.prefix)
+        has_updated = True
 
     if not has_updated:
         display_config_db = LocalDbService().display_db()

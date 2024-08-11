@@ -12,7 +12,7 @@ def prepare_commit_msg_hook():
     Logger().log("Commit message already exists, skipping AI commit message generation")
     return
 
-  commit_message = "✨" + generate_commit_message()
+  commit_message = generate_commit_message()
 
   GitService.update_commit_message(commit_message)
 

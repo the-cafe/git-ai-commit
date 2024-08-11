@@ -126,6 +126,10 @@ A toggle for enabling logs that are saved to a local file - `.git/ai_commit_mess
 
 Resets the entire config to its default state. This will reset all settings, including API keys and model.
 
+`--prefix`
+
+Set a prefix for generate commit messages.
+
 ---
 
 📌 `git-ai-commit  help`, `-h`

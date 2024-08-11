@@ -10,6 +10,7 @@ class ConfigService:
     model = "gpt-4o-mini"
     ollama_url = "http://localhost:11434/api/chat"
     last_updated_at = ""
+    prefix = ""
 
     def __init__(self):
         config = ConfigService.get_config()
@@ -20,6 +21,7 @@ class ConfigService:
         if "model" in config: self.model = config["model"]
         if "ollama_url" in config: self.ollama_url = config["ollama_url"]
         if "last_updated_at" in config: self.last_updated_at = config["last_updated_at"]
+        if "prefix" in config: self.prefix = config["prefix"]
 
     @staticmethod
     def get_config():
@@ -80,6 +82,12 @@ class ConfigService:
         config["last_updated_at"] = last_updated_at
         LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
         self.last_updated_at = last_updated_at
+
+    def set_prefix(self, prefix):
+        config = ConfigService.get_config()
+        config["prefix"] = prefix
+        LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
+        self.prefix = prefix
 
     @staticmethod
     def is_supported_model(model):

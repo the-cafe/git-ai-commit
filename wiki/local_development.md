@@ -6,6 +6,12 @@ Install the `gen_ai_commit_message` pip library
 pip install .
 ```
 
+Use our prefix for AI generated commit message
+
+```bash
+git-ai-commit config --prefix=✨
+```
+
 Update your pre-commit hooks
 
 ```bash
