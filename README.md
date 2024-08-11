@@ -126,6 +126,8 @@ A toggle for enabling logs that are saved to a local file - `.git/ai_commit_mess
 
 Resets the entire config to its default state. This will reset all settings, including API keys and model.
 
+---
+
 📌 `git-ai-commit  help`, `-h`
 
 Displays a list of available command and options to help you setup our tool.
@@ -134,6 +136,7 @@ Displays a list of available command and options to help you setup our tool.
 git-ai-commit help # -h
 ```
 
+---
 🪝 `git-ai-commit hook`
 
 ```bash
