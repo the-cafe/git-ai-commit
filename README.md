@@ -26,19 +26,19 @@ This tool currently supports the following LLM source...
 
 ## 🚀 Let's Get Started
 
-To install the AI Commit Message tool, run:
+1. To install the AI Commit Message tool, run:
 
 ```bash
 pip install git-ai-commit
 ```
 
-1. Run the command to start the new user setup:
+2. Run the command to start configuring your tool:
 
 ```bash
 git-ai-commit config --setup
 ```
 
-### 🛠️ Integrate with `pre-commit` framework
+### 🪝 Integrate with `pre-commit` framework
 
 `git-ai-commit` integrated easily with your other git hook using the `pre-commit` framework.
 
