@@ -48,7 +48,7 @@ class GitService:
     new_content = header + commit_message + '\n' + existing_content
 
     with open(GitService.get_commit_editmsg_file_path(), 'w') as file:
-        file.write(new_content)
+      file.write(new_content)
 
     return 0
 
