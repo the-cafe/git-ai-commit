@@ -40,15 +40,23 @@ class GitService:
 
   @staticmethod
   def update_commit_message(commit_message):
-    header = "🎉 Crafted with love by our special coffee brewers: Ming, Seif & Ali! ☕️\n" \
-             "Check it out our repo: https://github.com/the-cafe/git-ai-commit\n\n"
+    header = "🎉 Commit Message crafted with love by the coffee brewers: Ming, Seif & Ali! ☕️\n" \
+             "Do you like it? Check it out our repo: https://github.com/the-cafe/git-ai-commit\n"
 
+    # Create a box around the header
+    box_width = max(len(line) for line in header.splitlines()) + 4
+    box_top_bottom = '#' * box_width + '\n'
+    box_content = ''.join(f'# {line} #\n' for line in header.splitlines())
+
+    # Combine box and content
+    boxed_header = box_top_bottom + box_content + box_top_bottom
     existing_content = GitService.read_commit_editmsg_file()
 
-    new_content = header + commit_message + '\n' + existing_content
+    # Combine boxed header, commit message, and existing content
+    new_content = boxed_header + commit_message + '\n' + existing_content
 
     with open(GitService.get_commit_editmsg_file_path(), 'w') as file:
-      file.write(new_content)
+        file.write(new_content)
 
     return 0
 
