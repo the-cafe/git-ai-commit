@@ -53,6 +53,8 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
     hook_parser.add_argument('-x','--run', action='store_true', help='Run the prepare-commit-msg hook')
     args = parser.parse_args(argv)
 
+    print(args)
+
     if args.command == 'config':
         config_handler(args)
     elif args.command == 'help':
