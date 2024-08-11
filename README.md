@@ -97,27 +97,31 @@ This flag allows you to set a new or update the OpenAI API key for the CLI to us
 
 `--anthropic-key`
 `-a`
+
 This flag allows you to set or update the Anthropic API key for AI-powered commit messages.
   
 `--ollama-url`
 `-ou`
+
 This flag allows you to set the Ollama URL for local LLM models.
 
-`--reset`,
-`-r`:
-Use this flag to reset the entire configuration database to its default state.
+`--reset`
+`-r`
 
-This will reset all settings, including the OpenAI API key and logger status
+Use this flag to reset the entire configuration database to its default state. This will reset all settings, including the OpenAI API key and logger status
 
 `--logger`
 `-l`
+
 This flag displays the log status for the CLI
 
 `--model`
 `-m`
+
 This flag allows you to set the OpenAI model to use for generating commit messages.
 
 📌 `git-ai-commit  help`, `-h`
+
 This subcommand displays a list of all available commands and their usage, helping users understand how to interact with the CLI.
 
   ```bash
