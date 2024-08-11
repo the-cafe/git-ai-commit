@@ -41,7 +41,7 @@ class GitService:
   @staticmethod
   def update_commit_message(commit_message):
     # Create the enthusiastic header
-    header = "🎉 Crafted with love by the coffee brewers: Ming, Seif & Ali! ☕️\n" \
+    header = "🎉 Crafted with love by our special coffee brewers: Ming, Seif & Ali! ☕️\n" \
              "Check it out our repo: https://github.com/the-cafe/git-ai-commit\n\n"
 
     # Read existing content from the COMMIT_EDITMSG file
