@@ -16,12 +16,12 @@
 
 This tool currently supports the following LLM source...
 
-- **Open AI**: gpt-4o-mini(default), gpt-4, gpt-3.5, and more
+- **Open AI**: `gpt-4o-mini`(default), `gpt-4`, `gpt-3.5`, and [more...](https://github.com/ming1in/ai-commit-msg/blob/a1e62be64c1f877bfa26c45d2d61508f94504ec0/ai_commit_msg/utils/models.py#L1)
 
-- **Anthropic**: claude-3-haiku, claude-3-sonnet, claude-3-opus
+- **Anthropic**: `claude-3-haiku`, `claude-3-sonnet`, `claude-3-opus`
   - [Wiki: Setup Anthropic Model](./wiki/anthropic.md)
 
-- **Local Ollama**: llama3, mistral, phi-3, gemma, and more
+- **Local Ollama**: `llama3`, `mistral`, `phi-3`, `gemma`, and [more..](https://github.com/ming1in/ai-commit-msg/blob/a1e62be64c1f877bfa26c45d2d61508f94504ec0/ai_commit_msg/utils/models.py#L1)
   - [Wiki: Using local Ollama LLM model](./wiki/ollama.md)
 
 ## 🚀 Let's Get Started
