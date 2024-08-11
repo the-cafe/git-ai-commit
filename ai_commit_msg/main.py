@@ -3,6 +3,7 @@ import argparse
 import sys
 import os
 from typing import Sequence
+import configparser
 
 from ai_commit_msg.cli.config_handler import config_handler, handle_config_setup
 from ai_commit_msg.cli.gen_ai_commit_message_handler import gen_ai_commit_message_handler
@@ -13,6 +14,11 @@ from ai_commit_msg.utils.logger import Logger
 
 def called_from_git_hook():
     return os.environ.get('PRE_COMMIT') == '1'
+
+def get_version():
+    config = configparser.ConfigParser()
+    config.read('setup.cfg')
+    return config['metadata']['version']
 
 def main(argv: Sequence[str] = sys.argv[1:]) -> int:
     if called_from_git_hook():
@@ -26,6 +32,7 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
         return gen_ai_commit_message_handler()
 
     parser = argparse.ArgumentParser(description="🚀 AI-powered CLI tool that revolutionizes your Git workflow by automatically generating commit messages!")
+    parser.add_argument('-v', '--version', action='version', version=f'%(prog)s {get_version()}')
     subparsers = parser.add_subparsers(dest='command', required=False)
 
     # Config command
