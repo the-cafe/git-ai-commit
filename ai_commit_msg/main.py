@@ -3,7 +3,7 @@ import argparse
 import sys
 import os
 from typing import Sequence
-import configparser
+import pkg_resources
 
 from ai_commit_msg.cli.config_handler import config_handler, handle_config_setup
 from ai_commit_msg.cli.gen_ai_commit_message_handler import gen_ai_commit_message_handler
@@ -16,9 +16,7 @@ def called_from_git_hook():
     return os.environ.get('PRE_COMMIT') == '1'
 
 def get_version():
-    config = configparser.ConfigParser()
-    config.read('setup.cfg')
-    return config['metadata']['version']
+    return pkg_resources.get_distribution("git-ai-commit").version
 
 def main(argv: Sequence[str] = sys.argv[1:]) -> int:
     if called_from_git_hook():
