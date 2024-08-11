@@ -94,43 +94,43 @@ git-ai-commit config
 git-ai-commit config --openai-key=... --model=gpt-4o-mini
 ```
   
-`-k` `--openai-key`
+- `-k` `--openai-key`
 
-Set or update the OpenAI API key to access their GPT models.
+  Set or update the OpenAI API key to access their GPT models.
 
-`-a` `--anthropic-key`
+- `-a` `--anthropic-key`
 
-Set or update the Anthropic API key to access their Claude models.
+  Set or update the Anthropic API key to access their Claude models.
 
-`-m` `--model`
+- `-m` `--model`
 
-*default:  "gpt-4o-mini"*
+  *default:  "gpt-4o-mini"*
 
-Select a model to power our tool from our supported provider. To use a [Ollama](./wiki/ollama.md) model, prefix `ollama/<model>`.
+  Select a model to power our tool from our supported provider. To use a [Ollama](./wiki/ollama.md) model, prefix `ollama/<model>`.
 
-`-ou` `--ollama-url`
+- `-ou` `--ollama-url`
 
-*default:  "<http://localhost:11434/api/chat>"*
+  *default:  "<http://localhost:11434/api/chat>"*
 
-Set the URL for interacting with your local Ollama models.
+  Set the URL for interacting with your local Ollama models.
 
-`-s` `--setup`
+- `-s` `--setup`
 
-Config your git hook, model, and API keys via the NUX flow.
+  Config your git hook, model, and API keys via the NUX flow.
 
-`-l` `--logger`
+- `-l` `--logger`
 
-*default:  false*
+  *default:  false*
 
-A toggle for enabling logs that are saved to a local file - `.git/ai_commit_message.log`. This was intended to be used as a local debug tool.
+  A toggle for enabling logs that are saved to a local file - `.git/ai_commit_message.log`. This was intended to be used as a local debug tool.
 
-`-r` `--reset`
+- `-r` `--reset`
 
-Resets your entire config settings to the default state. This will reset all settings, including API keys and model.
+  Resets your entire config settings to the default state. This will reset all settings, including API keys and model.
 
-`-p` `--prefix`
+- `-p` `--prefix`
 
-Set a prefix for the generate commit messages.
+  Set a prefix for the generate commit messages.
 
 ---
 
