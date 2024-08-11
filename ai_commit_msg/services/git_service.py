@@ -50,7 +50,7 @@ class GitService:
     existing_content = GitService.read_commit_editmsg_file()
 
     # Combine boxed header, commit message, and existing content
-    new_content = header + commit_message + '\n' + existing_content
+    new_content = commit_message + '\n' + header + '\n' + existing_content
 
     with open(GitService.get_commit_editmsg_file_path(), 'w') as file:
         file.write(new_content)
