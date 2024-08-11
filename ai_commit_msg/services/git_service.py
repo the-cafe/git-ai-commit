@@ -40,13 +40,13 @@ class GitService:
 
   @staticmethod
   def update_commit_message(commit_message):
-    # open COMMIT_EDITMSG file to add the generated commit message
+    header = "This has been created by Ming, Seif & Ali\nLink to this project: https://github.com/the-cafe/git-ai-commit\n\n"
     existing_content = GitService.read_commit_editmsg_file()
 
-    new_content = commit_message + '\n' + existing_content
+    new_content = header + commit_message + '\n' + existing_content
 
     with open(GitService.get_commit_editmsg_file_path(), 'w') as file:
-      file.write(new_content)
+        file.write(new_content)
 
     return 0
 
