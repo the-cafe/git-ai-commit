@@ -4,11 +4,11 @@
 
 ## 🚀 Tl;DR
 
-- Generates the perfect commit message every time you run `git commit`
+- A CLI and git hook that generates the perfect commit message every time you run `git commit`
 
 - Integrates with the [`pre-commit`](https://pre-commit.com/) framework, works alongside all your git hooks
 
-- Supports all projects and programming languages, its open source!
+- Supports all projects and programming languages
 
 ## 📺 Usage
 
@@ -49,16 +49,15 @@ brew install pre-commit
 pre-commit --version 
 ```
 
-2. Create a `.pre-commit-config.yaml` files and add the following config
+2. Create a `.pre-commit-config.yaml` files and add the following config.
 
 ```bash
 touch .pre-commit-config.yaml 
 ```
 
-🚨 Make sure you include `prepare-commit-msg` in `default_install_hook_types`🚨
-
 ```yaml
 default_install_hook_types: 
+  # make sure you include `prepare-commit-msg` in `default_install_hook_types`
   - prepare-commit-msg
 repos:
   - repo: https://github.com/ming1in/ai-commit-msg
@@ -76,7 +75,7 @@ pre-commit install
 4. Setup your OpenAI key, [see their docs for help](https://platform.openai.com/docs/quickstart)
 
 ```bash
-git-ai-commit config --openai-key=<insert-your-key>
+git-ai-commit config --openai-key=...
 ```
 
 ## 🛠️ CLI Commands & Options
@@ -129,7 +128,7 @@ This subcommand displays a list of all available commands and their usage, helpi
 ## 🤝 Wanna Contribute?
 
 If you would like to contribute code and improve our product, please read our
-[Local Development Wiki](./wiki/local_development.md)
+[Local Development Wiki](./wiki/local_development.md) to get started
 
 ## 🎉 Fun Facts
 
