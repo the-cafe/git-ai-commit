@@ -30,6 +30,8 @@ This tool currently supports the following LLM source...
 
 ```bash
 pip install git-ai-commit
+
+git-ai-commit --version # Check the installed version 
 ```
 
 2. Run the command to start configuring your tool:
