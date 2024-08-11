@@ -54,7 +54,7 @@ class LocalDbService:
         db_contents = self.get_db()
         config = db_contents.get("config", {})
 
-        output = "Current Configuration:\n"
+        output = "Settings\n"
         output += "----------------------\n"
         for key, value in config.items():
             if key == "last_updated_at" and isinstance(value, int):
