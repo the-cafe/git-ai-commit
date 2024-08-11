@@ -1,6 +1,8 @@
-# 🤖 `git-ai-commit` | lets AI write your commit messages
+# 🤖 `git-ai-commit`
 
 <a href="https://pypi.org/project/git-ai-commit"><img src="https://img.shields.io/pypi/v/git-ai-commit" alt="Current version"></a>
+
+> let AI write your commit messages
 
 Tl;DR
 
