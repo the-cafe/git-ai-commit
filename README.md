@@ -1,14 +1,14 @@
-# 🤖 `git-ai-commit` | lets AI write your commit messages
+# 🤖 `git-ai-commit`
 
 <a href="https://pypi.org/project/git-ai-commit"><img src="https://img.shields.io/pypi/v/git-ai-commit" alt="Current version"></a>
 
 Tl;DR
 
-- A CLI and git hook that generates the perfect commit message every time you run `git commit`
+- Let AI write your commit messages
 
-- Integrates with the [`pre-commit`](https://pre-commit.com/) framework, works alongside all your git hooks
+- A CLI and git hook that summarizes your changes every time you run `git commit`
 
-- Supports all projects and programming languages
+- Integrates with the [`pre-commit`](https://pre-commit.com/) framework, working alongside all your git hooks
 
 ## 📺 Usage
 
