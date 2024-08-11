@@ -2,15 +2,13 @@
 
 <a href="https://pypi.org/project/git-ai-commit"><img src="https://img.shields.io/pypi/v/git-ai-commit" alt="Current version"></a>
 
-> let AI write your commit messages
-
 Tl;DR
 
-- A CLI and git hook that generates the perfect commit message every time you run `git commit`
+- Let AI write your commit messages
+
+- A CLI and git hook that summarizes your changes every time you run `git commit`
 
 - Integrates with the [`pre-commit`](https://pre-commit.com/) framework, works alongside all your git hooks
-
-- Supports all projects and programming languages
 
 ## 📺 Usage
 
