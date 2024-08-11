@@ -117,6 +117,11 @@ This flag displays the log status for the CLI
 
 This flag allows you to set the OpenAI model to use for generating commit messages.
 
+`--setup`
+`-s`
+
+Config your git hook, model, and API keys via the NUX flow.
+
 📌 `git-ai-commit  help`, `-h`
 
 This subcommand displays a list of all available commands and their usage, helping users understand how to interact with the CLI.
