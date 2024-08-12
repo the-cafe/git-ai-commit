@@ -11,8 +11,8 @@ def prepare_commit_msg_hook():
   if(filtered_content != ""):
     Logger().log("Commit message already exists, skipping AI commit message generation")
     return
-
-  commit_message = generate_commit_message()
+  staged_diff = GitService.get_staged_diff()
+  commit_message = generate_commit_message(staged_diff.stdout)
 
   GitService.update_commit_message(commit_message)
 

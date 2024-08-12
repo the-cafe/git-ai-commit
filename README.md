@@ -134,6 +134,20 @@ git-ai-commit config --openai-key=... --model=gpt-4o-mini
 
 ---
 
+🔎 `git-ai-commit summarize`
+
+Get a quick summary of your local changes
+
+```bash
+git-ai-commit summarize
+```
+
+- `-u` `--unstaged`
+
+  Summarize your local *unstaged* changes.
+
+---
+
 📌 `git-ai-commit  help`, `-h`
 
 Displays a list of available command and options to help you setup our tool.
