@@ -72,6 +72,12 @@ def onboarding_flow():
                       choices=['OpenAI', 'Anthropic', 'Ollama'])
     ])['provider'].lower()
 
+    default_models = {
+        'openai': 'gpt-4o-mini',
+        'anthropic': 'claude-3-sonnet-20240229',
+        'ollama': 'ollama/llama3'
+    }
+
     model_choices = {
         'openai': OPEN_AI_MODEL_LIST,
         'anthropic': ANTHROPIC_MODEL_LIST,
@@ -81,7 +87,8 @@ def onboarding_flow():
     model_choice = inquirer.prompt([
         inquirer.List('model',
                       message="Select Model",
-                      choices=model_choices[provider_choice])
+                      choices=model_choices[provider_choice],
+                      default=default_models[provider_choice])
     ])['model']
 
     config_service = ConfigService()
