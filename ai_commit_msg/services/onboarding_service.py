@@ -89,9 +89,7 @@ def onboarding_flow():
 
     if provider_choice in ['openai', 'anthropic']:
         print_formatted_text(HTML(f"\n<b>Let's set up your {provider_choice.capitalize()} API key.</b>"))
-        api_key = inquirer.prompt([
-            inquirer.Password('key', message=f"Enter your {provider_choice.capitalize()} API key")
-        ])['key']
+        api_key = input(f"[?] Enter your {provider_choice.capitalize()} API key: ")
         if api_key:
             getattr(config_service, f"set_{provider_choice}_api_key")(api_key)
             console.print(f"{provider_choice.capitalize()} API key set successfully!", style="bold green")
