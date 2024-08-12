@@ -24,7 +24,7 @@ Tl;DR
 - **Local Ollama**: `llama3`, `mistral`, `phi-3`, `gemma`, and [more..](https://github.com/ming1in/ai-commit-msg/blob/a1e62be64c1f877bfa26c45d2d61508f94504ec0/ai_commit_msg/utils/models.py#L1)
   - [Wiki: Using local Ollama LLM model](./wiki/ollama.md)
 
-## 🚀 Let's Get Started
+## 🚀 Getting Started
 
 1. Install the `git-ai-commit` tool via pip
 
@@ -165,8 +165,20 @@ git-ai-commit hook --setup
 
 ## 🤝 Wanna Contribute?
 
-If you would like to contribute code and improve our product, please read our
+Do you love our tool and wanna support us? Drop us a star 🌟
+
+Have some feedback on what we could do better? [Create a issue](https://github.com/the-cafe/git-ai-commit/issues/new) we'll respond in 24hrs we promise 😄
+
+Wanna contribute code and improve our product, check out our
 [Local Development Wiki](./wiki/local_development.md) to get started.
+
+Right now we're focused on
+
+- Improving our prompting strategy to generate the best commit message possible
+
+- Super charge our CLI to support broad developer use cases and build the best interface we can
+
+- Build some tests
 
 ## 🎉 Fun Facts
 
