@@ -40,9 +40,9 @@ git-ai-commit --version # verify installation
 git-ai-commit config --setup
 ```
 
-### 🪝 Integrate with `pre-commit` framework
+## 🪝 Integrate with `pre-commit` framework
 
-`git-ai-commit` integrates easily with your other git hook using the `pre-commit` framework.
+`git-ai-commit` integrates easily with your other git hook using the `pre-commit` framework. Follow the instructions below to get set up.
 
 1. Install the [`pre-commit`](https://pre-commit.com/) git hooks framework
 
