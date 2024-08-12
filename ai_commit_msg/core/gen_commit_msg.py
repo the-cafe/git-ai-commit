@@ -9,6 +9,10 @@ from ai_commit_msg.utils.logger import Logger
 from ai_commit_msg.utils.models import ANTHROPIC_MODEL_LIST, OPEN_AI_MODEL_LIST
 
 def generate_commit_message(diff: str = None) -> str:
+
+  if diff is None:
+    raise ValueError("Diff is required to generate a commit message")
+
   COMMIT_MSG_SYSTEM_MESSAGE = '''
 You will be provided with a set of code changes in diff format.
 Your task is to read each file and explain every major change in a concise way.
