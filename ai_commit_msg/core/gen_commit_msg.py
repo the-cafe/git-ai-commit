@@ -40,14 +40,9 @@ Only respond with a short sentence no longer than 50 characters that I can use f
             return OpenAiService().chat_with_openai(prompt)
         except Exception as e:
             if "maximum context length" in str(e) or "Request too large" in str(e):
-                Logger().log(f"Switching to gpt-4 due to token limit: {e}")
-                try:
-                    return OpenAiService().chat_with_openai(prompt, model="gpt-4")
-                except Exception as e2:
-                    if "maximum context length" in str(e2) or "Request too large" in str(e2):
-                        return None
-                    else:
-                        raise e2
+                truncated_diff = truncate_diff(prompt[1]["content"])
+                prompt[1]["content"] = truncated_diff
+                return OpenAiService().chat_with_openai(prompt)
             else:
                 raise e
     elif select_model.startswith("ollama"):
@@ -58,10 +53,6 @@ Only respond with a short sentence no longer than 50 characters that I can use f
     return None
 
   ai_gen_commit_msg = try_generate_message(diff)
-
-  if ai_gen_commit_msg is None:
-    truncated_diff = truncate_diff(diff)
-    ai_gen_commit_msg = try_generate_message(truncated_diff)
 
   if ai_gen_commit_msg is None:
     Logger().log(f"Unsupported or token limit exceeded for model: {select_model}")
