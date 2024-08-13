@@ -28,26 +28,24 @@ Only respond with a short sentence no longer than 50 characters that I can use f
 
   select_model = ConfigService.get_model()
 
-  def try_generate_message(current_diff):
-    prompt = [
-        {"role": "system", "content": COMMIT_MSG_SYSTEM_MESSAGE},
-        {"role": "user", "content": current_diff},
-    ]
+  prompt = [
+          {"role": "system", "content": COMMIT_MSG_SYSTEM_MESSAGE},
+          {"role": "user", "content": diff},
+      ]
+
   # TODO - create a factory with a shared interface for calling the LLM models, this will make it easier to add new models
-    if str(select_model) in OPEN_AI_MODEL_LIST:
-            return OpenAiService().chat_with_openai(prompt)
-    elif select_model.startswith("ollama"):
-        return OLlamaService().chat_completion(prompt)
-    elif select_model in ANTHROPIC_MODEL_LIST:
-        return AnthropicService().chat_completion(prompt)
-
-    return None
-
-  ai_gen_commit_msg = try_generate_message(diff)
+  ai_gen_commit_msg = None
+  if str(select_model) in OPEN_AI_MODEL_LIST :
+    ai_gen_commit_msg = OpenAiService().chat_with_openai(prompt)
+  elif(select_model.startswith("ollama")):
+    ai_gen_commit_msg = OLlamaService().chat_completion(prompt)
+  elif(select_model in ANTHROPIC_MODEL_LIST):
+    ai_gen_commit_msg = AnthropicService().chat_completion(prompt)
 
   if ai_gen_commit_msg is None:
-    Logger().log(f"Unsupported or token limit exceeded for model: {select_model}")
+    Logger().log("Unsupport: " + select_model)
     return ""
 
   prefix = ConfigService().prefix
+
   return prefix + ai_gen_commit_msg
