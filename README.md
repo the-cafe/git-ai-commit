@@ -40,6 +40,18 @@ git-ai-commit --version # verify installation
 git-ai-commit config --setup
 ```
 
+## ⚡️ Quick Start: Setup Git Hook
+
+To quickly setup your [`prepare-commit-msg`](<https://git-scm.com/docs/githooks#_prepare_commit_msg>) git hook, execute the command below.
+
+Caution, this will override any existing `prepare-commit-msg` hooks you may have. To coordinate multiple git hook, check out the [`pre-commit`](https://pre-commit.com/) framework.
+
+```bash
+git-ai-commit hook --setup
+```
+
+That is all, your good to go! Now every time you run `git commit`, let AI present you with a commit message.
+
 ## 🪝 Integrate with `pre-commit` framework
 
 `git-ai-commit` integrates easily with your other git hook using the `pre-commit` framework. Follow the instructions below to get set up.
