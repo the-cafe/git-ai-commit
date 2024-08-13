@@ -1,3 +1,4 @@
+import tiktoken
 OPEN_AI_MODEL_LIST = {
   "gpt-3.5-turbo": 4096,
   "gpt-3.5-turbo-instruct": 4096,
@@ -30,18 +31,21 @@ def truncate_diff(diff: str, model_name: str) -> str:
     # Retrieve the max tokens for the given model name from the dictionary
     # If the model name is not found, default to 4096 tokens
     max_tokens = OPEN_AI_MODEL_LIST.get(model_name, 4096)
-    max_lines = max_tokens // 4  # Assuming an average of 4 tokens per line
 
-    lines = diff.split('\n')
-    if len(lines) <= max_lines:
+    # Initialize the tokenizer for the given model
+    tokenizer = tiktoken.encoding_for_model(model_name)
+
+    # Tokenize the diff
+    tokens = tokenizer.encode(diff)
+    if len(tokens) <= max_tokens:
         return diff
 
-    # Keeping the first 100 lines
-    truncated = lines[:100]
+    # Truncate the diff to fit within the max tokens
+    truncated_tokens = tokens[:max_tokens - 10]  # Reserve some tokens for the truncation message
+    truncated_diff = tokenizer.decode(truncated_tokens)
 
-    truncated.append("... (diff truncated due to length) ...")
+    # Add truncation message
+    truncation_message = "\n... (diff truncated due to length) ..."
+    truncated_diff += truncation_message
 
-    # Keeping the last 400 lines
-    truncated.extend(lines[-400:])
-
-    return '\n'.join(truncated)
+    return truncated_diff
