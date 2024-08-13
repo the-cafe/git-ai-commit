@@ -21,7 +21,6 @@ class OpenAiService:
     def chat_with_openai(self, messages, model_name):
         if model_name not in OPEN_AI_MODEL_LIST:
             raise Exception(f"Attempted to call OpenAI with an invalid model: {model_name}")
-
         try:
             completion = self.client.chat.completions.create(
                 model=model_name,
