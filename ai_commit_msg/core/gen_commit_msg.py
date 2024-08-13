@@ -7,7 +7,6 @@ from ai_commit_msg.services.ollama_service import OLlamaService
 from ai_commit_msg.services.openai_service import OpenAiService
 from ai_commit_msg.utils.logger import Logger
 from ai_commit_msg.utils.models import ANTHROPIC_MODEL_LIST, OPEN_AI_MODEL_LIST
-from ai_commit_msg.utils.diff_truncator import truncate_diff
 
 def generate_commit_message(diff: str = None) -> str:
 
@@ -36,15 +35,7 @@ Only respond with a short sentence no longer than 50 characters that I can use f
     ]
   # TODO - create a factory with a shared interface for calling the LLM models, this will make it easier to add new models
     if str(select_model) in OPEN_AI_MODEL_LIST:
-        try:
             return OpenAiService().chat_with_openai(prompt)
-        except Exception as e:
-            if "maximum context length" in str(e) or "Request too large" in str(e):
-                truncated_diff = truncate_diff(prompt[1]["content"])
-                prompt[1]["content"] = truncated_diff
-                return OpenAiService().chat_with_openai(prompt)
-            else:
-                raise e
     elif select_model.startswith("ollama"):
         return OLlamaService().chat_completion(prompt)
     elif select_model in ANTHROPIC_MODEL_LIST:
