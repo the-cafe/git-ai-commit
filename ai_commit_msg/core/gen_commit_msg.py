@@ -36,7 +36,16 @@ Only respond with a short sentence no longer than 50 characters that I can use f
   # TODO - create a factory with a shared interface for calling the LLM models, this will make it easier to add new models
   ai_gen_commit_msg = None
   if str(select_model) in OPEN_AI_MODEL_LIST :
-    ai_gen_commit_msg = OpenAiService().chat_with_openai(prompt)
+    try:
+      ai_gen_commit_msg = OpenAiService().chat_with_openai(prompt)
+    except Exception as e:
+      if "context_length_exceeded" in str(e):
+        truncated_diff = truncate_diff(diff)
+        prompt = [
+            {"role": "system", "content": COMMIT_MSG_SYSTEM_MESSAGE},
+            {"role": "user", "content": truncated_diff},
+        ]
+        ai_gen_commit_msg = OpenAiService().chat_with_openai(prompt)
   elif(select_model.startswith("ollama")):
     ai_gen_commit_msg = OLlamaService().chat_completion(prompt)
   elif(select_model in ANTHROPIC_MODEL_LIST):
@@ -49,3 +58,23 @@ Only respond with a short sentence no longer than 50 characters that I can use f
   prefix = ConfigService().prefix
 
   return prefix + ai_gen_commit_msg
+
+
+def truncate_diff(diff: str, max_length: int = 3000) -> str:
+    """
+    Truncate the diff to a maximum length while preserving the most recent changes.
+    """
+    if len(diff) <= max_length:
+        return diff
+
+    lines = diff.split('\n')
+    truncated_lines = []
+    current_length = 0
+
+    for line in reversed(lines):
+        if current_length + len(line) + 1 > max_length:
+            break
+        truncated_lines.append(line)
+        current_length += len(line) + 1
+
+    return '\n'.join(reversed(truncated_lines))
