@@ -18,32 +18,30 @@ class OpenAiService:
         """)
       self.client = OpenAI(api_key=api_key)
 
-    def chat_with_openai(self, messages):
-        select_model = ConfigService.get_model()
-
-        if select_model not in OPEN_AI_MODEL_LIST:
-            raise Exception(f"Attempted to call OpenAI with an invalid model: {select_model}")
+    def chat_with_openai(self, messages, model_name):
+        if model_name not in OPEN_AI_MODEL_LIST:
+            raise Exception(f"Attempted to call OpenAI with an invalid model: {model_name}")
 
         try:
             completion = self.client.chat.completions.create(
-                model=select_model,
+                model=model_name,
                 messages=messages
             )
             return completion.choices[0].message.content
         except Exception as e:
             if e.code == "context_length_exceeded":
-                truncated_messages = self._truncate_messages(messages)
+                truncated_messages = self._truncate_messages(messages, model_name)
                 completion = self.client.chat.completions.create(
-                    model=select_model,
+                    model=model_name,
                     messages=truncated_messages
                 )
                 return completion.choices[0].message.content
             else:
                 raise e
 
-    def _truncate_messages(self, messages):
+    def _truncate_messages(self, messages, model_name):
         truncated_messages = messages[:-1]
-        truncated_diff = truncate_diff(messages[-1]["content"])
+        truncated_diff = truncate_diff(messages[-1]["content"], model_name)
         truncated_messages.append({"role": "user", "content": truncated_diff})
         return truncated_messages
 
