@@ -36,7 +36,7 @@ Only respond with a short sentence no longer than 50 characters that I can use f
   # TODO - create a factory with a shared interface for calling the LLM models, this will make it easier to add new models
   ai_gen_commit_msg = None
   if str(select_model) in OPEN_AI_MODEL_LIST :
-    ai_gen_commit_msg = OpenAiService().chat_with_openai(prompt, select_model)
+    ai_gen_commit_msg = OpenAiService().chat_with_openai(prompt)
   elif(select_model.startswith("ollama")):
     ai_gen_commit_msg = OLlamaService().chat_completion(prompt)
   elif(select_model in ANTHROPIC_MODEL_LIST):
