@@ -3,13 +3,12 @@ def truncate_diff(diff: str, max_lines: int = 500) -> str:
     if len(lines) <= max_lines:
         return diff
 
-    # Keep the first 100 lines
+    # Keeping the first 100
     truncated = lines[:100]
 
-    # Add a message indicating truncation
     truncated.append("... (diff truncated due to length) ...")
 
-    # Add the last 400 lines
+    # Keeping the last 400 lines
     truncated.extend(lines[-400:])
 
     return '\n'.join(truncated)
