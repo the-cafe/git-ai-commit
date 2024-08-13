@@ -17,8 +17,8 @@ class OpenAiService:
         """)
       self.client = OpenAI(api_key=api_key)
 
-    def chat_with_openai(self, messages, model=None):
-        select_model = model or ConfigService.get_model()
+    def chat_with_openai(self, messages):
+        select_model = ConfigService.get_model()
 
         if(select_model not in OPEN_AI_MODEL_LIST):
             raise Exception(f"Attempted to call OpenAI with an invalid model: {select_model}")
