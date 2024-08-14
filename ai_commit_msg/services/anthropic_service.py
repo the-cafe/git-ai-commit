@@ -14,9 +14,8 @@ class AnthropicService:
       raise Exception("""Anthropic API key is not set. Run the following command to set the key:git-ai-commit config --anthropic-key=<insert your key>""")
 
     self.client = anthropic.Anthropic(
-            # defaults to os.environ.get("ANTHROPIC_API_KEY")
-            api_key=self.api_key,
-        )
+      api_key=self.api_key,
+      )
 
     def chat_completion(self, messages):
       select_model = ConfigService.get_model()
