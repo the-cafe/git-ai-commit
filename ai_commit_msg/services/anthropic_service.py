@@ -56,4 +56,4 @@ class AnthropicService:
             return e.error['type']
           elif isinstance(e.error, dict) and 'error' in e.error and isinstance(e.error['error'], dict) and 'type' in e.error['error']:
             return e.error['error']['type']
-          return str(type(e).__name__).lower().replace('error', '')# ... rest of the code ...
+          return str(type(e).__name__).lower().replace('error', '')

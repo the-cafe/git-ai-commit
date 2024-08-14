@@ -56,6 +56,25 @@ class OLlamaService:
             "Content-Type": "application/json"
         }
 
-        response = requests.post(self.url, headers=headers, json=data)
-        answer = response.json()["message"]["content"]
-        return answer
+        try:
+            response = requests.post(self.url, headers=headers, json=data)
+            response.raise_for_status()
+
+            # Parse the response content
+            response_json = response.json()
+
+            # Check if 'response' key exists in the JSON
+            if 'response' in response_json:
+                answer = response_json['response']
+            else:
+                raise KeyError("Expected 'response' key not found in Ollama API response")
+
+            return answer
+        except requests.exceptions.RequestException as e:
+            print(f"Error occurred while making the request: {e}")
+        except KeyError as e:
+            print(f"Error parsing the response: {e}")
+        except json.JSONDecodeError:
+            print("Error decoding JSON response")
+
+        return None
