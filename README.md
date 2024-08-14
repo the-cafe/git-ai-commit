@@ -2,6 +2,8 @@
 
 <a href="https://pypi.org/project/git-ai-commit"><img src="https://img.shields.io/pypi/v/git-ai-commit" alt="Current version"></a>
 
+![PyPI - Downloads](https://img.shields.io/pypi/dm/git-ai-commit)
+
 Tl;DR
 
 - AI that writes your commit messages.
