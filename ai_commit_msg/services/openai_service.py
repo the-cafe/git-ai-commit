@@ -3,7 +3,6 @@ from openai import OpenAI
 from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.services.local_db_service import LocalDbService, CONFIG_COLLECTION_KEY
 from ai_commit_msg.utils.models import OPEN_AI_MODEL_LIST
-from ai_commit_msg.utils.diff_truncator import truncate_diff
 
 class OpenAiService:
     client = None
@@ -31,21 +30,10 @@ class OpenAiService:
             return completion.choices[0].message.content
         except Exception as e:
             if e.code == "context_length_exceeded":
-                truncated_messages = self._truncate_messages(messages, model_name)
-                completion = self.client.chat.completions.create(
-                    model=model_name,
-                    messages=truncated_messages
-                )
-                return completion.choices[0].message.content
+                print("You have exceeded the token size write your commit message manually :(")
+                return
             else:
                 raise e
-
-    def _truncate_messages(self, messages, model_name):
-        truncated_messages = messages[:-1]
-        truncated_diff = truncate_diff(messages[-1]["content"], model_name)
-        truncated_messages.append({"role": "user", "content": truncated_diff})
-        return truncated_messages
-
     @staticmethod
     def get_openai_api_key():
         raw_json_db = LocalDbService().get_db()[CONFIG_COLLECTION_KEY]
