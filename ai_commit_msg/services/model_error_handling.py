@@ -19,7 +19,8 @@ AI_MODEL_ERRORS = {
         "INTERNAL_SERVER_ERROR": "InternalServerError",
         "API_CONNECTION_ERROR": "APIConnectionError",
         "INVALID_REQUEST_ERROR": "InvalidRequestError",
-        "EXCEEDED_TOKEN_SIZE": "MaxTokensError"
+        "EXCEEDED_TOKEN_SIZE": "BadRequestError",
+        "BAD_REQUEST_ERROR": "BadRequestError"
     },
     "OLLAMA": {
         # Add Ollama-specific error types here
@@ -35,4 +36,5 @@ def map_error(provider: str, error_code: str, original_error: Exception):
             print(f"Mapped to error category: {error_category}")
             return AIModelHandlerError(provider, error_category, original_error)
 
+    print(f"No matching error category found, defaulting to UNKNOWN_ERROR")
     return AIModelHandlerError(provider, "UNKNOWN_ERROR", original_error)

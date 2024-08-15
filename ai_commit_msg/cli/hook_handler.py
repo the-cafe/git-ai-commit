@@ -69,6 +69,15 @@ def hook_handler(args):
             prepare_commit_msg_hook()
         except AIModelHandlerError as e:
             print(f"Error in prepare-commit-msg hook: {e}")
+            if e.error_type == "EXCEEDED_TOKEN_SIZE":
+                print("The input is too long. Please commit changes manually.")
+            elif e.error_type == "RATE_LIMIT_ERROR":
+                print("You've hit the rate limit. Please commit changes manually..")
+            else:
+                print("An unexpected error occurred. Please write your commit message manually.")
+            print("Please write your commit message manually.")
+        except Exception as e:
+            print(f"Unexpected error in prepare-commit-msg hook: {str(e)}")
             print("Please write your commit message manually.")
 
     return
