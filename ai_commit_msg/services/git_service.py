@@ -40,7 +40,10 @@ class GitService:
 
   @staticmethod
   def update_commit_message(commit_message):
-    new_content = commit_message
+
+    existing_content = GitService.read_commit_editmsg_file()
+
+    new_content = commit_message + existing_content
     with open(GitService.get_commit_editmsg_file_path(), 'w') as file:
         file.write(new_content)
 
