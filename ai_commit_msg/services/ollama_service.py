@@ -2,7 +2,6 @@ import requests
 
 from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.utils.logger import Logger
-from ai_commit_msg.services.model_error_handling import map_error
 
 class OLlamaService:
     def __init__(self,):
