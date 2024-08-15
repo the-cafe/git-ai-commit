@@ -2,7 +2,7 @@ from ai_commit_msg.utils.logger import Logger
 from ai_commit_msg.utils.models import ANTHROPIC_MODEL_LIST
 import anthropic
 from ai_commit_msg.services.config_service import ConfigService
-from ai_commit_msg.services.model_error_handling import handle_ai_model_error
+from ai_commit_msg.services.model_error_handling import map_error
 
 class AnthropicService:
   api_key = ""
@@ -43,17 +43,11 @@ class AnthropicService:
         messages=user_message,
         )
       return ai_gen_message.content[0].text
-    except anthropic.APIError as e:
-      error_type = self._extract_error_type(e)
-      handle_ai_model_error("ANTHROPIC", error_type)
     except Exception as e:
-      error_type = str(type(e).__name__)
-      handle_ai_model_error("ANTHROPIC", error_type)
+      error_type = self._extract_error_type(e)
+      raise map_error("ANTHROPIC", error_type, e)
 
-      def _extract_error_type(self, e):
-        if hasattr(e, 'error'):
-          if isinstance(e.error, dict) and 'type' in e.error:
-            return e.error['type']
-          elif isinstance(e.error, dict) and 'error' in e.error and isinstance(e.error['error'], dict) and 'type' in e.error['error']:
-            return e.error['error']['type']
-          return str(type(e).__name__).lower().replace('error', '')
+  def _extract_error_type(self, e):
+    error_type = e.__class__.__name__
+    print(f"Extracted error type: {error_type}")
+    return error_type

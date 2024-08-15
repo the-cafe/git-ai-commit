@@ -2,6 +2,7 @@ import os
 from ai_commit_msg.prepare_commit_msg_hook import prepare_commit_msg_hook
 from ai_commit_msg.services.git_service import GitService
 from ai_commit_msg.utils.logger import Logger
+from ai_commit_msg.services.model_error_handling import AIModelHandlerError
 
 PREPARE_COMMIT_MSG_BASH_SCRIPT="""#!/usr/bin/env bash
 
@@ -64,6 +65,10 @@ def hook_handler(args):
         handle_remove_hook()
     elif args.run:
         Logger().log("Running prepare-commit-msg hook")
-        prepare_commit_msg_hook()
+        try:
+            prepare_commit_msg_hook()
+        except AIModelHandlerError as e:
+            print(f"Error in prepare-commit-msg hook: {e}")
+            print("Please write your commit message manually.")
 
     return

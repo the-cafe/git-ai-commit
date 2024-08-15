@@ -1,6 +1,7 @@
 from ai_commit_msg.core.gen_commit_msg import generate_commit_message
 from ai_commit_msg.services.git_service import GitService
 from ai_commit_msg.utils.utils import execute_cli_command
+from ai_commit_msg.services.model_error_handling import AIModelHandlerError
 
 def gen_ai_commit_message_handler():
     if(len(GitService.get_staged_files()) == 0):
@@ -8,7 +9,13 @@ def gen_ai_commit_message_handler():
       return
 
     staged_diff = GitService.get_staged_diff()
-    ai_gen_commit_msg = generate_commit_message(staged_diff.stdout)
+
+    try:
+        ai_gen_commit_msg = generate_commit_message(staged_diff.stdout)
+    except AIModelHandlerError as e:
+        print(f"Error generating commit message: {e}")
+        print("Please write your commit message manually.")
+        return
 
     command_string = f"""
 git commit -m "{ai_gen_commit_msg}"

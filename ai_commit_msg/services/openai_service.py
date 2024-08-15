@@ -4,7 +4,7 @@ from openai import OpenAI
 from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.services.local_db_service import LocalDbService, CONFIG_COLLECTION_KEY
 from ai_commit_msg.utils.models import OPEN_AI_MODEL_LIST
-from ai_commit_msg.services.model_error_handling import handle_ai_model_error
+from ai_commit_msg.services.model_error_handling import map_error
 
 class OpenAiService:
     client = None
@@ -31,7 +31,7 @@ class OpenAiService:
             )
             return completion.choices[0].message.content
         except Exception as e:
-            handle_ai_model_error("OPENAI", e.code)
+            raise map_error("OPENAI", getattr(e, 'code', str(e)), e)
 
     @staticmethod
     def get_openai_api_key():

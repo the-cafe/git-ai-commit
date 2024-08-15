@@ -2,6 +2,7 @@ import requests
 
 from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.utils.logger import Logger
+from ai_commit_msg.services.model_error_handling import map_error
 
 class OLlamaService:
     def __init__(self,):
@@ -70,11 +71,5 @@ class OLlamaService:
                 raise KeyError("Expected 'response' key not found in Ollama API response")
 
             return answer
-        except requests.exceptions.RequestException as e:
-            print(f"Error occurred while making the request: {e}")
-        except KeyError as e:
-            print(f"Error parsing the response: {e}")
-        except json.JSONDecodeError:
-            print("Error decoding JSON response")
-
-        return None
+        except Exception as e:
+            raise map_error("OLLAMA", str(type(e).__name__), e)
