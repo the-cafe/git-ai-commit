@@ -4,50 +4,25 @@ from ai_commit_msg.utils.logger import Logger
 from ai_commit_msg.services.model_error_handling import AIModelHandlerError
 
 def prepare_commit_msg_hook():
+    existing_content = GitService.read_commit_editmsg_file()
 
-  existing_content = GitService.read_commit_editmsg_file()
+    success_banner = GitService.get_success_banner()
 
-  filtered_content = "\n".join([line for line in existing_content.splitlines() if not line.strip().startswith('#')])
 
-  if(filtered_content != ""):
-    Logger().log("Commit message already exists, skipping AI commit message generation")
+    filtered_content = "\n".join([line for line in existing_content.splitlines() if not line.strip().startswith('#')])
+
+    if filtered_content != "":
+        Logger().log("Commit message already exists, skipping AI commit message generation")
+        return
+
+    staged_diff = GitService.get_staged_diff()
+
+    try:
+        commit_message = generate_commit_message(staged_diff.stdout)
+        GitService.update_commit_message(commit_message + success_banner + existing_content)
+    except AIModelHandlerError as error:
+        GitService.update_commit_message(GitService.get_error_banner(error))
+    except Exception as e:
+        GitService.update_commit_message()
+
     return
-
-  staged_diff = GitService.get_staged_diff()
-
-  try:
-      commit_message = generate_commit_message(staged_diff.stdout)
-      GitService.update_commit_message(commit_message)
-  except AIModelHandlerError as e:
-      error_message = f"Error in AI commit message generation: {e}\n"
-      if e.error_type == "EXCEEDED_TOKEN_SIZE":
-          error_message += "The input is too long. Please write your commit message manually.\n"
-      elif e.error_type == "RATE_LIMIT_ERROR":
-          error_message += "You've hit the rate limit. Please write your commit message manually.\n"
-      else:
-          error_message += "An unexpected error occurred. Please write your commit message manually.\n"
-
-      # Format the error message to replace the entire commit message
-      formatted_error_message = (
-          "#############################################################\n"
-          "#                                                           #\n"
-          f"#   {error_message.strip()}  #\n"
-          "#                                                           #\n"
-          "#############################################################\n"
-      )
-      GitService.update_commit_message(formatted_error_message, is_error=True)  # Indicate it's an error
-  except Exception as e:
-      error_message = f"Unexpected error in AI commit message generation: {str(e)}\n"
-      error_message += "Please write your commit message manually.\n"
-
-      # Format the error message to replace the entire commit message
-      formatted_error_message = (
-          "#############################################################\n"
-          "#                                                           #\n"
-          f"#   {error_message.strip()}  #\n"
-          "#                                                           #\n"
-          "#############################################################\n"
-      )
-      GitService.update_commit_message(formatted_error_message, is_error=True)  # Indicate it's an error
-
-  return

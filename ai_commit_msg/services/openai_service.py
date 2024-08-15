@@ -1,5 +1,4 @@
 from logging import Logger
-import sys
 from openai import OpenAI
 from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.services.local_db_service import LocalDbService, CONFIG_COLLECTION_KEY
