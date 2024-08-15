@@ -1,4 +1,3 @@
-from venv import logger
 from ai_commit_msg.core.gen_commit_msg import generate_commit_message
 from ai_commit_msg.services.git_service import GitService
 from ai_commit_msg.utils.utils import execute_cli_command
