@@ -3,7 +3,7 @@ import argparse
 import sys
 import os
 from typing import Sequence
-import pkg_resources
+
 
 from ai_commit_msg.cli.summary_handler import summary_handler
 from ai_commit_msg.cli.config_handler import config_handler, handle_config_setup
@@ -12,12 +12,10 @@ from ai_commit_msg.cli.hook_handler import hook_handler
 from ai_commit_msg.prepare_commit_msg_hook import prepare_commit_msg_hook
 from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.utils.logger import Logger
+from ai_commit_msg.utils.utils import get_version
 
 def called_from_git_hook():
     return os.environ.get('PRE_COMMIT') == '1'
-
-def get_version():
-    return pkg_resources.get_distribution("git-ai-commit").version
 
 def main(argv: Sequence[str] = sys.argv[1:]) -> int:
     Logger().log("Received command: " + str(sys.argv))

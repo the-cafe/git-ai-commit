@@ -1,4 +1,5 @@
 import subprocess
+import pkg_resources
 
 # TODO - get repo root directory without using git command
 def execute_cli_command(cmd_string_list, cwd=None, output=False):
@@ -22,3 +23,5 @@ def execute_cli_command(cmd_string_list, cwd=None, output=False):
         error_msg = f"🚨 Total failure to call: {cmd_string}\n{e.stderr}"
         raise Exception(error_msg)
 
+def get_version():
+    return pkg_resources.get_distribution("git-ai-commit").version
