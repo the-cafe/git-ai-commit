@@ -1,5 +1,3 @@
-import sys
-
 class AIModelHandlerError(Exception):
     def __init__(self, provider, error_type, original_error):
         self.provider = provider
