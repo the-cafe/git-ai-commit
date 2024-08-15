@@ -20,6 +20,8 @@ def get_version():
     return pkg_resources.get_distribution("git-ai-commit").version
 
 def main(argv: Sequence[str] = sys.argv[1:]) -> int:
+    Logger().log("Received command: " + str(sys.argv))
+
     if called_from_git_hook():
         return prepare_commit_msg_hook()
 

@@ -71,7 +71,6 @@ def hook_handler(args):
         file_path = get_git_prepare_commit_msg_hook_path()
         handle_setup_hook(file_path)
     if args.setup_husky:
-        print("Setting up husky prepare-commit-msg hook")
         file_path = get_husky_prepare_commit_msg_hook_path()
         handle_setup_hook(file_path)
     elif args.remove:
