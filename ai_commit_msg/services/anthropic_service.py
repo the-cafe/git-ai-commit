@@ -2,7 +2,7 @@ from ai_commit_msg.utils.logger import Logger
 from ai_commit_msg.utils.models import ANTHROPIC_MODEL_LIST
 import anthropic
 from ai_commit_msg.services.config_service import ConfigService
-from ai_commit_msg.utils.errorr_handling import map_error
+from ai_commit_msg.utils.error_handling import map_error
 
 class AnthropicService:
   api_key = ""
