@@ -21,7 +21,7 @@ class AnthropicService:
     select_model = ConfigService.get_model()
 
     if select_model not in ANTHROPIC_MODEL_LIST:
-        raise Exception(f"Attempted to call Anthropic with an invalid model: {select_model}")
+      raise Exception(f"Attempted to call Anthropic with an invalid model: {select_model}")
 
     # filter messages with system role
     system_message = list(filter(lambda message: message["role"] == "system", messages))
@@ -43,6 +43,7 @@ class AnthropicService:
         messages=user_message,
         )
       return ai_gen_message.content[0].text
+
     except Exception as e:
       error_type = self._extract_error_type(e)
       raise map_error("ANTHROPIC", error_type, e)
