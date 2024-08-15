@@ -1,9 +1,13 @@
+from venv import logger
 from ai_commit_msg.core.gen_commit_msg import generate_commit_message
 from ai_commit_msg.services.git_service import GitService
 from ai_commit_msg.utils.utils import execute_cli_command
 from ai_commit_msg.services.model_error_handling import AIModelHandlerError
+from ai_commit_msg.utils.logger import Logger
 
 def gen_ai_commit_message_handler():
+    logger = Logger()
+
     if(len(GitService.get_staged_files()) == 0):
       print("🚨 No files are staged for commit. Run `git add` to stage some of your changes")
       return
@@ -13,11 +17,11 @@ def gen_ai_commit_message_handler():
     try:
         ai_gen_commit_msg = generate_commit_message(staged_diff.stdout)
     except AIModelHandlerError as e:
-        print(f"Error generating commit message: {e}")
-        print("Please enter your commit message manually:")
+        logger.log(f"Error generating commit message: {e}")
+        logger.log("Please enter your commit message manually:")
         ai_gen_commit_msg = input().strip()
         if not ai_gen_commit_msg:
-            print("No commit message provided. Exiting.")
+            logger.log("No commit message provided. Exiting.")
             return
 
     command_string = f"""
@@ -28,12 +32,12 @@ Would you like to commit your changes? (y/n): """
 
     should_push_changes = input(command_string)
 
-    if(should_push_changes == 'n'):
-      print("👋 Goodbye!")
-      return
+    if should_push_changes == 'n':
+        logger.log("👋 Goodbye!")
+        return
     elif should_push_changes != 'y':
-      print("🚨 Invalid input. Exiting.")
-      return
+        logger.log("🚨 Invalid input. Exiting.")
+        return
 
     execute_cli_command(['git', 'commit', '-m', ai_gen_commit_msg], output=True)
     current_branch = GitService.get_current_branch()
