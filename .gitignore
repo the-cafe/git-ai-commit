@@ -162,3 +162,9 @@ cython_debug/
 #.idea/
 
 .vscode/
+
+package.json
+package-lock.json
+.husky/
+node_modules/
+*.js

@@ -4,7 +4,6 @@ from ai_commit_msg.services.git_service import GitService
 from ai_commit_msg.utils.logger import Logger
 
 PREPARE_COMMIT_MSG_BASH_SCRIPT="""#!/usr/bin/env bash
-#!/usr/bin/env bash
 
 # check if git-ai-commit is installed
 if ! command -v git-ai-commit &> /dev/null; then

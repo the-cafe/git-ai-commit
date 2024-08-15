@@ -180,7 +180,11 @@ git-ai-commit hook --setup
 
 - `-s` `--setup`
 
-  Adds a basic git hook by generating a `.git/hooks/prepare-commit-msg` script in your git repo.
+  Adds a git hook by generating a `.git/hooks/prepare-commit-msg` script in your git repo.
+
+- `-sh` `--setup-husky`
+
+  Integrate our hook into your [husky git hooks](https://typicode.github.io/husky/) by generating a `.husky/prepare-commit-msg` script in your git repo.
 
 - `-r` `--remove`
 
