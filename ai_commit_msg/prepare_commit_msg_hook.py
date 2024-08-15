@@ -19,18 +19,10 @@ def prepare_commit_msg_hook():
       commit_message = generate_commit_message(staged_diff.stdout)
       GitService.update_commit_message(commit_message)
   except AIModelHandlerError as e:
-      error_message = f"Error in AI commit message generation: {e}\n"
-      if e.error_type == "EXCEEDED_TOKEN_SIZE":
-          error_message += "The input is too long. Please write your commit message manually.\n"
-      elif e.error_type == "RATE_LIMIT_ERROR":
-          error_message += "You've hit the rate limit. Please write your commit message manually.\n"
-      else:
-          error_message += "An unexpected error occurred. Please write your commit message manually.\n"
-
-      GitService.update_commit_message(error_message)
+      warning_message = GitService.get_warning_banner(e)
+      GitService.update_commit_message(warning_message)
   except Exception as e:
-      error_message = f"Unexpected error in AI commit message generation: {str(e)}\n"
-      error_message += "Please write your commit message manually.\n"
-      GitService.update_commit_message(error_message)
+      warning_message = GitService.get_unexpected_error_banner(e)
+      GitService.update_commit_message(warning_message)
 
   return
