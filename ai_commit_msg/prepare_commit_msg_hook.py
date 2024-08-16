@@ -1,7 +1,7 @@
 from ai_commit_msg.core.gen_commit_msg import generate_commit_message
 from ai_commit_msg.services.git_service import GitService
 from ai_commit_msg.utils.logger import Logger
-from ai_commit_msg.services.model_error_handling import AIModelHandlerError
+from ai_commit_msg.utils.model_error_handling import AIModelHandlerError
 
 def prepare_commit_msg_hook():
 

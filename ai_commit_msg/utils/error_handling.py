@@ -1,4 +1,4 @@
-from ai_commit_msg.services.model_error_handling import AI_MODEL_ERRORS, AIModelHandlerError
+from ai_commit_msg.utils.model_error_handling import AI_MODEL_ERRORS, AIModelHandlerError
 
 def map_error(provider: str, error_code: str, original_error: Exception):
     error_categories = AI_MODEL_ERRORS.get(provider, {})
