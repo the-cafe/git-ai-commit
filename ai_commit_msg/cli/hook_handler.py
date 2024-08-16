@@ -31,7 +31,7 @@ fi
     return PREPARE_COMMIT_MSG_BASH_SCRIPT
 
 def handle_setup_hook(hook_directory_path: str):
-    Logger().log("Setting up prepare-commit-msg hook")
+    Logger().log("[Setup] Git prepare-commit-msg hook")
 
     existing_hook_content = ""
     if os.path.exists(hook_directory_path):
@@ -73,10 +73,10 @@ def handle_remove_hook():
 
 
 def setup_husky_git_hook():
-    Logger().log("Setting up prepare-commit-msg hook for husky")
+    Logger().log("[Setup] Husky prepare-commit-msg hook")
 
     if not HuskyService.repo_has_husky_framework():
-        Logger().log("Husky framework not found in the repository. Please install husky.")
+        Logger().log("Husky framework not found in the repository. Please install husky - https://typicode.github.io/husky/")
         return
 
     file_path = HuskyService.get_husky_prepare_commit_msg_hook_path()
@@ -86,6 +86,7 @@ def setup_husky_git_hook():
 
 def hook_handler(args):
     if args.setup:
+        # check if husky is installed, if it is, setup husky hook
         if HuskyService.repo_has_husky_framework():
             setup_husky_git_hook()
 
