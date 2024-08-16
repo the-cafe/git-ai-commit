@@ -14,7 +14,7 @@ AI_MODEL_ERRORS = {
         "OPENAI": {
             "context_length_exceeded": ErrorCode.EXCEEDED_TOKEN_SIZE,
             "rate_limit_exceeded": ErrorCode.EXCEEDED_TOKEN_SIZE,
-            # Add other OpenAI error codes here
+            # TODO - Add other OpenAI error codes here
         },
         "ANTHROPIC": {
             "AuthenticationError": ErrorCode.AUTHENTICATION_ERROR,
