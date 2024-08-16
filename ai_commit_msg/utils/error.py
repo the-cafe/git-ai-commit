@@ -10,7 +10,6 @@ class ErrorCode(Enum):
     API_CONNECTION_ERROR = "API_CONNECTION_ERROR"
     INVALID_REQUEST_ERROR = "INVALID_REQUEST_ERROR"
 
-
 AI_MODEL_ERRORS = {
         "OPENAI": {
             "context_length_exceeded": ErrorCode.EXCEEDED_TOKEN_SIZE,
@@ -31,3 +30,19 @@ AI_MODEL_ERRORS = {
             # Add Ollama-specific error codes here
         }
     }
+
+def map_error(provider: str, error_code: str, original_error: Exception):
+    error_categories = AI_MODEL_ERRORS.get(provider, {})
+    print(f"Mapping error for provider: {provider}, error_code: {error_code}")
+
+    error_type = error_categories.get(error_code, "UNKNOWN_ERROR")
+    print(f"Mapped to error category: {error_type}")
+    return AIModelHandlerError(provider, error_type, original_error)
+
+
+class AIModelHandlerError(Exception):
+    def __init__(self, provider, error_type, original_error):
+        self.provider = provider
+        self.error_type = error_type
+        self.original_error = original_error
+        super().__init__(f"{provider} error: {error_type}")
