@@ -7,7 +7,6 @@ from ai_commit_msg.services.husky_service import HuskyService
 from ai_commit_msg.utils.logger import Logger
 from ai_commit_msg.utils.utils import get_version
 
-
 def get_bash_script():
     version = get_version()
     id = uuid.uuid4()
