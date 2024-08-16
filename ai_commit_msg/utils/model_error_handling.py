@@ -7,4 +7,4 @@ class AIModelHandlerError(Exception):
         self.original_error = original_error
         super().__init__(f"{provider} error: {error_type}")
 
-AI_MODEL_ERRORS = get_ai_model_errors()
+get_ai_model_errors()
