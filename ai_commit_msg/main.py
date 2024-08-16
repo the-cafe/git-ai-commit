@@ -18,8 +18,6 @@ def called_from_git_hook():
     return os.environ.get('PRE_COMMIT') == '1'
 
 def main(argv: Sequence[str] = sys.argv[1:]) -> int:
-    Logger().log("Received command: " + str(sys.argv))
-
     if called_from_git_hook():
         return prepare_commit_msg_hook()
 
@@ -31,7 +29,7 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
         return gen_ai_commit_message_handler()
 
     parser = argparse.ArgumentParser(description="🚀 AI-powered CLI tool that revolutionizes your Git workflow by automatically generating commit messages!")
-    parser.add_argument('-v', '--version', action='version', version=f'%(prog)s {get_version()}')
+    parser.add_argument('-v', '--version', action='version', version=get_version())
     subparsers = parser.add_subparsers(dest='command', required=False)
 
     # Config command
