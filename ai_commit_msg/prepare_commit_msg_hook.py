@@ -21,7 +21,6 @@ def prepare_commit_msg_hook():
         success_banner = GitService.get_success_banner()
         commit_message = generate_commit_message(staged_diff.stdout)
         GitService.update_commit_message(commit_message + "\n" + success_banner)
-        Logger().log("AI commit message generated successfully")
     except AIModelHandlerError as error:
         GitService.update_commit_message(GitService.get_error_banner(error))
     except Exception as e:
