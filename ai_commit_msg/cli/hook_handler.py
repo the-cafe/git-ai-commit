@@ -89,7 +89,6 @@ def hook_handler(args):
         if HuskyService.repo_has_husky_framework():
             setup_husky_git_hook()
 
-
         file_path = GitService.get_git_prepare_commit_msg_hook_path()
         handle_setup_hook(file_path)
         return
