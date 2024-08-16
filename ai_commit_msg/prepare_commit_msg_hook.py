@@ -7,7 +7,6 @@ def prepare_commit_msg_hook():
 
     existing_content = GitService.read_commit_editmsg_file()
 
-    success_banner = GitService.get_success_banner()
 
 
     filtered_content = "\n".join([line for line in existing_content.splitlines() if not line.strip().startswith('#')])
@@ -19,6 +18,7 @@ def prepare_commit_msg_hook():
     staged_diff = GitService.get_staged_diff()
 
     try:
+        success_banner = GitService.get_success_banner()
         commit_message = generate_commit_message(staged_diff.stdout)
         GitService.update_commit_message(commit_message + success_banner)
     except AIModelHandlerError as error:
