@@ -108,7 +108,7 @@ class GitService:
 
   @staticmethod
   def get_git_config_value(key: GitConfigKeysEnum):
-    return execute_cli_command(['git', 'config', '--get', key]).stdout.strip()
+    return execute_cli_command(['git', 'config', '--local', key]).stdout.strip()
 
   @staticmethod
   def get_git_prepare_commit_msg_hook_path():
