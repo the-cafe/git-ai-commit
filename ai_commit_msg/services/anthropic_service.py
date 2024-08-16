@@ -45,10 +45,5 @@ class AnthropicService:
       return ai_gen_message.content[0].text
 
     except Exception as e:
-      error_type = self._extract_error_type(e)
+      error_type = e.__class__.__name__
       raise map_error("ANTHROPIC", error_type, e)
-
-  def _extract_error_type(self, e):
-    error_type = e.__class__.__name__
-    print(f"Extracted error type: {error_type}")
-    return error_type
