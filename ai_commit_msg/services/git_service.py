@@ -1,4 +1,8 @@
 from ai_commit_msg.utils.utils import execute_cli_command
+from enum import Enum
+
+class GitConfigKeysEnum(Enum):
+  hookPath = 'core.hooksPath'
 
 class GitService:
   def __init__(self):
@@ -6,8 +10,7 @@ class GitService:
 
   @staticmethod
   def get_staged_diff():
-    return execute_cli_command(['git', 'diff', '--staged'],
-                               cwd=GitService.get_repo_root_directory(), output=False)
+    return execute_cli_command(['git', 'diff', '--staged'], cwd=GitService.get_repo_root_directory(), output=False)
 
   @staticmethod
   def get_repo_root_directory():
@@ -102,3 +105,12 @@ class GitService:
 #                                                                                                                                       #
 #########################################################################################################################################
   """)
+
+  @staticmethod
+  def get_git_config_value(key: GitConfigKeysEnum):
+    return execute_cli_command(['git', 'config', '--get', key]).stdout.strip()
+
+  @staticmethod
+  def get_git_prepare_commit_msg_hook_path():
+    git_repo_path = GitService.get_git_directory()
+    return git_repo_path + '/hooks/prepare-commit-msg'
