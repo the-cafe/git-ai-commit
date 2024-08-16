@@ -1,3 +1,4 @@
+import openai
 from logging import Logger
 from ai_commit_msg.utils.error import map_error
 from openai import OpenAI
@@ -30,6 +31,16 @@ class OpenAiService:
                 messages=messages
             )
             return completion.choices[0].message.content
+        except openai.APIError as e:
+            raise map_error("OPENAI", e.code, e)
+        except openai.APIConnectionError as e:
+            #Handle connection error here
+            print(f"Failed to connect to OpenAI API: {e}")
+            raise
+        except openai.RateLimitError as e:
+            #Handle rate limit error (we recommend using exponential backoff)
+            print(f"OpenAI API request exceeded rate limit: {e}")
+            pass
         except Exception as e:
             raise map_error("OPENAI", getattr(e, 'code', str(e)), e)
 

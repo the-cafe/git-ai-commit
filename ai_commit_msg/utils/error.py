@@ -14,6 +14,11 @@ AI_MODEL_ERRORS = {
         "OPENAI": {
             "context_length_exceeded": ErrorCode.EXCEEDED_TOKEN_SIZE,
             "rate_limit_exceeded": ErrorCode.EXCEEDED_TOKEN_SIZE,
+            "tokens_exceeded_error": ErrorCode.EXCEEDED_TOKEN_SIZE,
+            "authentication_error": ErrorCode.AUTHENTICATION_ERROR,
+            "not_found_error": ErrorCode.NOT_FOUND,
+            "server_error": ErrorCode.INTERNAL_SERVER_ERROR,
+            "permission_error": ErrorCode.PERMISSION_DENIED,
             # TODO - Add other OpenAI error codes here
         },
         "ANTHROPIC": {
@@ -43,3 +48,7 @@ class AIModelHandlerError(Exception):
         self.error_type = error_type
         self.original_error = original_error
         super().__init__(f"{provider} error: {error_type}")
+
+class LLMProviderError(Exception):
+    def __init__(self, provider):
+        self.provider = provider
