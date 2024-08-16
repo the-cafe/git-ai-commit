@@ -31,8 +31,6 @@ fi
     return PREPARE_COMMIT_MSG_BASH_SCRIPT
 
 def handle_setup_hook(hook_directory_path: str):
-    Logger().log("[Setup] Git prepare-commit-msg hook")
-
     existing_hook_content = ""
     if os.path.exists(hook_directory_path):
       with open(hook_directory_path, 'r') as file:
@@ -43,7 +41,7 @@ def handle_setup_hook(hook_directory_path: str):
         return
 
     if existing_hook_content:
-      override_content = input("prepare-commit-msg hook already exists. Would you like to overwrite it? (y/n): ")
+      override_content = input(f"prepare-commit-msg hook already exists in {hook_directory_path}\n\nWould you like to overwrite it? (y/n): ")
 
       if override_content.lower() == 'n':
         return
@@ -84,14 +82,22 @@ def setup_husky_git_hook():
 
     return
 
+
+def setup_git_hook():
+    Logger().log("[Setup] Git prepare-commit-msg hook")
+
+    # check if husky is installed, if it is, setup husky hook
+    if HuskyService.repo_has_husky_framework():
+        setup_husky_git_hook()
+
+    file_path = GitService.get_git_prepare_commit_msg_hook_path()
+    handle_setup_hook(file_path)
+
+    return
+
 def hook_handler(args):
     if args.setup:
-        # check if husky is installed, if it is, setup husky hook
-        if HuskyService.repo_has_husky_framework():
-            setup_husky_git_hook()
-
-        file_path = GitService.get_git_prepare_commit_msg_hook_path()
-        handle_setup_hook(file_path)
+        setup_git_hook()
         return
 
     if args.setup_husky:

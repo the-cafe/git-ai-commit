@@ -9,7 +9,7 @@ from prompt_toolkit.formatted_text import HTML
 from prompt_toolkit import print_formatted_text
 from ai_commit_msg.services.git_service import GitService
 from ai_commit_msg.services.config_service import ConfigService
-from ai_commit_msg.cli.hook_handler import handle_setup_hook
+from ai_commit_msg.cli.hook_handler import setup_git_hook
 from ai_commit_msg.utils.models import OPEN_AI_MODEL_LIST, ANTHROPIC_MODEL_LIST, OLLAMA_MODEL_LIST
 from rich.panel import Panel
 from rich.style import Style
@@ -63,7 +63,7 @@ def onboarding_flow():
         console.print("Please ensure Git is installed and you're in a Git repository.", style="bold red")
         sys.exit(1)
 
-    handle_setup_hook()
+    setup_git_hook()
 
     print_formatted_text(HTML("\n<b>Choose your preferred AI provider:</b>"))
     provider_choice = inquirer.prompt([
