@@ -1,8 +1,10 @@
 from logging import Logger
+from ai_commit_msg.utils.error_handling import map_error
 from openai import OpenAI
 from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.services.local_db_service import LocalDbService, CONFIG_COLLECTION_KEY
 from ai_commit_msg.utils.models import OPEN_AI_MODEL_LIST
+
 
 class OpenAiService:
     client = None
@@ -18,16 +20,18 @@ class OpenAiService:
       self.client = OpenAI(api_key=api_key)
 
     def chat_with_openai(self, messages):
-        select_model = ConfigService.get_model()
+        model_name = ConfigService.get_model()
 
-        if(select_model not in OPEN_AI_MODEL_LIST):
-            raise Exception(f"Attempted to call OpenAI with an invalid model: {select_model}")
-
-        completion = self.client.chat.completions.create(
-            model=select_model,
-            messages=messages
-        )
-        return completion.choices[0].message.content
+        if model_name not in OPEN_AI_MODEL_LIST:
+            raise Exception(f"Attempted to call OpenAI with an invalid model: {model_name}")
+        try:
+            completion = self.client.chat.completions.create(
+                model=model_name,
+                messages=messages
+            )
+            return completion.choices[0].message.content
+        except Exception as e:
+            raise map_error("OPENAI", getattr(e, 'code', str(e)), e)
 
     @staticmethod
     def get_openai_api_key():
