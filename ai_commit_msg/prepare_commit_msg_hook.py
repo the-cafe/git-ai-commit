@@ -7,8 +7,6 @@ def prepare_commit_msg_hook():
 
     existing_content = GitService.read_commit_editmsg_file()
 
-
-
     filtered_content = "\n".join([line for line in existing_content.splitlines() if not line.strip().startswith('#')])
 
     if filtered_content != "":
@@ -23,7 +21,5 @@ def prepare_commit_msg_hook():
         GitService.update_commit_message(commit_message + "\n" + success_banner)
     except AIModelHandlerError as error:
         GitService.update_commit_message(GitService.get_error_banner(error))
-    except Exception as e:
-        GitService.update_commit_message()
 
     return
