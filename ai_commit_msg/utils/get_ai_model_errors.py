@@ -11,8 +11,7 @@ class ErrorCode(Enum):
     INVALID_REQUEST_ERROR = "INVALID_REQUEST_ERROR"
 
 
-def get_ai_model_errors():
-    return {
+AI_MODEL_ERRORS = {
         "OPENAI": {
             "context_length_exceeded": ErrorCode.EXCEEDED_TOKEN_SIZE,
             "rate_limit_exceeded": ErrorCode.EXCEEDED_TOKEN_SIZE,

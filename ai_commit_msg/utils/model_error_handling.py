@@ -1,4 +1,4 @@
-from ai_commit_msg.utils.get_ai_model_errors import get_ai_model_errors
+from ai_commit_msg.utils.get_ai_model_errors import AI_MODEL_ERRORS
 
 class AIModelHandlerError(Exception):
     def __init__(self, provider, error_type, original_error):
@@ -7,4 +7,4 @@ class AIModelHandlerError(Exception):
         self.original_error = original_error
         super().__init__(f"{provider} error: {error_type}")
 
-get_ai_model_errors()
+AI_MODEL_ERRORS
