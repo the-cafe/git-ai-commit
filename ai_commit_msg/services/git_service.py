@@ -114,3 +114,7 @@ class GitService:
   def get_git_prepare_commit_msg_hook_path():
     git_repo_path = GitService.get_git_directory()
     return git_repo_path + '/hooks/prepare-commit-msg'
+
+  @staticmethod
+  def get_last_n_commit_msg(n):
+    return execute_cli_command(['git', 'log', f'-n {n}', '--pretty=format:%s']).stdout.splitlines()

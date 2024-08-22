@@ -14,7 +14,7 @@ def generate_commit_message(diff: str = None) -> str:
 
   select_model = ConfigService.get_model()
 
-  prompt = get_prompt(staged_diff.stdout)
+  prompt = get_prompt(diff)
 
   # TODO - create a factory with a shared interface for calling the LLM models, this will make it easier to add new models
   ai_gen_commit_msg = None
