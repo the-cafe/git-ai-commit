@@ -55,6 +55,11 @@ def config_handler(args):
         Logger().log("Prefix set to " + args.prefix)
         has_updated = True
 
+    if args.max_length:
+        config_service.set_max_length(args.max_length)
+        Logger().log("Max length set to " + args.max_length)
+        has_updated = True
+
     if not has_updated:
         display_config_db = LocalDbService().display_db()
         Logger().log(display_config_db)

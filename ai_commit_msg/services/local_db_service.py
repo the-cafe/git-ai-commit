@@ -13,7 +13,8 @@ default_db = {
       "logger_enabled": False,
       "model": "gpt-4o-mini",
       "ollama_url": "http://localhost:11434/api/chat",
-      "last_updated_at": ""
+      "last_updated_at": "",
+      "max_length": 50,
     }
 }
 
