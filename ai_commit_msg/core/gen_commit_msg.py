@@ -26,7 +26,7 @@ def generate_commit_message(diff: str = None) -> str:
     ai_gen_commit_msg = AnthropicService().chat_completion(prompt)
 
   if ai_gen_commit_msg is None:
-    Logger().log("Unsupport: " + select_model)
+    Logger().log("Unsupported model: " + select_model)
     return ""
 
   prefix = ConfigService().prefix

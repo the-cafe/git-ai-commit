@@ -57,6 +57,7 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
     summary_cmd_parser = subparsers.add_parser('summary', help='🚀 Generate an AI commit message')
     summarize_cmd_parser.add_argument('-u','--unstaged', action='store_true', help='Setup the prepare-commit-msg hook')
     summary_cmd_parser.add_argument('-u','--unstaged', action='store_true', help='Setup the prepare-commit-msg hook')
+    summary_cmd_parser.add_argument('-d','--diff', help='🔍 Provide a diff to generate a commit message')
 
     args = parser.parse_args(argv)
 
