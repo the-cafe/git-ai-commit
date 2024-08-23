@@ -11,8 +11,8 @@ def print_summary(summary):
 to use this summary run: `git commit -m "{summary}"`
 """)
 
-def summaryFromDiffFile(diff_file):
-  with open(diff_file, 'r') as file:
+def summaryFromDiffFile(diff_file_path):
+  with open(diff_file_path, 'r') as file:
     diff = file.read()
     ai_commit_msg = generate_commit_message(diff)
     print_summary(ai_commit_msg)
