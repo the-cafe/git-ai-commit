@@ -145,6 +145,10 @@ git-ai-commit config --openai-key=... --model=gpt-4o-mini
 
   Set a prefix for the generate commit messages.
 
+- `-ml` `--max-length`
+
+  Set the character limit for the LLM response. In our testing, the greater the limit the more details are included in the commit messages.
+
 ---
 
 🔎 `git-ai-commit summarize`
@@ -158,6 +162,10 @@ git-ai-commit summarize
 - `-u` `--unstaged`
 
   Summarize your local *unstaged* changes.
+
+- `-d` `--diff`
+
+  Provide a .diff file from the local file system to summarize
 
 ---
 
