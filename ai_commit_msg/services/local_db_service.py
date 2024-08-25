@@ -1,20 +1,30 @@
 import time
 import os
 import json
+from enum import Enum
 
 from ai_commit_msg.services.git_service import GitService
 
 CONFIG_COLLECTION_KEY = "config"
 
+class ConfigKeysEnum(Enum):
+    ANTHROPIC_API_KEY = "anthropic_api_key"
+    OPENAI_API_KEY = "openai_api_key"
+    LOGGER_ENABLED = "logger_enabled"
+    MODEL = "model"
+    OLLAMA_URL = "ollama_url"
+    LAST_UPDATED_AT = "last_updated_at"
+    MAX_LENGTH = "max_length"
+
 default_db = {
     CONFIG_COLLECTION_KEY: {
-      "anthropic_api_key": "",
-      "openai_api_key": "",
-      "logger_enabled": False,
-      "model": "gpt-4o-mini",
-      "ollama_url": "http://localhost:11434/api/chat",
-      "last_updated_at": "",
-      "max_length": 50,
+        ConfigKeysEnum.ANTHROPIC_API_KEY.value: "",
+        ConfigKeysEnum.OPENAI_API_KEY.value: "",
+        ConfigKeysEnum.LOGGER_ENABLED.value: False,
+        ConfigKeysEnum.MODEL.value: "gpt-4o-mini",
+        ConfigKeysEnum.OLLAMA_URL.value: "http://localhost:11434/api/chat",
+        ConfigKeysEnum.LAST_UPDATED_AT.value: "",
+        ConfigKeysEnum.MAX_LENGTH.value: 50,
     }
 }
 

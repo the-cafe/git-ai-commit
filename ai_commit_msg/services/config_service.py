@@ -1,6 +1,6 @@
 import time
 
-from ai_commit_msg.services.local_db_service import LocalDbService, CONFIG_COLLECTION_KEY
+from ai_commit_msg.services.local_db_service import ConfigKeysEnum, LocalDbService, CONFIG_COLLECTION_KEY
 from ai_commit_msg.utils.models import OPEN_AI_MODEL_LIST, ANTHROPIC_MODEL_LIST
 
 class ConfigService:
@@ -23,7 +23,7 @@ class ConfigService:
         if "ollama_url" in config: self.ollama_url = config["ollama_url"]
         if "last_updated_at" in config: self.last_updated_at = config["last_updated_at"]
         if "prefix" in config: self.prefix = config["prefix"]
-        if "max_length" in config: self.max_length = config["max_length"]
+        if ConfigKeysEnum.MAX_LENGTH.value in config: self.max_length = config[ConfigKeysEnum.MAX_LENGTH.value]
 
     @staticmethod
     def get_config():
@@ -93,7 +93,7 @@ class ConfigService:
 
     def set_max_length(self, max_length):
         config = ConfigService.get_config()
-        config["max_length"] = max_length
+        config[ConfigKeysEnum.MAX_LENGTH.value] = int(max_length)
         LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
         self.max_length = max_length
 

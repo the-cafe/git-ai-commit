@@ -4,7 +4,7 @@ from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.utils.logger import Logger
 
 class OLlamaService:
-    def __init__(self,):
+    def __init__(self):
         self.url = ConfigService.get_ollama_url()
 
     def chat_completion(self, prompt):
@@ -13,6 +13,7 @@ class OLlamaService:
         # remove the ollama prefix
         ollama_model = select_model.replace("ollama/", "")
 
+        Logger().log("Using Ollama url: " + self.url)
         Logger().log("Using Ollama model: " + ollama_model)
 
         data = {
