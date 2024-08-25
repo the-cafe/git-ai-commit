@@ -11,7 +11,18 @@ def print_summary(summary):
 to use this summary run: `git commit -m "{summary}"`
 """)
 
+def summaryFromDiffFile(diff_file_path):
+  with open(diff_file_path, 'r') as file:
+    diff = file.read()
+    ai_commit_msg = generate_commit_message(diff)
+    print_summary(ai_commit_msg)
+
 def summary_handler(args):
+
+  if args.diff:
+    summaryFromDiffFile(args.diff)
+    return
+
   if args.unstaged:
     Logger().log("Fetching your unstaged changes...\n")
     unstaged_changes_diff = execute_cli_command(['git', 'diff'])
