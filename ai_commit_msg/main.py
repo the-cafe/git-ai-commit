@@ -11,6 +11,7 @@ from ai_commit_msg.cli.gen_ai_commit_message_handler import gen_ai_commit_messag
 from ai_commit_msg.cli.hook_handler import hook_handler
 from ai_commit_msg.prepare_commit_msg_hook import prepare_commit_msg_hook
 from ai_commit_msg.services.config_service import ConfigService
+from ai_commit_msg.services.pip_service import PipService
 from ai_commit_msg.utils.logger import Logger
 from ai_commit_msg.utils.utils import get_version
 
@@ -29,7 +30,7 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
         return gen_ai_commit_message_handler()
 
     parser = argparse.ArgumentParser(description="🚀 AI-powered CLI tool that revolutionizes your Git workflow by automatically generating commit messages!")
-    parser.add_argument('-v', '--version', action='version', version=get_version())
+    parser.add_argument('-v', '--version', action='version', version=PipService.get_version())
     subparsers = parser.add_subparsers(dest='command', required=False)
 
     # Config command

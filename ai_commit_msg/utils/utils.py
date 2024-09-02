@@ -22,6 +22,3 @@ def execute_cli_command(cmd_string_list, cwd=None, output=False):
         cmd_string = " ".join(cmd_string_list)
         error_msg = f"🚨 Total failure to call: {cmd_string}\n{e.stderr}"
         raise Exception(error_msg)
-
-def get_version():
-    return pkg_resources.get_distribution("git-ai-commit").version
