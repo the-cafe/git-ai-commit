@@ -41,6 +41,16 @@ git-ai-commit --version # verify installation
 git-ai-commit config --setup
 ```
 
+3. Your done, happy committing! Check out our fun range of command, the LLM can even help you, just run...
+
+```bash
+git-ai-commit help-ai [question?]
+
+# or get help the ol fashion way
+
+git-ai-commit --help
+```
+
 ## ⚡️ Quick Start: Setup Git Hook
 
 To quickly setup your [`prepare-commit-msg`](<https://git-scm.com/docs/githooks#_prepare_commit_msg>) git hook, execute the command below.

@@ -89,7 +89,9 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
     # Help command
     subparsers.add_parser("help", help="Display this help message")
 
-    help_ai_parser = subparsers.add_parser("help-ai", help="Display this help message")
+    help_ai_parser = subparsers.add_parser(
+        "help-ai", help="🤖 Get help from AI to find the right command for you"
+    )
     help_ai_parser.add_argument(
         "message", nargs=argparse.REMAINDER, help="Additional message for help"
     )
@@ -149,9 +151,8 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
     if args.command == "config":
         config_handler(args)
     elif args.command == "help":
-        print(get_full_help_menu)
+        print(get_full_help_menu())
     elif args.command == "help-ai":
-        # print(f"gac help-ai ${args}")
         help_ai_handler(args, help_menu=get_full_help_menu())
     elif args.command == "hook":
         hook_handler(args)
