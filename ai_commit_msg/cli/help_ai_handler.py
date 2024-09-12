@@ -1,5 +1,6 @@
 from ai_commit_msg.core.gen_commit_msg import llm_chat_completion
 
+
 def help_ai_handler(args, help_menu):
     user_message = " ".join(args.message)
 

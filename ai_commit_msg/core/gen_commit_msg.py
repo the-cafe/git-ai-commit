@@ -2,6 +2,7 @@ from ai_commit_msg.core.llm_chat_completion import llm_chat_completion
 from ai_commit_msg.core.prompt import get_prompt
 from ai_commit_msg.services.config_service import ConfigService
 
+
 def generate_commit_message(diff: str = None) -> str:
 
     if diff is None:
