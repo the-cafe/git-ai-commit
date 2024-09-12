@@ -3,14 +3,23 @@ from ai_commit_msg.services.git_service import GitService
 from ai_commit_msg.utils.logger import Logger
 from ai_commit_msg.utils.error import AIModelHandlerError
 
+
 def prepare_commit_msg_hook():
 
     existing_content = GitService.read_commit_editmsg_file()
 
-    filtered_content = "\n".join([line for line in existing_content.splitlines() if not line.strip().startswith('#')])
+    filtered_content = "\n".join(
+        [
+            line
+            for line in existing_content.splitlines()
+            if not line.strip().startswith("#")
+        ]
+    )
 
     if filtered_content != "":
-        Logger().log("Commit message already exists, skipping AI commit message generation")
+        Logger().log(
+            "Commit message already exists, skipping AI commit message generation"
+        )
         return
 
     staged_diff = GitService.get_staged_diff()

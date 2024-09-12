@@ -6,3 +6,4 @@ prompt_toolkit==3.0.47
 requests==2.32.3
 rich==13.7.1
 pre-commit==3.8.0
+black=24.8.0

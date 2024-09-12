@@ -3,6 +3,7 @@ import requests
 from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.utils.logger import Logger
 
+
 class OLlamaService:
     def __init__(self):
         self.url = ConfigService.get_ollama_url()
@@ -30,7 +31,7 @@ class OLlamaService:
                 # "tfs_z": 0.5,
                 # "typical_p": 0.7,
                 # "repeat_last_n": 33,
-                "temperature": 0, # larger value = more randomness
+                "temperature": 0,  # larger value = more randomness
                 # "repeat_penalty": 1.2,
                 # "presence_penalty": 1.5,
                 # "frequency_penalty": 1.0,
@@ -50,12 +51,10 @@ class OLlamaService:
                 # "use_mmap": true,
                 # "use_mlock": false,
                 # "num_thread": 8
-            }
+            },
         }
 
-        headers = {
-            "Content-Type": "application/json"
-        }
+        headers = {"Content-Type": "application/json"}
 
         response = requests.post(self.url, headers=headers, json=data)
         answer = response.json()["message"]["content"]

@@ -1,7 +1,12 @@
 import time
 
-from ai_commit_msg.services.local_db_service import ConfigKeysEnum, LocalDbService, CONFIG_COLLECTION_KEY
+from ai_commit_msg.services.local_db_service import (
+    ConfigKeysEnum,
+    LocalDbService,
+    CONFIG_COLLECTION_KEY,
+)
 from ai_commit_msg.utils.models import OPEN_AI_MODEL_LIST, ANTHROPIC_MODEL_LIST
+
 
 class ConfigService:
     anthropic_api_key = ""
@@ -16,14 +21,22 @@ class ConfigService:
     def __init__(self):
         config = ConfigService.get_config()
 
-        if "anthropic_api_key" in config: self.anthropic_api_key = config["anthropic_api_key"]
-        if "openai_api_key" in config: self.openai_api_key = config["openai_api_key"]
-        if "logger_enabled" in config: self.logger_enabled = config["logger_enabled"]
-        if "model" in config: self.model = config["model"]
-        if "ollama_url" in config: self.ollama_url = config["ollama_url"]
-        if "last_updated_at" in config: self.last_updated_at = config["last_updated_at"]
-        if "prefix" in config: self.prefix = config["prefix"]
-        if ConfigKeysEnum.MAX_LENGTH.value in config: self.max_length = config[ConfigKeysEnum.MAX_LENGTH.value]
+        if "anthropic_api_key" in config:
+            self.anthropic_api_key = config["anthropic_api_key"]
+        if "openai_api_key" in config:
+            self.openai_api_key = config["openai_api_key"]
+        if "logger_enabled" in config:
+            self.logger_enabled = config["logger_enabled"]
+        if "model" in config:
+            self.model = config["model"]
+        if "ollama_url" in config:
+            self.ollama_url = config["ollama_url"]
+        if "last_updated_at" in config:
+            self.last_updated_at = config["last_updated_at"]
+        if "prefix" in config:
+            self.prefix = config["prefix"]
+        if ConfigKeysEnum.MAX_LENGTH.value in config:
+            self.max_length = config[ConfigKeysEnum.MAX_LENGTH.value]
 
     @staticmethod
     def get_config():
@@ -79,7 +92,7 @@ class ConfigService:
         LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
         self.ollama_url = url
 
-    def set_last_updated_at(self, last_updated_at = str(time.time())):
+    def set_last_updated_at(self, last_updated_at=str(time.time())):
         config = ConfigService.get_config()
         config["last_updated_at"] = last_updated_at
         LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
@@ -100,7 +113,11 @@ class ConfigService:
     @staticmethod
     def is_supported_model(model):
         # check if the model has ollama prefix
-        if model.startswith("ollama") or model in ANTHROPIC_MODEL_LIST or model in OPEN_AI_MODEL_LIST:
+        if (
+            model.startswith("ollama")
+            or model in ANTHROPIC_MODEL_LIST
+            or model in OPEN_AI_MODEL_LIST
+        ):
             return True
 
         return False

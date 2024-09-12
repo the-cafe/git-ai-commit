@@ -1,6 +1,7 @@
 import subprocess
 import pkg_resources
 
+
 # TODO - get repo root directory without using git command
 def execute_cli_command(cmd_string_list, cwd=None, output=False):
     try:
@@ -11,7 +12,7 @@ def execute_cli_command(cmd_string_list, cwd=None, output=False):
             text=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            timeout=60  # timeout in 1m/60s
+            timeout=60,  # timeout in 1m/60s
         )
 
         if output:

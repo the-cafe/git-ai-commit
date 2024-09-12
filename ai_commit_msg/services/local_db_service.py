@@ -7,6 +7,7 @@ from ai_commit_msg.services.git_service import GitService
 
 CONFIG_COLLECTION_KEY = "config"
 
+
 class ConfigKeysEnum(Enum):
     ANTHROPIC_API_KEY = "anthropic_api_key"
     OPENAI_API_KEY = "openai_api_key"
@@ -15,6 +16,7 @@ class ConfigKeysEnum(Enum):
     OLLAMA_URL = "ollama_url"
     LAST_UPDATED_AT = "last_updated_at"
     MAX_LENGTH = "max_length"
+
 
 default_db = {
     CONFIG_COLLECTION_KEY: {
@@ -28,11 +30,12 @@ default_db = {
     }
 }
 
+
 class LocalDbService:
     def __init__(self):
         repo_git_directory = GitService.get_git_directory()
 
-        self.db_path = os.path.join(repo_git_directory, '.ai_commit_msg_config.json')
+        self.db_path = os.path.join(repo_git_directory, ".ai_commit_msg_config.json")
 
         # Ensure the directory exists
         os.makedirs(os.path.dirname(self.db_path), exist_ok=True)
@@ -42,20 +45,20 @@ class LocalDbService:
             self.create_db()
 
     def create_db(self):
-        with open(self.db_path, 'w') as db:
+        with open(self.db_path, "w") as db:
             json.dump(default_db, db)
 
     def get_db(self):
-        with open(self.db_path, 'r') as db:
+        with open(self.db_path, "r") as db:
             return json.load(db)
 
     def set_db(self, data):
         data["config"]["last_updated_at"] = int(time.time())
-        with open(self.db_path, 'w') as db:
+        with open(self.db_path, "w") as db:
             json.dump(data, db)
 
     def append_db(self, data):
-        with open(self.db_path, 'a') as db:
+        with open(self.db_path, "a") as db:
             db.write(data)
 
     def reset_db(self):
