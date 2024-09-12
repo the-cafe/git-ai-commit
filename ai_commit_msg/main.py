@@ -13,7 +13,6 @@ from ai_commit_msg.prepare_commit_msg_hook import prepare_commit_msg_hook
 from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.services.pip_service import PipService
 from ai_commit_msg.utils.logger import Logger
-from ai_commit_msg.utils.utils import get_version
 
 def called_from_git_hook():
     return os.environ.get('PRE_COMMIT') == '1'

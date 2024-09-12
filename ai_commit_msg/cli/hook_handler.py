@@ -4,11 +4,12 @@ import uuid
 from ai_commit_msg.prepare_commit_msg_hook import prepare_commit_msg_hook
 from ai_commit_msg.services.git_service import GitService
 from ai_commit_msg.services.husky_service import HuskyService
+from ai_commit_msg.services.pip_service import PipService
 from ai_commit_msg.utils.logger import Logger
-from ai_commit_msg.utils.utils import get_version
+
 
 def get_bash_script():
-    version = get_version()
+    version = PipService.get_version()
     id = uuid.uuid4()
 
     PREPARE_COMMIT_MSG_BASH_SCRIPT=f"""#!/usr/bin/env bash

@@ -170,3 +170,5 @@ node_modules/
 *.js
 
 .local/
+
+.DS_Store
