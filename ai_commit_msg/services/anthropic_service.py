@@ -1,5 +1,7 @@
-from ai_commit_msg.utils.models import ANTHROPIC_MODEL_LIST
+import os
 import anthropic
+
+from ai_commit_msg.utils.models import ANTHROPIC_MODEL_LIST
 from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.utils.error import map_error
 
@@ -8,7 +10,7 @@ class AnthropicService:
     api_key = ""
 
     def __init__(self):
-        self.api_key = ConfigService().get_anthropic_api_key()
+        self.api_key = AnthropicService.get_anthropic_api_key()
 
         if self.api_key is None or self.api_key == "":
             raise Exception(
@@ -18,6 +20,20 @@ class AnthropicService:
         self.client = anthropic.Anthropic(
             api_key=self.api_key,
         )
+
+    @staticmethod
+    def get_anthropic_api_key():
+
+        local_api_key = ConfigService().get_anthropic_api_key()
+
+        if local_api_key != "":
+            return local_api_key
+
+        env_api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if env_api_key != "":
+            return env_api_key
+
+        return ""
 
     def chat_completion(self, messages):
         select_model = ConfigService.get_model()
