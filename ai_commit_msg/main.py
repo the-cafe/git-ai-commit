@@ -4,6 +4,7 @@ import sys
 import os
 from typing import Sequence
 
+from ai_commit_msg.cli.help_ai_handler import help_ai_handler
 from ai_commit_msg.cli.summary_handler import summary_handler
 from ai_commit_msg.cli.config_handler import config_handler, handle_config_setup
 from ai_commit_msg.cli.gen_ai_commit_message_handler import (
@@ -88,6 +89,13 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
     # Help command
     subparsers.add_parser("help", help="Display this help message")
 
+    help_ai_parser = subparsers.add_parser(
+        "help-ai", help="🤖 Get help from AI to find the right command for you"
+    )
+    help_ai_parser.add_argument(
+        "message", nargs=argparse.REMAINDER, help="Additional message for help"
+    )
+
     # Hook command
     hook_parser = subparsers.add_parser(
         "hook", help="🪝 Run the prepare-commit-msg hook to generate commit messages"
@@ -132,10 +140,20 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
 
     args = parser.parse_args(argv)
 
+    def get_full_help_menu():
+        full_help_menu = "\nAvailable commands:\n"
+        for name, subparser in subparsers.choices.items():
+            full_help_menu += f"\n{name}:\n"
+            full_help_menu += subparser.format_help()
+
+        return full_help_menu
+
     if args.command == "config":
         config_handler(args)
     elif args.command == "help":
-        parser.print_help()
+        print(get_full_help_menu())
+    elif args.command == "help-ai":
+        help_ai_handler(args, help_menu=get_full_help_menu())
     elif args.command == "hook":
         hook_handler(args)
     elif args.command == "summarize" or args.command == "summary":
