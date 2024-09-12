@@ -32,6 +32,14 @@ After a local change to the hook, the follow command will build and install it
 pip install . && pre-commit install && pre-commit autoupdate
 ```
 
+## Linter
+
+We use the python `black` linter, to lint run
+
+```bash
+black .
+```
+
 ## Directory Structure
 
 - `/cli` - contains logic for handling CLI command

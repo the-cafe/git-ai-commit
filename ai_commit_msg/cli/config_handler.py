@@ -4,6 +4,7 @@ from ai_commit_msg.services.openai_service import OpenAiService
 from ai_commit_msg.utils.logger import Logger
 from ai_commit_msg.services.onboarding_service import onboarding_flow
 
+
 def handle_config_setup():
     onboarding_flow()
     return
@@ -25,7 +26,7 @@ def config_handler(args):
         has_updated = True
 
     if args.reset:
-        #reset the db the entire db
+        # reset the db the entire db
         LocalDbService().reset_db()
         Logger().log("Configuration has been reset")
         has_updated = True
