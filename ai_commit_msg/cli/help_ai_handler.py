@@ -1,5 +1,4 @@
-from ai_commit_msg.services.openai_service import OpenAiService
-
+from ai_commit_msg.core.gen_commit_msg import llm_chat_completion
 
 def help_ai_handler(args, help_menu):
     user_message = " ".join(args.message)
@@ -20,7 +19,7 @@ Hey GPT, based on the follow documentation on the CLI's arguments
 
 what are set of arguments and options should i use if someone requests for help?
 
-Please only respond with the exact command that should be used and nothing else.
+Please only respond with the exact commands that should be used and nothing else.
 """,
         },
         {
@@ -29,7 +28,7 @@ Please only respond with the exact command that should be used and nothing else.
         },
     ]
 
-    ai_gen_commit_msg = OpenAiService().chat_with_openai(prompt)
+    ai_gen_commit_msg = llm_chat_completion(prompt)
 
     print(ai_gen_commit_msg)
 
