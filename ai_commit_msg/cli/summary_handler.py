@@ -24,7 +24,7 @@ def summaryFromDiffFile(diff_file_path):
 
 def summary_handler(args):
 
-    if args.diff:
+    if hasattr(args, 'diff') and args.diff is not None:
         summaryFromDiffFile(args.diff)
         return
 
