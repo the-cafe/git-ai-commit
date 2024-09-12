@@ -1,6 +1,7 @@
-from logging import Logger
-from ai_commit_msg.utils.error import map_error
+import os
 from openai import OpenAI
+
+from ai_commit_msg.utils.error import map_error
 from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.services.local_db_service import (
     LocalDbService,
@@ -43,7 +44,18 @@ class OpenAiService:
     @staticmethod
     def get_openai_api_key():
         raw_json_db = LocalDbService().get_db()[CONFIG_COLLECTION_KEY]
-        return raw_json_db["openai_api_key"]
+
+        # if the key is set in the local db, use that...
+        local_api_key = raw_json_db["openai_api_key"]
+        if local_api_key != "":
+            return local_api_key
+
+        # ...otherwise, check the environment variable
+        env_api_key = os.environ.get("OPENAI_API_KEY")
+        if env_api_key != "":
+            return env_api_key
+
+        return ""
 
     @staticmethod
     def set_openai_api_key(api_key):
