@@ -105,12 +105,11 @@ def conventional_commit_handler(args):
     staged_changes_diff = execute_cli_command(["git", "diff", "--staged"])
     diff = staged_changes_diff.stdout
 
-    # First, have the AI classify the commit type
+    # AI suggests a commit type
     try:
         logger.log("🤖 AI is analyzing your changes to suggest a commit type...\n")
         suggested_type = generate_commit_message(diff, classify_type=True)
 
-        # Validate the suggested type
         if suggested_type not in COMMIT_TYPES:
             logger.log(
                 f"AI suggested an invalid type: '{suggested_type}'. Falling back to manual selection."
@@ -120,16 +119,12 @@ def conventional_commit_handler(args):
         logger.log(f"Error classifying commit type: {e}")
         suggested_type = None
 
-    # Have the AI suggest a scope - make sure this is called separately
     suggested_scope = None
     try:
         logger.log("🤖 AI is analyzing your changes to suggest a scope...\n")
-        # Make sure we're explicitly setting classify_scope=True and other params to False
         suggested_scope = generate_commit_message(
             diff, conventional=False, classify_type=False, classify_scope=True
         )
-
-        # Add debug logging to see what's being returned
         logger.log(f"Debug - AI suggested scope: '{suggested_scope}'")
 
         if suggested_scope == "none" or not suggested_scope:
@@ -152,7 +147,6 @@ def conventional_commit_handler(args):
     # Get commit type (with AI suggestion) and scope
     commit_type = select_commit_type(suggested_type)
 
-    # Make sure we're passing the suggested scope to get_scope
     scope = get_scope(suggested_scope)
 
     # Format the conventional commit
