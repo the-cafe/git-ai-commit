@@ -192,6 +192,7 @@ This command:
 6. Gives you the option to commit and push
 
 Available commit types:
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `docs`: Documentation changes
