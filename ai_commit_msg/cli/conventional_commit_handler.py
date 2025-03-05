@@ -2,6 +2,7 @@ from ai_commit_msg.core.gen_commit_msg import generate_commit_message
 from ai_commit_msg.services.git_service import GitService
 from ai_commit_msg.utils.logger import Logger
 from ai_commit_msg.utils.utils import execute_cli_command
+from ai_commit_msg.utils.error import AIModelHandlerError
 
 
 COMMIT_TYPES = {
@@ -65,19 +66,21 @@ def get_scope():
 
 
 def conventional_commit_handler(args):
+    logger = Logger()
+
     # Get the diff
     if hasattr(args, "diff") and args.diff is not None:
         with open(args.diff, "r") as file:
             diff = file.read()
     elif hasattr(args, "unstaged") and args.unstaged:
-        Logger().log("Fetching your unstaged changes...\n")
+        logger.log("Fetching your unstaged changes...\n")
         unstaged_changes_diff = execute_cli_command(["git", "diff"])
         diff = unstaged_changes_diff.stdout
     else:
-        Logger().log("Fetching your staged changes...\n")
+        logger.log("Fetching your staged changes...\n")
 
         if len(GitService.get_staged_files()) == 0:
-            Logger().log(
+            logger.log(
                 "🚨 No files are staged for commit. Run `git add` to stage some of your changes"
             )
             return
@@ -85,21 +88,60 @@ def conventional_commit_handler(args):
         staged_changes_diff = execute_cli_command(["git", "diff", "--staged"])
         diff = staged_changes_diff.stdout
 
-    # Generate the commit message body with the conventional parameter set to True
-    ai_commit_msg = generate_commit_message(diff, conventional=True)
+    # Generate the commit message body
+    try:
+        ai_commit_msg = generate_commit_message(diff, conventional=True)
+    except AIModelHandlerError as e:
+        logger.log(f"Error generating commit message: {e}")
+        logger.log("Please enter your commit message manually:")
+        ai_commit_msg = input().strip()
+        if not ai_commit_msg:
+            logger.log("No commit message provided. Exiting.")
+            return
 
     # Get commit type and scope
     commit_type = select_commit_type()
     scope = get_scope()
 
-    # Format and print the conventional commit
+    # Format the conventional commit
     formatted_commit = print_conventional_commit(commit_type, scope, ai_commit_msg)
 
-    # Ask if user wants to commit
-    should_commit = input("Would you like to commit with this message? (y/n): ")
+    # Ask if user wants to commit and push
+    command_string = f"""
+git commit -m "{formatted_commit}"
+git push
 
-    if should_commit.lower() == "y":
-        execute_cli_command(["git", "commit", "-m", formatted_commit], output=True)
-        Logger().log("Commit successful!")
+Would you like to commit your changes? (y/n): """
+
+    should_push_changes = input(command_string)
+
+    if should_push_changes == "n":
+        logger.log("👋 Goodbye!")
+        return
+    elif should_push_changes != "y":
+        logger.log("🚨 Invalid input. Exiting.")
+        return
+
+    # Commit the changes
+    execute_cli_command(["git", "commit", "-m", formatted_commit], output=True)
+
+    # Handle git push with upstream setting if needed
+    current_branch = GitService.get_current_branch()
+    has_upstream = GitService.has_upstream_branch(current_branch)
+
+    if has_upstream:
+        execute_cli_command(["git", "push"], output=True)
+        return
+
+    set_upstream = input(
+        f"No upstream branch found for '{current_branch}'. This will run: 'git push --set-upstream origin {current_branch}'. Set upstream? (y/n): "
+    )
+    if set_upstream.lower() == "y":
+        execute_cli_command(
+            ["git", "push", "--set-upstream", "origin", current_branch], output=True
+        )
+        logger.log(f"🔄 Upstream branch set for '{current_branch}'")
     else:
-        Logger().log("Commit cancelled.")
+        logger.log("Skipping push. You can set upstream manually")
+
+    return 0
