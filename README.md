@@ -188,11 +188,12 @@ git-ai-commit conventional
 ```
 
 This command:
-1. Analyzes your changes using AI
-2. Prompts you to select a commit type (feat, fix, docs, etc.)
-3. Allows you to add an optional scope
-4. Formats the message according to conventional commit standards
-5. Gives you the option to commit and push
+1. Analyzes your staged changes using AI
+2. Suggests the most appropriate commit type based on your changes
+3. Allows you to accept the suggestion or choose a different type
+4. Allows you to add an optional scope
+5. Formats the message according to conventional commit standards
+6. Gives you the option to commit and push
 
 Available commit types:
 - `feat`: New feature
