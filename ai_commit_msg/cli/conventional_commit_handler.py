@@ -69,25 +69,17 @@ def get_scope():
 def conventional_commit_handler(args):
     logger = Logger()
 
-    # Get the diff
-    if hasattr(args, "diff") and args.diff is not None:
-        with open(args.diff, "r") as file:
-            diff = file.read()
-    elif hasattr(args, "unstaged") and args.unstaged:
-        logger.log("Fetching your unstaged changes...\n")
-        unstaged_changes_diff = execute_cli_command(["git", "diff"])
-        diff = unstaged_changes_diff.stdout
-    else:
-        logger.log("Fetching your staged changes...\n")
+    # Simplify the diff handling - only use staged changes
+    logger.log("Fetching your staged changes...\n")
 
-        if len(GitService.get_staged_files()) == 0:
-            logger.log(
-                "🚨 No files are staged for commit. Run `git add` to stage some of your changes"
-            )
-            return
+    if len(GitService.get_staged_files()) == 0:
+        logger.log(
+            "🚨 No files are staged for commit. Run `git add` to stage some of your changes"
+        )
+        return
 
-        staged_changes_diff = execute_cli_command(["git", "diff", "--staged"])
-        diff = staged_changes_diff.stdout
+    staged_changes_diff = execute_cli_command(["git", "diff", "--staged"])
+    diff = staged_changes_diff.stdout
 
     # Generate the commit message body
     try:

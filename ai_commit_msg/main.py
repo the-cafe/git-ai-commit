@@ -145,18 +145,6 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
     conventional_commit_parser = subparsers.add_parser(
         "conventional", help="🏷️ Generate a conventional commit message"
     )
-    conventional_commit_parser.add_argument(
-        "-u",
-        "--unstaged",
-        action="store_true",
-        help="Use unstaged changes instead of staged changes",
-    )
-    conventional_commit_parser.add_argument(
-        "-d",
-        "--diff",
-        default=None,
-        help="🔍 Provide a diff file to generate a commit message",
-    )
 
     args = parser.parse_args(argv)
 
