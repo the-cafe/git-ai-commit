@@ -123,10 +123,8 @@ Would you like to commit your changes? (y/n): """
         logger.log("🚨 Invalid input. Exiting.")
         return
 
-    # Commit the changes
     execute_cli_command(["git", "commit", "-m", formatted_commit], output=True)
 
-    # Handle git push with the shared utility function
     handle_git_push()
 
     return 0
