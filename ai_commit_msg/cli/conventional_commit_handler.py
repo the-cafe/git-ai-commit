@@ -93,7 +93,6 @@ def get_scope(suggested_scope=None):
 def conventional_commit_handler(args):
     logger = Logger()
 
-    # Get the diff from staged changes
     logger.log("Fetching your staged changes...\n")
 
     if len(GitService.get_staged_files()) == 0:
@@ -105,7 +104,6 @@ def conventional_commit_handler(args):
     staged_changes_diff = execute_cli_command(["git", "diff", "--staged"])
     diff = staged_changes_diff.stdout
 
-    # AI suggests a commit type
     try:
         logger.log("🤖 AI is analyzing your changes to suggest a commit type...\n")
         suggested_type = generate_commit_message(diff, classify_type=True)
@@ -133,7 +131,6 @@ def conventional_commit_handler(args):
         logger.log(f"Error suggesting scope: {e}")
         suggested_scope = None
 
-    # Generate the commit message body
     try:
         ai_commit_msg = generate_commit_message(diff, conventional=True)
     except AIModelHandlerError as e:
@@ -144,15 +141,12 @@ def conventional_commit_handler(args):
             logger.log("No commit message provided. Exiting.")
             return
 
-    # Get commit type (with AI suggestion) and scope
     commit_type = select_commit_type(suggested_type)
 
     scope = get_scope(suggested_scope)
 
-    # Format the conventional commit
     formatted_commit = print_conventional_commit(commit_type, scope, ai_commit_msg)
 
-    # Ask if user wants to commit and push
     command_string = f"""
 git commit -m "{formatted_commit}"
 git push
@@ -168,8 +162,6 @@ Would you like to commit your changes? (y/n): """
         logger.log("🚨 Invalid input. Exiting.")
         return
 
-    # Commit the changes
     execute_cli_command(["git", "commit", "-m", f'"{formatted_commit}"'], output=True)
 
-    # Handle git push
     handle_git_push()
