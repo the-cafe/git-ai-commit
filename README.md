@@ -183,10 +183,6 @@ git-ai-commit summarize
 
 Generate commit messages in the [Conventional Commits](https://www.conventionalcommits.org/) format (`type(scope): description`).
 
-```bash
-git-ai-commit conventional
-```
-
 This command:
 1. Analyzes your staged changes using AI
 2. Suggests the most appropriate commit type based on your changes
