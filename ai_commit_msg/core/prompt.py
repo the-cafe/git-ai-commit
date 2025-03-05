@@ -1,10 +1,28 @@
 from ai_commit_msg.services.config_service import ConfigService
 
 
-def get_prompt(diff, conventional=False):
+def get_prompt(diff, conventional=False, classify_type=False):
     max_length = ConfigService().max_length
 
-    if conventional:
+    if classify_type:
+        COMMIT_MSG_SYSTEM_MESSAGE = f"""
+You are a software engineer reviewing code changes to classify them according to conventional commit standards.
+You will be provided with a set of code changes in diff format.
+
+Your task is to analyze the changes and determine the most appropriate conventional commit type.
+Choose ONE type from the following options:
+- feat: New feature
+- fix: Bug fix
+- docs: Documentation changes
+- style: Formatting changes
+- refactor: Code refactoring
+- perf: Performance improvements
+- test: Adding or modifying tests
+- chore: Maintenance tasks
+
+Respond with ONLY the type (e.g., "feat", "fix", etc.) without any additional text or explanation.
+"""
+    elif conventional:
         COMMIT_MSG_SYSTEM_MESSAGE = f"""
 You are a software engineer reviewing code changes.
 You will be provided with a set of code changes in diff format.

@@ -35,15 +35,29 @@ to use this commit message run: `git commit -m "{formatted_commit}"`
     return formatted_commit
 
 
-def select_commit_type():
-    Logger().log("Select a commit type:")
+def select_commit_type(suggested_type=None):
+    logger = Logger()
+
+    if suggested_type and suggested_type in COMMIT_TYPES:
+        logger.log(
+            f"AI suggests commit type: {suggested_type} ({COMMIT_TYPES[suggested_type]})"
+        )
+        use_suggested = (
+            input(f"Use suggested type '{suggested_type}'? (Y/n): ").strip().lower()
+        )
+        if use_suggested == "" or use_suggested == "y":
+            return suggested_type
+
+    logger.log("Select a commit type:")
 
     # Display commit types with descriptions
     for i, (type_key, description) in enumerate(COMMIT_TYPES.items(), 1):
-        Logger().log(f"{i}. {type_key}: {description}")
+        # Highlight the suggested type if it exists
+        highlight = "→ " if suggested_type == type_key else "  "
+        logger.log(f"{highlight}{i}. {type_key}: {description}")
 
     # Add custom option
-    Logger().log(f"{len(COMMIT_TYPES) + 1}. custom: Enter a custom type")
+    logger.log(f"  {len(COMMIT_TYPES) + 1}. custom: Enter a custom type")
 
     while True:
         try:
@@ -56,9 +70,9 @@ def select_commit_type():
                 custom_type = input("Enter your custom commit type: ")
                 return custom_type
             else:
-                Logger().log("Invalid choice. Please try again.")
+                logger.log("Invalid choice. Please try again.")
         except ValueError:
-            Logger().log("Please enter a valid number.")
+            logger.log("Please enter a valid number.")
 
 
 def get_scope():
@@ -69,7 +83,7 @@ def get_scope():
 def conventional_commit_handler(args):
     logger = Logger()
 
-    # Simplify the diff handling - only use staged changes
+    # Get the diff from staged changes
     logger.log("Fetching your staged changes...\n")
 
     if len(GitService.get_staged_files()) == 0:
@@ -80,6 +94,21 @@ def conventional_commit_handler(args):
 
     staged_changes_diff = execute_cli_command(["git", "diff", "--staged"])
     diff = staged_changes_diff.stdout
+
+    # First, have the AI classify the commit type
+    try:
+        logger.log("🤖 AI is analyzing your changes to suggest a commit type...\n")
+        suggested_type = generate_commit_message(diff, classify_type=True)
+
+        # Validate the suggested type
+        if suggested_type not in COMMIT_TYPES:
+            logger.log(
+                f"AI suggested an invalid type: '{suggested_type}'. Falling back to manual selection."
+            )
+            suggested_type = None
+    except AIModelHandlerError as e:
+        logger.log(f"Error classifying commit type: {e}")
+        suggested_type = None
 
     # Generate the commit message body
     try:
@@ -92,8 +121,8 @@ def conventional_commit_handler(args):
             logger.log("No commit message provided. Exiting.")
             return
 
-    # Get commit type and scope
-    commit_type = select_commit_type()
+    # Get commit type (with AI suggestion) and scope
+    commit_type = select_commit_type(suggested_type)
     scope = get_scope()
 
     # Format the conventional commit
@@ -115,8 +144,26 @@ Would you like to commit your changes? (y/n): """
         logger.log("🚨 Invalid input. Exiting.")
         return
 
+    # Commit the changes
     execute_cli_command(["git", "commit", "-m", formatted_commit], output=True)
 
-    handle_git_push()
+    # Handle git push
+    current_branch = GitService.get_current_branch()
+    has_upstream = GitService.has_upstream_branch(current_branch)
+
+    if has_upstream:
+        execute_cli_command(["git", "push"], output=True)
+        return
+
+    set_upstream = input(
+        f"No upstream branch found for '{current_branch}'. This will run: 'git push --set-upstream origin {current_branch}'. Set upstream? (y/n): "
+    )
+    if set_upstream.lower() == "y":
+        execute_cli_command(
+            ["git", "push", "--set-upstream", "origin", current_branch], output=True
+        )
+        logger.log(f"🔄 Upstream branch set for '{current_branch}'")
+    else:
+        logger.log("Skipping push. You can set upstream manually")
 
     return 0
