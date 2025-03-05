@@ -3,12 +3,12 @@ from ai_commit_msg.core.prompt import get_prompt
 from ai_commit_msg.services.config_service import ConfigService
 
 
-def generate_commit_message(diff: str = None) -> str:
+def generate_commit_message(diff: str = None, conventional: bool = False) -> str:
 
     if diff is None:
         raise ValueError("Diff is required to generate a commit message")
 
-    prompt = get_prompt(diff)
+    prompt = get_prompt(diff, conventional=conventional)
     ai_gen_commit_msg = llm_chat_completion(prompt)
 
     prefix = ConfigService().prefix

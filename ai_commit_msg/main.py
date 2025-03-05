@@ -15,6 +15,7 @@ from ai_commit_msg.prepare_commit_msg_hook import prepare_commit_msg_hook
 from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.services.pip_service import PipService
 from ai_commit_msg.utils.logger import Logger
+from ai_commit_msg.cli.conventional_commit_handler import conventional_commit_handler
 
 
 def called_from_git_hook():
@@ -135,9 +136,26 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
         help="Setup the prepare-commit-msg hook",
     )
     summary_cmd_parser.add_argument(
-        "-d", "--diff",
+        "-d",
+        "--diff",
         default=None,
-        help="🔍 Provide a diff to generate a commit message"
+        help="🔍 Provide a diff to generate a commit message",
+    )
+
+    conventional_commit_parser = subparsers.add_parser(
+        "conventional", help="🏷️ Generate a conventional commit message"
+    )
+    conventional_commit_parser.add_argument(
+        "-u",
+        "--unstaged",
+        action="store_true",
+        help="Use unstaged changes instead of staged changes",
+    )
+    conventional_commit_parser.add_argument(
+        "-d",
+        "--diff",
+        default=None,
+        help="🔍 Provide a diff file to generate a commit message",
     )
 
     args = parser.parse_args(argv)
@@ -160,6 +178,8 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
         hook_handler(args)
     elif args.command == "summarize" or args.command == "summary":
         summary_handler(args)
+    elif args.command == "conventional":
+        conventional_commit_handler(args)
 
     ## Only in main script, we return zero instead of None when the return value is unused
     return 0

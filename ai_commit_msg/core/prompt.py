@@ -1,10 +1,25 @@
 from ai_commit_msg.services.config_service import ConfigService
 
 
-def get_prompt(diff):
+def get_prompt(diff, conventional=False):
     max_length = ConfigService().max_length
 
-    COMMIT_MSG_SYSTEM_MESSAGE = f"""
+    if conventional:
+        COMMIT_MSG_SYSTEM_MESSAGE = f"""
+You are a software engineer reviewing code changes.
+You will be provided with a set of code changes in diff format.
+
+Your task is to write a concise commit message body that summarizes the changes. This will be used in a conventional commit format.
+
+These are your requirements for the commit message body:
+- Write in the imperative mood (e.g., "add feature" not "added feature")
+- Focus only on the description part - do NOT include type prefixes like "feat:" or "fix:" as these will be added separately
+- Be specific but concise about what was changed
+- You don't need to add any punctuation or capitalization
+- Your response cannot be more than {max_length} characters
+"""
+    else:
+        COMMIT_MSG_SYSTEM_MESSAGE = f"""
 Your a software engineer and you are reviewing a set of code changes.
 You will be provided with a set of code changes in diff format.
 
