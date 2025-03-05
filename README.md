@@ -190,8 +190,8 @@ git-ai-commit conventional
 This command:
 1. Analyzes your staged changes using AI
 2. Suggests the most appropriate commit type based on your changes
-3. Allows you to accept the suggestion or choose a different type
-4. Allows you to add an optional scope
+3. Suggests a relevant scope based on the affected components
+4. Allows you to accept the suggestions or choose your own
 5. Formats the message according to conventional commit standards
 6. Gives you the option to commit and push
 

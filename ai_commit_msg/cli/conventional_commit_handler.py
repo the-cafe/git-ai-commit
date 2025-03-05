@@ -75,7 +75,17 @@ def select_commit_type(suggested_type=None):
             logger.log("Please enter a valid number.")
 
 
-def get_scope():
+def get_scope(suggested_scope=None):
+    logger = Logger()
+
+    if suggested_scope and suggested_scope.strip() and suggested_scope != "none":
+        logger.log(f"AI suggests scope: '{suggested_scope}'")
+        use_suggested = (
+            input(f"Use suggested scope '{suggested_scope}'? (Y/n): ").strip().lower()
+        )
+        if use_suggested == "" or use_suggested == "y":
+            return suggested_scope
+
     scope = input("Enter scope (optional, press Enter to skip): ")
     return scope.strip()
 
@@ -110,6 +120,24 @@ def conventional_commit_handler(args):
         logger.log(f"Error classifying commit type: {e}")
         suggested_type = None
 
+    # Have the AI suggest a scope - make sure this is called separately
+    suggested_scope = None
+    try:
+        logger.log("🤖 AI is analyzing your changes to suggest a scope...\n")
+        # Make sure we're explicitly setting classify_scope=True and other params to False
+        suggested_scope = generate_commit_message(
+            diff, conventional=False, classify_type=False, classify_scope=True
+        )
+
+        # Add debug logging to see what's being returned
+        logger.log(f"Debug - AI suggested scope: '{suggested_scope}'")
+
+        if suggested_scope == "none" or not suggested_scope:
+            suggested_scope = None
+    except AIModelHandlerError as e:
+        logger.log(f"Error suggesting scope: {e}")
+        suggested_scope = None
+
     # Generate the commit message body
     try:
         ai_commit_msg = generate_commit_message(diff, conventional=True)
@@ -123,7 +151,9 @@ def conventional_commit_handler(args):
 
     # Get commit type (with AI suggestion) and scope
     commit_type = select_commit_type(suggested_type)
-    scope = get_scope()
+
+    # Make sure we're passing the suggested scope to get_scope
+    scope = get_scope(suggested_scope)
 
     # Format the conventional commit
     formatted_commit = print_conventional_commit(commit_type, scope, ai_commit_msg)
@@ -145,7 +175,7 @@ Would you like to commit your changes? (y/n): """
         return
 
     # Commit the changes
-    execute_cli_command(["git", "commit", "-m", formatted_commit], output=True)
+    execute_cli_command(["git", "commit", "-m", f'"{formatted_commit}"'], output=True)
 
     # Handle git push
     current_branch = GitService.get_current_branch()

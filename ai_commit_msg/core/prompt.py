@@ -1,7 +1,7 @@
 from ai_commit_msg.services.config_service import ConfigService
 
 
-def get_prompt(diff, conventional=False, classify_type=False):
+def get_prompt(diff, conventional=False, classify_type=False, classify_scope=False):
     max_length = ConfigService().max_length
 
     if classify_type:
@@ -21,6 +21,28 @@ Choose ONE type from the following options:
 - chore: Maintenance tasks
 
 Respond with ONLY the type (e.g., "feat", "fix", etc.) without any additional text or explanation.
+"""
+    elif classify_scope:
+        COMMIT_MSG_SYSTEM_MESSAGE = f"""
+You are a software engineer reviewing code changes to suggest an appropriate scope for a conventional commit.
+You will be provided with a set of code changes in diff format.
+
+Your task is to analyze the changes and suggest a concise, meaningful scope that indicates what part of the codebase or functionality is being modified.
+Good scopes are typically:
+- Short (1-3 words)
+- Descriptive of the component or feature being changed
+- Lowercase with no spaces (use hyphens if needed)
+
+Examples of good scopes:
+- "auth" for authentication changes
+- "user-profile" for user profile features
+- "api" for API-related changes
+- "docs" for documentation
+- "deps" for dependency updates
+- "ui" for user interface changes
+
+If you can't determine a meaningful scope, respond with "none".
+Respond with ONLY the suggested scope without any additional text or explanation.
 """
     elif conventional:
         COMMIT_MSG_SYSTEM_MESSAGE = f"""
