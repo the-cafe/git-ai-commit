@@ -4,6 +4,7 @@ from ai_commit_msg.services.pip_service import PipService
 from ai_commit_msg.utils.utils import execute_cli_command
 from ai_commit_msg.utils.error import AIModelHandlerError
 from ai_commit_msg.utils.logger import Logger
+from ai_commit_msg.utils.git_utils import handle_git_push
 
 
 def gen_ai_commit_message_handler():
@@ -45,22 +46,7 @@ Would you like to commit your changes? (y/n): """
         return
 
     execute_cli_command(["git", "commit", "-m", ai_gen_commit_msg], output=True)
-    current_branch = GitService.get_current_branch()
-    has_upstream = GitService.has_upstream_branch(current_branch)
 
-    if has_upstream:
-        execute_cli_command(["git", "push"], output=True)
-        return
-
-    set_upstream = input(
-        f"No upstream branch found for '{current_branch}'. This will run: 'git push --set-upstream origin {current_branch}'. Set upstream? (y/n): "
-    )
-    if set_upstream.lower() == "y":
-        execute_cli_command(
-            ["git", "push", "--set-upstream", "origin", current_branch], output=True
-        )
-        print(f"🔄 Upstream branch set for '{current_branch}'")
-    else:
-        print("Skipping push. You can set upstream manually")
+    handle_git_push()
 
     return 0

@@ -3,6 +3,7 @@ from ai_commit_msg.services.git_service import GitService
 from ai_commit_msg.utils.logger import Logger
 from ai_commit_msg.utils.utils import execute_cli_command
 from ai_commit_msg.utils.error import AIModelHandlerError
+from ai_commit_msg.utils.git_utils import handle_git_push
 
 
 COMMIT_TYPES = {
@@ -125,23 +126,7 @@ Would you like to commit your changes? (y/n): """
     # Commit the changes
     execute_cli_command(["git", "commit", "-m", formatted_commit], output=True)
 
-    # Handle git push with upstream setting if needed
-    current_branch = GitService.get_current_branch()
-    has_upstream = GitService.has_upstream_branch(current_branch)
-
-    if has_upstream:
-        execute_cli_command(["git", "push"], output=True)
-        return
-
-    set_upstream = input(
-        f"No upstream branch found for '{current_branch}'. This will run: 'git push --set-upstream origin {current_branch}'. Set upstream? (y/n): "
-    )
-    if set_upstream.lower() == "y":
-        execute_cli_command(
-            ["git", "push", "--set-upstream", "origin", current_branch], output=True
-        )
-        logger.log(f"🔄 Upstream branch set for '{current_branch}'")
-    else:
-        logger.log("Skipping push. You can set upstream manually")
+    # Handle git push with the shared utility function
+    handle_git_push()
 
     return 0
