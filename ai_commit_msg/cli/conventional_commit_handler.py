@@ -172,22 +172,4 @@ Would you like to commit your changes? (y/n): """
     execute_cli_command(["git", "commit", "-m", f'"{formatted_commit}"'], output=True)
 
     # Handle git push
-    current_branch = GitService.get_current_branch()
-    has_upstream = GitService.has_upstream_branch(current_branch)
-
-    if has_upstream:
-        execute_cli_command(["git", "push"], output=True)
-        return
-
-    set_upstream = input(
-        f"No upstream branch found for '{current_branch}'. This will run: 'git push --set-upstream origin {current_branch}'. Set upstream? (y/n): "
-    )
-    if set_upstream.lower() == "y":
-        execute_cli_command(
-            ["git", "push", "--set-upstream", "origin", current_branch], output=True
-        )
-        logger.log(f"🔄 Upstream branch set for '{current_branch}'")
-    else:
-        logger.log("Skipping push. You can set upstream manually")
-
-    return 0
+    handle_git_push()
