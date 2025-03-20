@@ -8,9 +8,10 @@ from ai_commit_msg.services.local_db_service import (
     CONFIG_COLLECTION_KEY,
 )
 from ai_commit_msg.utils.models import OPEN_AI_MODEL_LIST
+from ai_commit_msg.services.llm_service import LLMService
 
 
-class OpenAiService:
+class OpenAiService(LLMService):
     client = None
 
     def __init__(self):
@@ -26,7 +27,7 @@ class OpenAiService:
             )
         self.client = OpenAI(api_key=api_key)
 
-    def chat_with_openai(self, messages):
+    def chat_completion(self, messages):
         model_name = ConfigService.get_model()
 
         if model_name not in OPEN_AI_MODEL_LIST:
@@ -40,6 +41,9 @@ class OpenAiService:
             return completion.choices[0].message.content
         except Exception as e:
             raise map_error("OPENAI", getattr(e, "code", str(e)), e)
+
+    def chat_with_openai(self, messages):
+        return self.chat_completion(messages)
 
     @staticmethod
     def get_openai_api_key():

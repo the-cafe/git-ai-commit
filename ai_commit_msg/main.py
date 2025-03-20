@@ -135,9 +135,10 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
         help="Setup the prepare-commit-msg hook",
     )
     summary_cmd_parser.add_argument(
-        "-d", "--diff",
+        "-d",
+        "--diff",
         default=None,
-        help="🔍 Provide a diff to generate a commit message"
+        help="🔍 Provide a diff to generate a commit message",
     )
 
     args = parser.parse_args(argv)

@@ -2,9 +2,10 @@ import requests
 
 from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.utils.logger import Logger
+from ai_commit_msg.services.llm_service import LLMService
 
 
-class OLlamaService:
+class OLlamaService(LLMService):
     def __init__(self):
         self.url = ConfigService.get_ollama_url()
 

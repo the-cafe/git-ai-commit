@@ -4,9 +4,10 @@ import anthropic
 from ai_commit_msg.utils.models import ANTHROPIC_MODEL_LIST
 from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.utils.error import map_error
+from ai_commit_msg.services.llm_service import LLMService
 
 
-class AnthropicService:
+class AnthropicService(LLMService):
     api_key = ""
 
     def __init__(self):
