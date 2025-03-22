@@ -6,19 +6,9 @@ from ai_commit_msg.utils.logger import Logger
 
 
 class LLMServiceFactory:
-    """Factory class for creating LLM service instances"""
 
     @staticmethod
     def create_service(model_name):
-        """
-        Create and return an instance of the appropriate LLM service based on the model name
-
-        Args:
-            model_name (str): The name of the model to use
-
-        Returns:
-            LLMService: An instance of the appropriate LLM service
-        """
         if model_name in OPEN_AI_MODEL_LIST:
             return OpenAiService()
         elif model_name.startswith("ollama"):
