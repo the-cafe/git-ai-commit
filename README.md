@@ -179,6 +179,31 @@ git-ai-commit summarize
 
 ---
 
+🏷️ `git-ai-commit conventional`
+
+Generate commit messages in the [Conventional Commits](https://www.conventionalcommits.org/) format (`type(scope): description`).
+
+This command:
+1. Analyzes your staged changes using AI
+2. Suggests the most appropriate commit type based on your changes
+3. Suggests a relevant scope based on the affected components
+4. Allows you to accept the suggestions or choose your own
+5. Formats the message according to conventional commit standards
+6. Gives you the option to commit and push
+
+Available commit types:
+
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation changes
+- `style`: Formatting changes
+- `refactor`: Code refactoring
+- `perf`: Performance improvements
+- `test`: Adding or modifying tests
+- `chore`: Maintenance tasks
+
+---
+
 📌 `git-ai-commit  help`, `-h`
 
 Displays a list of available command and options to help you setup our tool.
