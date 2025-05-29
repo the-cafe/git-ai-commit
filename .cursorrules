@@ -1,0 +1,23 @@
+# Git AI Commit Integration
+
+## Commit Workflow
+When making commits, always use the `git-ai-commit` CLI tool instead of regular `git commit`. This tool automatically generates AI-powered commit messages based on your staged changes.
+
+### Recommended Commands:
+- Use `git-ai-commit` instead of `git commit` for AI-generated commit messages
+- Use `git-ai-commit conventional` for conventional commit format
+- Use `git-ai-commit summarize` to get a quick overview of changes before committing
+- Use `git-ai-commit help-ai [question]` if you need assistance with the tool
+
+### Setup Instructions:
+1. Ensure git-ai-commit is installed: `pip install git-ai-commit`
+2. Configure your API keys: `git-ai-commit config --setup`
+3. Set up git hooks: `git-ai-commit hook --setup`
+
+### Workflow Integration:
+- Before committing, stage your changes with `git add`
+- Instead of `git commit -m "message"`, simply run `git-ai-commit`
+- The tool will analyze your changes and suggest an appropriate commit message
+- Review and accept the AI-generated message or customize as needed
+
+This ensures consistent, descriptive commit messages that follow best practices and provide clear context about the changes made. 
