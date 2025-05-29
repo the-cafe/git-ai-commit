@@ -88,7 +88,7 @@ default_install_hook_types:
   - prepare-commit-msg
 repos:
   - repo: https://github.com/the-cafe/git-ai-commit
-    rev: v1.0.11
+    rev: v1.0.13
     hooks:
     -   id: git-ai-commit
 ```
