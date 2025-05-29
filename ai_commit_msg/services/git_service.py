@@ -127,8 +127,12 @@ class GitService:
 
     @staticmethod
     def get_git_prepare_commit_msg_hook_path():
-        git_repo_path = GitService.get_git_directory()
-        return git_repo_path + "/hooks/prepare-commit-msg"
+        # Use git's built-in command to get the correct hooks directory
+        # This properly handles worktrees and other git configurations
+        hooks_dir = execute_cli_command(
+            ["git", "rev-parse", "--git-path", "hooks"]
+        ).stdout.strip()
+        return hooks_dir + "/prepare-commit-msg"
 
     @staticmethod
     def get_last_n_commit_msg(n):
