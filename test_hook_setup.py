@@ -34,5 +34,60 @@ def test_hook_setup_with_missing_directory():
         print("✅ Test completed successfully!")
 
 
+def test_local_git_hooks():
+    """Test the actual local .git/hooks directory"""
+
+    # Check if we're in a git repository
+    git_dir = ".git"
+    if not os.path.exists(git_dir):
+        print("❌ Not in a git repository - .git directory not found")
+        return
+
+    hooks_dir = os.path.join(git_dir, "hooks")
+    hook_file_path = os.path.join(hooks_dir, "prepare-commit-msg")
+
+    print(f"🔍 Checking local git hooks in: {os.path.abspath(hooks_dir)}")
+    print(f"Hooks directory exists: {os.path.exists(hooks_dir)}")
+
+    if os.path.exists(hooks_dir):
+        print(f"Files in hooks directory:")
+        for file in os.listdir(hooks_dir):
+            file_path = os.path.join(hooks_dir, file)
+            is_executable = os.access(file_path, os.X_OK)
+            print(
+                f"  - {file} {'(executable)' if is_executable else '(not executable)'}"
+            )
+
+    print(f"\n📋 prepare-commit-msg hook status:")
+    print(f"Hook file exists: {os.path.exists(hook_file_path)}")
+
+    if os.path.exists(hook_file_path):
+        print(f"Hook file is executable: {os.access(hook_file_path, os.X_OK)}")
+
+        # Check content
+        with open(hook_file_path, "r") as f:
+            content = f.read()
+            has_git_ai_commit = "git-ai-commit" in content
+            print(f"Hook file contains 'git-ai-commit': {has_git_ai_commit}")
+
+            if has_git_ai_commit:
+                print("✅ git-ai-commit hook is installed!")
+            else:
+                print("❌ git-ai-commit not found in hook file")
+                print("Hook content preview:")
+                print("-" * 40)
+                print(content[:200] + "..." if len(content) > 200 else content)
+                print("-" * 40)
+    else:
+        print("❌ prepare-commit-msg hook not found")
+        print("\n🔧 To install the hook, you can run:")
+        print(f"handle_setup_hook('{hook_file_path}')")
+
+
 if __name__ == "__main__":
+    print("=== Testing Local Git Hooks ===")
+    test_local_git_hooks()
+
+    print("\n" + "=" * 50)
+    print("=== Testing with Temporary Directory ===")
     test_hook_setup_with_missing_directory()
