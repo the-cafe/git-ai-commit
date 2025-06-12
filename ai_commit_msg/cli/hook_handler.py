@@ -32,6 +32,11 @@ fi
 
 
 def handle_setup_hook(hook_directory_path: str):
+    # Ensure the hooks directory exists
+    hooks_dir = os.path.dirname(hook_directory_path)
+    if not os.path.exists(hooks_dir):
+        os.makedirs(hooks_dir, exist_ok=True)
+
     existing_hook_content = ""
     if os.path.exists(hook_directory_path):
         with open(hook_directory_path, "r") as file:
