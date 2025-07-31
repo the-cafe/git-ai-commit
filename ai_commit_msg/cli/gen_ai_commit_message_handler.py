@@ -32,7 +32,6 @@ def gen_ai_commit_message_handler():
 
     command_string = f"""
 git commit -m "{ai_gen_commit_msg}"
-git push
 
 Would you like to commit your changes? (y/n): """
 
@@ -46,7 +45,5 @@ Would you like to commit your changes? (y/n): """
         return
 
     execute_cli_command(["git", "commit", "-m", ai_gen_commit_msg], output=True)
-
-    handle_git_push()
 
     return 0
