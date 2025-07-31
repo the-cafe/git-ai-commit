@@ -3,7 +3,6 @@ from ai_commit_msg.services.git_service import GitService
 from ai_commit_msg.utils.logger import Logger
 from ai_commit_msg.utils.utils import execute_cli_command
 from ai_commit_msg.utils.error import AIModelHandlerError
-from ai_commit_msg.utils.git_utils import handle_git_push
 
 
 COMMIT_TYPES = {
@@ -163,5 +162,3 @@ Would you like to commit your changes? (y/n): """
         return
 
     execute_cli_command(["git", "commit", "-m", f'"{formatted_commit}"'], output=True)
-
-    handle_git_push()
