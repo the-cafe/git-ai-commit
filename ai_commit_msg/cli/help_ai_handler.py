@@ -13,8 +13,7 @@ def help_ai_handler(args, help_menu):
     prompt = [
         {
             "role": "system",
-            "content": f"""
-Hey GPT, based on the follow documentation on the CLI's arguments
+            "content": f"""Based on the following documentation on the CLI's arguments
 
 {help_menu}
 

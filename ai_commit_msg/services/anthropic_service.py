@@ -18,9 +18,21 @@ class AnthropicService(LLMService):
                 """Anthropic API key is not set. Run the following command to set the key:git-ai-commit config --anthropic-key=<insert your key>"""
             )
 
-        self.client = anthropic.Anthropic(
-            api_key=self.api_key,
-        )
+        api_base = os.environ.get("API_BASE")
+        if api_base:
+            try:
+                self.client = anthropic.Anthropic(
+                    api_key=self.api_key,
+                    base_url=api_base,
+                )
+            except TypeError:
+                self.client = anthropic.Anthropic(
+                    api_key=self.api_key,
+                )
+        else:
+            self.client = anthropic.Anthropic(
+                api_key=self.api_key,
+            )
 
     @staticmethod
     def get_anthropic_api_key():
@@ -62,6 +74,7 @@ class AnthropicService(LLMService):
             ai_gen_message = self.client.messages.create(
                 model=select_model,
                 max_tokens=1024,
+                temperature=0.3,
                 system=system_message,
                 messages=user_message,
             )

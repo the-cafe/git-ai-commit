@@ -61,6 +61,14 @@ def config_handler(args):
         Logger().log("Max length set to " + args.max_length)
         has_updated = True
 
+    if hasattr(args, "commit_template") and args.commit_template is not None:
+        config_service.set_commit_template(args.commit_template)
+        if args.commit_template:
+            Logger().log("Commit template set to:\n" + args.commit_template)
+        else:
+            Logger().log("Commit template cleared")
+        has_updated = True
+
     if not has_updated:
         display_config_db = LocalDbService().display_db()
         Logger().log(display_config_db)

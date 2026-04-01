@@ -1,4 +1,5 @@
 from ai_commit_msg.core.gen_commit_msg import generate_commit_message
+from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.services.git_service import GitService
 from ai_commit_msg.services.pip_service import PipService
 from ai_commit_msg.utils.utils import execute_cli_command
@@ -20,8 +21,15 @@ def gen_ai_commit_message_handler():
 
     staged_diff = GitService.get_staged_diff()
 
+    # Check if user has a custom commit template configured
+    config = ConfigService()
+    commit_template = config.commit_template if config.commit_template else None
+
     try:
-        ai_gen_commit_msg = generate_commit_message(staged_diff.stdout)
+        ai_gen_commit_msg = generate_commit_message(
+            staged_diff.stdout,
+            commit_template=commit_template,
+        )
     except AIModelHandlerError as e:
         logger.log(f"Error generating commit message: {e}")
         logger.log("Please enter your commit message manually:")

@@ -84,7 +84,13 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
         "-p", "--prefix", help="🏷️ Set a prefix for the commit message"
     )
     config_parser.add_argument(
-        "-ml", "--max-length", help="🏷️ Set a prefix for the commit message"
+        "-ml", "--max-length", help="📏 Set the max length for the commit message"
+    )
+    config_parser.add_argument(
+        "-ct",
+        "--commit-template",
+        dest="commit_template",
+        help="📋 Set a custom commit message format template (e.g., '【type】（version-id）message')",
     )
 
     # Help command

@@ -1,3 +1,4 @@
+import os
 import time
 
 from ai_commit_msg.services.local_db_service import (
@@ -16,7 +17,8 @@ class ConfigService:
     ollama_url = "http://localhost:11434/api/chat"
     last_updated_at = ""
     prefix = ""
-    max_length = 50
+    max_length = 120
+    commit_template = ""
 
     def __init__(self):
         config = ConfigService.get_config()
@@ -37,6 +39,8 @@ class ConfigService:
             self.prefix = config["prefix"]
         if ConfigKeysEnum.MAX_LENGTH.value in config:
             self.max_length = config[ConfigKeysEnum.MAX_LENGTH.value]
+        if "commit_template" in config:
+            self.commit_template = config["commit_template"]
 
     @staticmethod
     def get_config():
@@ -45,6 +49,10 @@ class ConfigService:
 
     @staticmethod
     def get_model():
+        env_model = os.environ.get("MODEL")
+        if env_model:
+            return env_model
+
         raw_json_db = LocalDbService().get_db()[CONFIG_COLLECTION_KEY]
         return raw_json_db["model"]
 
@@ -78,7 +86,7 @@ class ConfigService:
         self.openai_api_key = api_key
 
     def set_model(self, model):
-        if not ConfigService.is_supported_model(model) and model is not "":
+        if not ConfigService.is_supported_model(model) and model != "":
             raise Exception(f"Model {model} is not supported")
 
         config = ConfigService.get_config()
@@ -109,6 +117,12 @@ class ConfigService:
         config[ConfigKeysEnum.MAX_LENGTH.value] = int(max_length)
         LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
         self.max_length = max_length
+
+    def set_commit_template(self, template):
+        config = ConfigService.get_config()
+        config["commit_template"] = template
+        LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
+        self.commit_template = template
 
     @staticmethod
     def is_supported_model(model):

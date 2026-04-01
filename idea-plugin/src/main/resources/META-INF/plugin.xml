@@ -1,0 +1,68 @@
+<idea-plugin>
+    <id>com.gitaicommit.plugin</id>
+    <name>Git AI Commit</name>
+    <vendor email="minglianglin50@gmail.com" url="https://github.com/the-cafe/ai-commit-msg">Git AI Commit Team</vendor>
+
+    <description><![CDATA[
+    AI-powered Git commit message generator integrated into IntelliJ IDEA.
+    <br/>
+    <ul>
+        <li>Generate commit messages using AI (OpenAI, Anthropic, Ollama)</li>
+        <li>Support for Conventional Commits format</li>
+        <li>Summarize staged changes</li>
+    </ul>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>Git4Idea</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="com.gitaicommit.services.GitAICommitService"/>
+        <applicationService serviceImplementation="com.gitaicommit.settings.GitAICommitSettings"/>
+        <applicationConfigurable parentId="tools" instance="com.gitaicommit.settings.GitAICommitConfigurable"
+                                 id="com.gitaicommit.settings.GitAICommitConfigurable"
+                                 displayName="Git AI Commit"/>
+    </extensions>
+
+    <actions>
+        <group id="GitAICommit.Menu" text="Git AI Commit" popup="true">
+            <add-to-group group-id="VcsGroups" anchor="last"/>
+
+            <action id="GitAICommit.Generate"
+                    class="com.gitaicommit.actions.GenerateCommitAction"
+                    text="Generate AI Commit Message"
+                    description="Generate commit message using AI">
+            </action>
+
+            <action id="GitAICommit.Conventional"
+                    class="com.gitaicommit.actions.ConventionalCommitAction"
+                    text="Generate Conventional Commit"
+                    description="Generate conventional commit message">
+            </action>
+
+            <action id="GitAICommit.Summarize"
+                    class="com.gitaicommit.actions.SummarizeChangesAction"
+                    text="Summarize Changes"
+                    description="Summarize staged changes">
+            </action>
+        </group>
+
+        <!-- 工具栏按钮 -->
+        <action id="GitAICommit.ToolbarGenerate"
+                class="com.gitaicommit.actions.GenerateCommitAction"
+                text="AI Commit"
+                description="Generate AI commit message"
+                icon="AllIcons.Actions.Lightning">
+            <add-to-group group-id="MainToolBar" anchor="last"/>
+        </action>
+
+        <!-- VCS 提交对话框按钮 -->
+        <action id="GitAICommit.VcsGenerate"
+                class="com.gitaicommit.actions.GenerateCommitFromVcsAction"
+                text="AI 生成提交消息"
+                description="使用 AI 生成提交消息"
+                icon="AllIcons.Actions.Lightning">
+            <add-to-group group-id="Vcs.MessageActionGroup" anchor="first"/>
+        </action>
+    </actions>
+</idea-plugin>

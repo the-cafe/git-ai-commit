@@ -25,7 +25,11 @@ class OpenAiService(LLMService):
         git-ai-commit config --openai-key=<insert-your-key>
         """
             )
-        self.client = OpenAI(api_key=api_key)
+        api_base = os.environ.get("API_BASE")
+        if api_base:
+            self.client = OpenAI(api_key=api_key, base_url=api_base)
+        else:
+            self.client = OpenAI(api_key=api_key)
 
     def chat_completion(self, messages):
         model_name = ConfigService.get_model()
@@ -36,7 +40,10 @@ class OpenAiService(LLMService):
             )
         try:
             completion = self.client.chat.completions.create(
-                model=model_name, messages=messages
+                model=model_name,
+                messages=messages,
+                temperature=0.3,
+                max_tokens=1024,
             )
             return completion.choices[0].message.content
         except Exception as e:
