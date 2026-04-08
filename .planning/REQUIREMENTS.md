@@ -8,18 +8,18 @@
 
 ### 配置管理（CONFIG）
 
-- [ ] **CONFIG-01**: 用户可以通过可视化界面配置项目版本号（如 "1.9.1"）
-- [ ] **CONFIG-02**: 系统自动验证版本号格式符合 SemVer 规范
-- [ ] **CONFIG-03**: 版本号配置持久化到 `.ai_commit_msg_config.json` 文件
-- [ ] **CONFIG-04**: 用户可以查看当前配置的版本号
-- [ ] **CONFIG-05**: 用户可以修改或删除已配置的版本号
-- [ ] **CONFIG-06**: 系统提供版本号配置的帮助提示和示例
+- [x] **CONFIG-01**: 用户可以通过可视化界面配置项目版本号（如 "1.9.1"）
+- [x] **CONFIG-02**: 系统自动验证版本号格式符合 SemVer 规范
+- [x] **CONFIG-03**: 版本号配置持久化到 `.ai_commit_msg_config.json` 文件
+- [x] **CONFIG-04**: 用户可以查看当前配置的版本号
+- [x] **CONFIG-05**: 用户可以修改或删除已配置的版本号
+- [x] **CONFIG-06**: 系统提供版本号配置的帮助提示和示例
 
 ### 详细格式生成（DETAIL）
 
 - [ ] **DETAIL-01**: 系统生成包含版本号、临时任务号、标题和详细列表的提交信息
 - [ ] **DETAIL-02**: 提交信息格式为：`type(version-taskid): 标题\n\n- 变更点1\n- 变更点2\n...`
-- [ ] **DETAIL-03**: 系统自动生成临时任务号（格式：TEMP-001）供用户替换
+- [x] **DETAIL-03**: 系统自动生成临时任务号（格式：TEMP-001）供用户替换
 - [ ] **DETAIL-04**: 详细列表包含 3-10 个具体的技术变更点
 - [ ] **DETAIL-05**: 每个变更点描述清晰、具体，聚焦业务影响和技术决策
 - [ ] **DETAIL-06**: 支持 bugfix 和 feature 两种提交类型的详细格式
@@ -35,10 +35,10 @@
 
 ### 格式回退机制（FALLBACK）
 
-- [ ] **FALLBACK-01**: 当用户未配置版本号时，系统自动使用普通 Conventional Commits 格式
-- [ ] **FALLBACK-02**: 格式回退过程对用户透明，无需额外操作
-- [ ] **FALLBACK-03**: 系统在回退时提示用户可以配置版本号以启用详细格式
-- [ ] **FALLBACK-04**: 回退格式与现有的 `conventional` 命令生成的格式一致
+- [x] **FALLBACK-01**: 当用户未配置版本号时，系统自动使用普通 Conventional Commits 格式
+- [x] **FALLBACK-02**: 格式回退过程对用户透明，无需额外操作
+- [x] **FALLBACK-03**: 系统在回退时提示用户可以配置版本号以启用详细格式
+- [x] **FALLBACK-04**: 回退格式与现有的 `conventional` 命令生成的格式一致
 
 ### LLM 集成（LLM）
 
@@ -101,15 +101,15 @@
 
 | 需求 | 阶段 | 状态 |
 |------|------|------|
-| CONFIG-01 | Phase 1 | Pending |
-| CONFIG-02 | Phase 1 | Pending |
-| CONFIG-03 | Phase 1 | Pending |
-| CONFIG-04 | Phase 1 | Pending |
-| CONFIG-05 | Phase 1 | Pending |
-| CONFIG-06 | Phase 1 | Pending |
+| CONFIG-01 | Phase 1 | Complete |
+| CONFIG-02 | Phase 1 | Complete |
+| CONFIG-03 | Phase 1 | Complete |
+| CONFIG-04 | Phase 1 | Complete |
+| CONFIG-05 | Phase 1 | Complete |
+| CONFIG-06 | Phase 1 | Complete |
 | DETAIL-01 | Phase 3 | Pending |
 | DETAIL-02 | Phase 3 | Pending |
-| DETAIL-03 | Phase 1 | Pending |
+| DETAIL-03 | Phase 1 | Complete |
 | DETAIL-04 | Phase 3 | Pending |
 | DETAIL-05 | Phase 3 | Pending |
 | DETAIL-06 | Phase 3 | Pending |
@@ -119,10 +119,10 @@
 | CLASSIFY-04 | Phase 2 | Pending |
 | CLASSIFY-05 | Phase 2 | Pending |
 | CLASSIFY-06 | Phase 2 | Pending |
-| FALLBACK-01 | Phase 1 | Pending |
-| FALLBACK-02 | Phase 1 | Pending |
-| FALLBACK-03 | Phase 1 | Pending |
-| FALLBACK-04 | Phase 1 | Pending |
+| FALLBACK-01 | Phase 1 | Complete |
+| FALLBACK-02 | Phase 1 | Complete |
+| FALLBACK-03 | Phase 1 | Complete |
+| FALLBACK-04 | Phase 1 | Complete |
 | LLM-01 | Phase 3 | Pending |
 | LLM-02 | Phase 3 | Pending |
 | LLM-03 | Phase 3 | Pending |
