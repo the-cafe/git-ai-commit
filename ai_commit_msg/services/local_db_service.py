@@ -79,6 +79,10 @@ class LocalDbService:
                 value = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(value))
             elif key.endswith("_api_key") and value:
                 value = value[:8] + "..." + value[-4:]
+            elif key == "project_version":
+                value = value if value else "(未配置)"
+            elif key == "temp_task_counter":
+                value = f"{value} (下一个: TEMP-{value:03d})"
             output += f"{key.replace('_', ' ').title()}: {value}\n"
 
         return output
