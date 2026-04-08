@@ -1,5 +1,6 @@
 import os
 import time
+import semver
 
 from ai_commit_msg.services.local_db_service import (
     ConfigKeysEnum,
@@ -19,6 +20,7 @@ class ConfigService:
     prefix = ""
     max_length = 120
     commit_template = ""
+    project_version = ""
 
     def __init__(self):
         config = ConfigService.get_config()
@@ -41,6 +43,8 @@ class ConfigService:
             self.max_length = config[ConfigKeysEnum.MAX_LENGTH.value]
         if "commit_template" in config:
             self.commit_template = config["commit_template"]
+        if ConfigKeysEnum.PROJECT_VERSION.value in config:
+            self.project_version = config[ConfigKeysEnum.PROJECT_VERSION.value]
 
     @staticmethod
     def get_config():
@@ -123,6 +127,27 @@ class ConfigService:
         config["commit_template"] = template
         LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
         self.commit_template = template
+
+    def set_project_version(self, version):
+        """设置项目版本号，验证 SemVer 格式"""
+        if version:  # 非空时验证
+            try:
+                semver.Version.parse(version)
+            except ValueError:
+                raise Exception(
+                    f"版本号格式无效: '{version}'\n"
+                    f"请使用 SemVer 格式，例如: 1.9.1, 2.0.0-beta, 1.0.0+build123"
+                )
+
+        config = ConfigService.get_config()
+        config[ConfigKeysEnum.PROJECT_VERSION.value] = version
+        LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
+        self.project_version = version
+
+    def get_project_version(self):
+        """获取项目版本号，未配置时返回空字符串"""
+        config = ConfigService.get_config()
+        return config.get(ConfigKeysEnum.PROJECT_VERSION.value, "")
 
     @staticmethod
     def is_supported_model(model):
