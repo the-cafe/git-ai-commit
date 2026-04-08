@@ -1,4 +1,4 @@
-from ai_commit_msg.core.gen_commit_msg import generate_commit_message
+from ai_commit_msg.core.gen_commit_msg import generate_commit_message, generate_commit_with_auto_fallback
 from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.services.git_service import GitService
 from ai_commit_msg.services.pip_service import PipService
@@ -26,10 +26,17 @@ def gen_ai_commit_message_handler():
     commit_template = config.commit_template if config.commit_template else None
 
     try:
-        ai_gen_commit_msg = generate_commit_message(
-            staged_diff.stdout,
-            commit_template=commit_template,
-        )
+        # Use auto-fallback format selection by default
+        # If custom template is configured, use the original generate_commit_message
+        if commit_template:
+            ai_gen_commit_msg = generate_commit_message(
+                staged_diff.stdout,
+                commit_template=commit_template,
+            )
+        else:
+            ai_gen_commit_msg = generate_commit_with_auto_fallback(
+                staged_diff.stdout
+            )
     except AIModelHandlerError as e:
         logger.log(f"Error generating commit message: {e}")
         logger.log("Please enter your commit message manually:")
