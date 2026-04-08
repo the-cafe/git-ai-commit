@@ -149,6 +149,27 @@ class ConfigService:
         config = ConfigService.get_config()
         return config.get(ConfigKeysEnum.PROJECT_VERSION.value, "")
 
+    def get_next_temp_task_id(self):
+        """生成下一个临时任务号，格式: TEMP-001"""
+        config = ConfigService.get_config()
+        counter = config.get(ConfigKeysEnum.TEMP_TASK_COUNTER.value, 1)
+
+        # 生成任务号
+        task_id = f"TEMP-{counter:03d}"
+
+        # 递增计数器（循环到 999 后重置）
+        next_counter = (counter % 999) + 1
+        config[ConfigKeysEnum.TEMP_TASK_COUNTER.value] = next_counter
+        LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
+
+        return task_id
+
+    def reset_temp_task_counter(self):
+        """重置临时任务号计数器（用户手动调用）"""
+        config = ConfigService.get_config()
+        config[ConfigKeysEnum.TEMP_TASK_COUNTER.value] = 1
+        LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
+
     @staticmethod
     def is_supported_model(model):
         # check if the model has ollama prefix
