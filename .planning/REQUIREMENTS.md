@@ -97,20 +97,67 @@
 
 ## 需求追溯
 
-### Phase 1: 基础设施和配置管理
+### 追溯表格
+
+| 需求 | 阶段 | 状态 |
+|------|------|------|
+| CONFIG-01 | Phase 1 | Pending |
+| CONFIG-02 | Phase 1 | Pending |
+| CONFIG-03 | Phase 1 | Pending |
+| CONFIG-04 | Phase 1 | Pending |
+| CONFIG-05 | Phase 1 | Pending |
+| CONFIG-06 | Phase 1 | Pending |
+| DETAIL-01 | Phase 3 | Pending |
+| DETAIL-02 | Phase 3 | Pending |
+| DETAIL-03 | Phase 1 | Pending |
+| DETAIL-04 | Phase 3 | Pending |
+| DETAIL-05 | Phase 3 | Pending |
+| DETAIL-06 | Phase 3 | Pending |
+| CLASSIFY-01 | Phase 2 | Pending |
+| CLASSIFY-02 | Phase 2 | Pending |
+| CLASSIFY-03 | Phase 2 | Pending |
+| CLASSIFY-04 | Phase 2 | Pending |
+| CLASSIFY-05 | Phase 2 | Pending |
+| CLASSIFY-06 | Phase 2 | Pending |
+| FALLBACK-01 | Phase 1 | Pending |
+| FALLBACK-02 | Phase 1 | Pending |
+| FALLBACK-03 | Phase 1 | Pending |
+| FALLBACK-04 | Phase 1 | Pending |
+| LLM-01 | Phase 3 | Pending |
+| LLM-02 | Phase 3 | Pending |
+| LLM-03 | Phase 3 | Pending |
+| LLM-04 | Phase 3 | Pending |
+| LLM-05 | Phase 3 | Pending |
+| LLM-06 | Phase 3 | Pending |
+| IDEA-01 | Phase 4 | Pending |
+| IDEA-02 | Phase 4 | Pending |
+| IDEA-03 | Phase 4 | Pending |
+| IDEA-04 | Phase 4 | Pending |
+| IDEA-05 | Phase 4 | Pending |
+| IDEA-06 | Phase 4 | Pending |
+| PERF-01 | Phase 3 | Pending |
+| PERF-02 | Phase 3 | Pending |
+| PERF-03 | Phase 3 | Pending |
+| PERF-04 | Phase 4 | Pending |
+| PERF-05 | Phase 4 | Pending |
+| PERF-06 | Phase 4 | Pending |
+
+### 阶段分组
+
+#### Phase 1: 基础设施和配置管理
 **需求：** CONFIG-01, CONFIG-02, CONFIG-03, CONFIG-04, CONFIG-05, CONFIG-06, FALLBACK-01, FALLBACK-02, FALLBACK-03, FALLBACK-04, DETAIL-03
 **目标：** 建立版本号配置系统和格式回退机制
 
-### Phase 2: Git Diff 解析和智能变更分类
+#### Phase 2: Git Diff 解析和智能变更分类
 **需求：** CLASSIFY-01, CLASSIFY-02, CLASSIFY-03, CLASSIFY-04, CLASSIFY-05, CLASSIFY-06
 **目标：** 实现结构化的 diff 解析和多维度变更分类
 
-### Phase 3: 详细提交信息生成
-**需求：** DETAIL-01, DETAIL-02, DETAIL-04, DETAIL-05, DETAIL-06, LLM-01, LLM-02, LLM-03, LLM-04, LLM-05, LLM-06
+#### Phase 3: 详细提交信息生成
+**需求：** DETAIL-01, DETAIL-02, DETAIL-04, DETAIL-05, DETAIL-06, LLM-01, LLM-02, LLM-03, LLM-04, LLM-05, LLM-06, PERF-01, PERF-02, PERF-03
 **目标：** 优化 LLM prompt 生成详细的、结构化的提交信息
 
-### Phase 4: IDEA 插件集成和用户体验优化
-**需求：** IDEA-01, IDEA-02, IDEA-03, IDEA-04, IDEA-05, IDEA-06, PERF-01, PERF-02, PERF-03, PERF-04, PERF-05, PERF-06
+#### Phase 4: IDEA 插件集成和用户体验优化
+**需求：** IDEA-01, IDEA-02, IDEA-03, IDEA-04, IDEA-05, IDEA-06, PERF-04, PERF-05, PERF-06
 **目标：** 提供流畅的 IDEA 插件使用体验
 
 ## 需求优先级
