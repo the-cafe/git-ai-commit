@@ -123,3 +123,50 @@ def generate_commit_with_auto_fallback(diff: str) -> str:
             "       详细变更列表将在 Phase 3 实现"
         )
         return f"feat({project_version}-{temp_task_id}): 详细格式占位符（Phase 3 实现）\n\n- 变更点 1\n- 变更点 2"
+
+
+if __name__ == "__main__":
+    # 集成测试：验证格式回退机制
+    import sys
+    from ai_commit_msg.services.config_service import ConfigService
+
+    test_diff = """diff --git a/test.py b/test.py
+index 1234567..abcdefg 100644
+--- a/test.py
++++ b/test.py
+@@ -1,3 +1,4 @@
+ def hello():
+-    print("world")
++    print("hello world")
++    return True
+"""
+
+    print("=== Test 1: Unconfigured version (fallback to conventional format) ===")
+    cs = ConfigService()
+    cs.set_project_version("")
+    result1 = generate_commit_with_auto_fallback(test_diff)
+    print(f"Result: {result1}")
+    assert ":" in result1, "Should contain colon separator"
+    assert "\n\n-" not in result1 or "占位符" in result1, "Conventional format should not contain detailed list"
+
+    print("\n=== Test 2: Configured version (detailed format placeholder) ===")
+    cs.set_project_version("1.9.1")
+    cs.reset_temp_task_counter()
+    result2 = generate_commit_with_auto_fallback(test_diff)
+    print(f"Result: {result2}")
+    assert "1.9.1" in result2, "Should contain version number"
+    assert "TEMP-001" in result2, "Should contain temp task ID"
+    assert "\n\n-" in result2, "Detailed format should contain list"
+
+    print("\n=== Test 3: Temp task ID increments ===")
+    result3 = generate_commit_with_auto_fallback(test_diff)
+    print(f"Result: {result3}")
+    assert "TEMP-002" in result3, "Task ID should increment"
+
+    print("\n=== Test 4: Clear version (restore conventional format) ===")
+    cs.set_project_version("")
+    result4 = generate_commit_with_auto_fallback(test_diff)
+    print(f"Result: {result4}")
+    assert "TEMP" not in result4, "Conventional format should not contain task ID"
+
+    print("\nAll tests passed!")
