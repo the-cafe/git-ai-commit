@@ -69,6 +69,18 @@ def config_handler(args):
             Logger().log("Commit template cleared")
         has_updated = True
 
+    if hasattr(args, "version") and args.version is not None:
+        try:
+            config_service.set_project_version(args.version)
+            if args.version:
+                Logger().log(f"✅ 项目版本号设置为: {args.version}")
+            else:
+                Logger().log("✅ 项目版本号已清空")
+            has_updated = True
+        except Exception as e:
+            Logger().log(f"❌ 错误: {e}")
+            return
+
     if not has_updated:
         display_config_db = LocalDbService().display_db()
         Logger().log(display_config_db)
