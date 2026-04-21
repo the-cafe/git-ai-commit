@@ -1,4 +1,5 @@
 from ai_commit_msg.core.gen_commit_msg import generate_commit_message
+from ai_commit_msg.services.config_service import ConfigService
 from ai_commit_msg.services.git_service import GitService
 from ai_commit_msg.utils.logger import Logger
 from ai_commit_msg.utils.error import AIModelHandlerError
@@ -24,9 +25,16 @@ def prepare_commit_msg_hook():
 
     staged_diff = GitService.get_staged_diff()
 
+    # Check if user has a custom commit template configured
+    config = ConfigService()
+    commit_template = config.commit_template if config.commit_template else None
+
     try:
         success_banner = GitService.get_success_banner()
-        commit_message = generate_commit_message(staged_diff.stdout)
+        commit_message = generate_commit_message(
+            staged_diff.stdout,
+            commit_template=commit_template,
+        )
         GitService.update_commit_message(commit_message + "\n" + success_banner)
     except AIModelHandlerError as error:
         GitService.update_commit_message(GitService.get_error_banner(error))

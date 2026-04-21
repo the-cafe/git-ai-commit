@@ -23,14 +23,30 @@ OPEN_AI_MODEL_LIST = [
     "gpt-4-32k-0613",
     "gpt-4o",
     "gpt-4o-2024-05-13",
+    "gpt-4o-2024-08-06",
+    "gpt-4o-2024-11-20",
     "gpt-4o-mini",
     "gpt-4o-mini-2024-07-18",
+    "gpt-4.1",
+    "gpt-4.1-mini",
+    "gpt-4.1-nano",
+    "o1",
+    "o1-mini",
+    "o1-preview",
+    "o3",
+    "o3-mini",
+    "o4-mini",
 ]
 
 ANTHROPIC_MODEL_LIST = [
     "claude-3-haiku-20240307",
     "claude-3-sonnet-20240229",
     "claude-3-opus-20240229",
+    "claude-3-5-haiku-20241022",
+    "claude-3-5-sonnet-20241022",
+    "claude-3-5-sonnet-20240620",
+    "claude-sonnet-4-20250514",
+    "claude-opus-4-20250514",
 ]
 
 OLLAMA_MODEL_LIST = ["ollama/llama3", "ollama/mistral", "ollama/phi-3:medium"]

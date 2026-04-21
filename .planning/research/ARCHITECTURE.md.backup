@@ -1,0 +1,470 @@
+# 架构模式
+
+**领域：** Git 提交信息生成工具
+**研究日期：** 2026-04-08
+
+## 推荐架构
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      IDEA Plugin Layer                       │
+│  (调用 Python CLI，传递参数，接收结构化输出)                  │
+└─────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────┐
+│                    CLI Entry Point                           │
+│  main.py → 路由到不同的 handler                               │
+└─────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────┐
+│                  Handler Layer (CLI)                         │
+│  - gen_ai_commit_message_handler.py                          │
+│  - conventional_commit_handler.py                            │
+│  - detailed_commit_handler.py (新增)                          │
+└─────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────┐
+│                    Core Logic Layer                          │
+│  ┌──────────────────┐  ┌──────────────────┐                 │
+│  │ gen_commit_msg.py│  │ change_classifier │                 │
+│  │ - 生成逻辑        │  │ - 变更分类        │                 │
+│  └──────────────────┘  └──────────────────┘                 │
+│  ┌──────────────────┐  ┌──────────────────┐                 │
+│  │ prompt.py        │  │ diff_parser.py    │                 │
+│  │ - Prompt 构建    │  │ - Diff 解析       │                 │
+│  └──────────────────┘  └──────────────────┘                 │
+└─────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────┐
+│                    Service Layer                             │
+│  ┌──────────────────┐  ┌──────────────────┐                 │
+│  │ llm_service      │  │ config_service    │                 │
+│  │ - LLM 调用       │  │ - 配置管理        │                 │
+│  └──────────────────┘  └──────────────────┘                 │
+│  ┌──────────────────┐  ┌──────────────────┐                 │
+│  │ git_service      │  │ local_db_service  │                 │
+│  │ - Git 操作       │  │ - 本地存储        │                 │
+│  └──────────────────┘  └──────────────────┘                 │
+└─────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────┐
+│                    External Services                         │
+│  OpenAI API  |  Anthropic API  |  Ollama Local               │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## 组件边界
+
+| 组件 | 职责 | 通信对象 |
+|------|------|---------|
+| **IDEA Plugin** | 用户界面、触发生成、显示结果 | CLI Entry Point |
+| **CLI Handler** | 参数解析、流程编排、错误处理 | Core Logic Layer |
+| **Core Logic** | 业务逻辑、Prompt 构建、结果格式化 | Service Layer |
+| **Service Layer** | 外部服务封装、配置管理、数据持久化 | External Services |
+| **External Services** | LLM API、Git 命令、文件系统 | - |
+
+## 数据流
+
+### 标准提交信息生成流程
+```
+1. IDEA Plugin 触发
+   ↓
+2. CLI Handler 接收请求
+   ↓
+3. Git Service 获取 staged diff
+   ↓
+4. Core Logic 预处理 diff（过滤噪音、截断）
+   ↓
+5. Prompt Builder 构建 LLM prompt
+   ↓
+6. LLM Service 调用 API
+   ↓
+7. Core Logic 解析响应、格式化
+   ↓
+8. CLI Handler 返回结果
+   ↓
+9. IDEA Plugin 显示给用户
+```
+
+### 详细提交信息生成流程（新增）
+```
+1. IDEA Plugin 触发（带 --detailed 标志）
+   ↓
+2. CLI Handler 检查配置
+   ├─ 有版本号配置 → 继续
+   └─ 无版本号配置 → 回退到标准流程
+   ↓
+3. Git Service 获取 staged diff
+   ↓
+4. Diff Parser 解析为结构化对象（unidiff）
+   ↓
+5. Change Classifier 分类变更
+   ├─ 文件路径模式匹配
+   ├─ 代码内容分析（可选）
+   └─ 生成分类摘要
+   ↓
+6. Prompt Builder 构建详细格式 prompt
+   ├─ 包含版本号
+   ├─ 包含分类摘要
+   └─ 要求结构化输出（JSON）
+   ↓
+7. LLM Service 调用 API
+   ↓
+8. Core Logic 解析 JSON 响应
+   ├─ 提取 type、title、changes
+   ├─ 生成临时任务号
+   └─ 格式化为最终文本
+   ↓
+9. CLI Handler 返回结果
+   ↓
+10. IDEA Plugin 显示给用户（可编辑）
+```
+
+## 遵循的模式
+
+### 模式 1: 分层架构（Layered Architecture）
+**什么：** 将系统分为表示层、业务逻辑层、服务层、数据层
+**何时使用：** 需要清晰的职责分离和可测试性
+**示例：**
+```python
+# Handler Layer (表示层)
+def handle_detailed_commit():
+    diff = git_service.get_staged_diff()
+    result = generate_detailed_commit_message(diff)
+    print(result)
+
+# Core Logic Layer (业务逻辑层)
+def generate_detailed_commit_message(diff: str) -> str:
+    config = config_service.get_config()
+    if not config.version_number:
+        return generate_standard_message(diff)
+
+    patch_set = diff_parser.parse(diff)
+    categories = change_classifier.classify(patch_set)
+    prompt = prompt_builder.build_detailed_prompt(categories, config)
+    response = llm_service.call(prompt)
+    return format_detailed_message(response, config)
+
+# Service Layer (服务层)
+class LLMService:
+    def call(self, prompt: list) -> str:
+        # 调用外部 API
+        pass
+```
+
+### 模式 2: 策略模式（Strategy Pattern）
+**什么：** 根据配置选择不同的生成策略
+**何时使用：** 需要支持多种格式（标准、Conventional、详细）
+**示例：**
+```python
+class CommitMessageGenerator:
+    def __init__(self, strategy: GenerationStrategy):
+        self.strategy = strategy
+
+    def generate(self, diff: str) -> str:
+        return self.strategy.generate(diff)
+
+class StandardStrategy(GenerationStrategy):
+    def generate(self, diff: str) -> str:
+        # 标准格式生成
+        pass
+
+class DetailedStrategy(GenerationStrategy):
+    def generate(self, diff: str) -> str:
+        # 详细格式生成
+        pass
+
+# 使用
+config = ConfigService()
+if config.enable_detailed_format:
+    generator = CommitMessageGenerator(DetailedStrategy())
+else:
+    generator = CommitMessageGenerator(StandardStrategy())
+```
+
+### 模式 3: 工厂模式（Factory Pattern）
+**什么：** 根据配置创建不同的 LLM 服务实例
+**何时使用：** 需要支持多个 LLM 提供商
+**示例：**
+```python
+# 现有实现
+class LLMServiceFactory:
+    @staticmethod
+    def create_llm_service(model: str):
+        if model.startswith("gpt"):
+            return OpenAIService()
+        elif model.startswith("claude"):
+            return AnthropicService()
+        elif model.startswith("ollama"):
+            return OllamaService()
+        else:
+            raise ValueError(f"Unsupported model: {model}")
+```
+
+### 模式 4: 管道模式（Pipeline Pattern）
+**什么：** 将 diff 处理分解为多个步骤
+**何时使用：** 需要对 diff 进行多步处理（过滤、解析、分类、格式化）
+**示例：**
+```python
+class DiffPipeline:
+    def __init__(self):
+        self.steps = []
+
+    def add_step(self, step: Callable):
+        self.steps.append(step)
+        return self
+
+    def process(self, diff: str) -> dict:
+        result = diff
+        for step in self.steps:
+            result = step(result)
+        return result
+
+# 使用
+pipeline = DiffPipeline()
+pipeline.add_step(preprocess_diff)      # 过滤噪音
+pipeline.add_step(parse_diff)           # 解析结构
+pipeline.add_step(classify_changes)     # 分类变更
+pipeline.add_step(summarize_changes)    # 生成摘要
+
+result = pipeline.process(raw_diff)
+```
+
+### 模式 5: 配置优先（Configuration Over Code）
+**什么：** 通过配置文件控制行为，而非硬编码
+**何时使用：** 需要灵活性和可定制性
+**示例：**
+```python
+# 配置文件
+{
+    "version_number": "1.9.1",
+    "enable_detailed_format": true,
+    "classification_rules": {
+        "数据库变更": ["**/models/*.py", "**/migrations/*.sql"],
+        "API 变更": ["**/api/*.py", "**/routes/*.py"]
+    },
+    "max_changes_in_list": 5,
+    "temp_task_prefix": "TEMP-"
+}
+
+# 代码读取配置
+class ChangeClassifier:
+    def __init__(self, config: dict):
+        self.rules = config.get("classification_rules", {})
+
+    def classify(self, file_path: str) -> str:
+        for category, patterns in self.rules.items():
+            if any(Path(file_path).match(p) for p in patterns):
+                return category
+        return "其他变更"
+```
+
+## 避免的反模式
+
+### 反模式 1: 上帝对象（God Object）
+**什么：** 单个类承担过多职责
+**为什么不好：** 难以测试、维护、扩展
+**替代方案：** 单一职责原则，拆分为多个专注的类
+
+```python
+# ❌ 不好：上帝对象
+class CommitMessageManager:
+    def get_diff(self): pass
+    def parse_diff(self): pass
+    def classify_changes(self): pass
+    def call_llm(self): pass
+    def format_output(self): pass
+    def save_config(self): pass
+    def validate_version(self): pass
+
+# ✅ 好：职责分离
+class GitService:
+    def get_diff(self): pass
+
+class DiffParser:
+    def parse(self, diff): pass
+
+class ChangeClassifier:
+    def classify(self, parsed_diff): pass
+
+class LLMService:
+    def call(self, prompt): pass
+```
+
+### 反模式 2: 硬编码配置
+**什么：** 将配置值直接写在代码中
+**为什么不好：** 难以定制、需要修改代码才能改变行为
+**替代方案：** 使用配置文件或环境变量
+
+```python
+# ❌ 不好：硬编码
+def classify_file(file_path: str) -> str:
+    if file_path.endswith("models.py"):
+        return "数据库变更"
+    if file_path.endswith("api.py"):
+        return "API 变更"
+
+# ✅ 好：配置驱动
+def classify_file(file_path: str, rules: dict) -> str:
+    for category, patterns in rules.items():
+        if any(Path(file_path).match(p) for p in patterns):
+            return category
+```
+
+### 反模式 3: 紧耦合
+**什么：** 组件直接依赖具体实现而非接口
+**为什么不好：** 难以测试、替换实现
+**替代方案：** 依赖注入、接口抽象
+
+```python
+# ❌ 不好：紧耦合
+class CommitGenerator:
+    def __init__(self):
+        self.llm = OpenAIService()  # 硬编码依赖
+
+    def generate(self, diff):
+        return self.llm.call(diff)
+
+# ✅ 好：依赖注入
+class CommitGenerator:
+    def __init__(self, llm_service: LLMService):
+        self.llm = llm_service  # 注入依赖
+
+    def generate(self, diff):
+        return self.llm.call(diff)
+
+# 使用
+llm = LLMServiceFactory.create(config.model)
+generator = CommitGenerator(llm)
+```
+
+### 反模式 4: 过度工程（Over-Engineering）
+**什么：** 为未来可能的需求添加复杂的抽象
+**为什么不好：** 增加复杂度、降低可读性、浪费时间
+**替代方案：** YAGNI（You Aren't Gonna Need It）原则
+
+```python
+# ❌ 不好：过度抽象
+class AbstractCommitMessageGeneratorFactoryBuilder:
+    def create_factory(self) -> AbstractFactory:
+        pass
+
+# ✅ 好：简单直接
+def generate_commit_message(diff: str, config: dict) -> str:
+    if config.get("detailed_format"):
+        return generate_detailed(diff, config)
+    else:
+        return generate_standard(diff)
+```
+
+## 扩展性考虑
+
+### 添加新的变更分类规则
+```python
+# 配置文件扩展
+{
+    "classification_rules": {
+        "数据库变更": ["**/models/*.py", "**/migrations/*.sql"],
+        "API 变更": ["**/api/*.py", "**/routes/*.py"],
+        "测试变更": ["**/tests/*.py", "**/*_test.py"],  # 新增
+        "文档变更": ["**/*.md", "**/docs/**"]           # 新增
+    }
+}
+
+# 代码无需修改，自动支持新规则
+```
+
+### 添加新的 LLM 提供商
+```python
+# 1. 创建新的服务类
+class NewLLMService(LLMService):
+    def call(self, prompt: list) -> str:
+        # 实现新提供商的 API 调用
+        pass
+
+# 2. 在工厂中注册
+class LLMServiceFactory:
+    @staticmethod
+    def create_llm_service(model: str):
+        if model.startswith("new-llm"):
+            return NewLLMService()
+        # ... 其他提供商
+```
+
+### 添加新的输出格式
+```python
+# 1. 创建新的策略
+class CustomFormatStrategy(GenerationStrategy):
+    def generate(self, diff: str) -> str:
+        # 实现自定义格式
+        pass
+
+# 2. 在配置中选择
+config = {
+    "format": "custom",  # standard | conventional | detailed | custom
+    "custom_template": "..."
+}
+```
+
+## 性能考虑
+
+| 关注点 | 当前规模 | 10K 用户 | 100K 用户 |
+|--------|---------|---------|-----------|
+| **LLM API 调用** | 单次调用 | 考虑缓存相似 diff | 批量处理、速率限制 |
+| **Diff 解析** | 内存处理 | 流式处理大 diff | 分块处理、异步 |
+| **配置读取** | 每次读取文件 | 内存缓存 | 分布式缓存 |
+| **变更分类** | 同步处理 | 并行处理多文件 | 预编译规则、索引 |
+
+**当前阶段建议：**
+- 保持简单，单次同步处理
+- 仅在性能成为问题时优化
+- 优先优化 LLM API 调用（最大瓶颈）
+
+## 测试策略
+
+### 单元测试
+```python
+# 测试 diff 解析
+def test_parse_diff():
+    diff = "diff --git a/file.py b/file.py\n..."
+    result = parse_diff(diff)
+    assert len(result) == 1
+    assert result[0].path == "file.py"
+
+# 测试变更分类
+def test_classify_database_change():
+    classifier = ChangeClassifier(rules)
+    category = classifier.classify("app/models/user.py")
+    assert category == "数据库变更"
+```
+
+### 集成测试
+```python
+# 测试完整流程
+def test_generate_detailed_commit():
+    diff = get_test_diff()
+    config = {"version_number": "1.0.0", "enable_detailed_format": True}
+    result = generate_detailed_commit_message(diff, config)
+    assert "1.0.0" in result
+    assert "TEMP-" in result
+    assert len(result.split("\n")) > 3
+```
+
+### Mock LLM 调用
+```python
+# 避免测试时调用真实 API
+class MockLLMService(LLMService):
+    def call(self, prompt: list) -> str:
+        return '{"type": "feat", "title": "test", "changes": ["change 1"]}'
+
+# 使用
+generator = CommitGenerator(MockLLMService())
+```
+
+## 来源
+
+- 现有项目代码结构分析
+- [Layered Architecture Pattern](https://en.wikipedia.org/wiki/Multitier_architecture)
+- [Strategy Pattern - Python Design Patterns](https://refactoring.guru/design-patterns/strategy/python/example)
+- [Factory Pattern - Python Design Patterns](https://refactoring.guru/design-patterns/factory-method/python/example)
+- [Pipeline Pattern in Python](https://medium.com/@deepakchawla1307/pipeline-design-pattern-in-python-8c7e6d4e3e3a)

@@ -84,7 +84,19 @@ def main(argv: Sequence[str] = sys.argv[1:]) -> int:
         "-p", "--prefix", help="🏷️ Set a prefix for the commit message"
     )
     config_parser.add_argument(
-        "-ml", "--max-length", help="🏷️ Set a prefix for the commit message"
+        "-ml", "--max-length", help="📏 Set the max length for the commit message"
+    )
+    config_parser.add_argument(
+        "-ct",
+        "--commit-template",
+        dest="commit_template",
+        help="📋 Set a custom commit message format template (e.g., '【type】（version-id）message')",
+    )
+    config_parser.add_argument(
+        "--project-version",
+        dest="version",
+        default=None,
+        help="🏷️ 设置项目版本号（SemVer 格式，例如: 1.9.1, 2.0.0-beta）。使用空字符串清空: --project-version=''",
     )
 
     # Help command

@@ -16,6 +16,8 @@ class ConfigKeysEnum(Enum):
     OLLAMA_URL = "ollama_url"
     LAST_UPDATED_AT = "last_updated_at"
     MAX_LENGTH = "max_length"
+    PROJECT_VERSION = "project_version"
+    TEMP_TASK_COUNTER = "temp_task_counter"
 
 
 default_db = {
@@ -27,6 +29,8 @@ default_db = {
         ConfigKeysEnum.OLLAMA_URL.value: "http://localhost:11434/api/chat",
         ConfigKeysEnum.LAST_UPDATED_AT.value: "",
         ConfigKeysEnum.MAX_LENGTH.value: 50,
+        ConfigKeysEnum.PROJECT_VERSION.value: "",
+        ConfigKeysEnum.TEMP_TASK_COUNTER.value: 1,
     }
 }
 
@@ -75,6 +79,10 @@ class LocalDbService:
                 value = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(value))
             elif key.endswith("_api_key") and value:
                 value = value[:8] + "..." + value[-4:]
+            elif key == "project_version":
+                value = value if value else "(未配置)"
+            elif key == "temp_task_counter":
+                value = f"{value} (下一个: TEMP-{value:03d})"
             output += f"{key.replace('_', ' ').title()}: {value}\n"
 
         return output

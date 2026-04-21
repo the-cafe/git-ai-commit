@@ -1,4 +1,4 @@
-from ai_commit_msg.core.gen_commit_msg import generate_commit_message
+from ai_commit_msg.core.gen_commit_msg import generate_conventional_commit_single_call
 from ai_commit_msg.services.git_service import GitService
 from ai_commit_msg.utils.logger import Logger
 from ai_commit_msg.utils.utils import execute_cli_command
@@ -101,40 +101,22 @@ def conventional_commit_handler(args):
         )
         return
 
-    staged_changes_diff = execute_cli_command(["git", "diff", "--staged"])
-    diff = staged_changes_diff.stdout
+    # Use GitService for consistent diff retrieval (respects repo root)
+    staged_diff_result = GitService.get_staged_diff()
+    diff = staged_diff_result.stdout
 
     try:
-        logger.log("🤖 AI is analyzing your changes to suggest a commit type...\n")
-        suggested_type = generate_commit_message(diff, classify_type=True)
+        logger.log("🤖 AI is analyzing your changes (single pass)...\n")
+        ai_result = generate_conventional_commit_single_call(diff)
 
-        if suggested_type not in COMMIT_TYPES:
-            logger.log(
-                f"AI suggested an invalid type: '{suggested_type}'. Falling back to manual selection."
-            )
-            suggested_type = None
-    except AIModelHandlerError as e:
-        logger.log(f"Error classifying commit type: {e}")
-        suggested_type = None
+        suggested_type = ai_result["type"] if ai_result["type"] in COMMIT_TYPES else None
+        suggested_scope = ai_result["scope"] if ai_result["scope"] != "none" else None
+        ai_commit_msg = ai_result["message"]
 
-    suggested_scope = None
-    try:
-        logger.log("🤖 AI is analyzing your changes to suggest a scope...\n")
-        suggested_scope = generate_commit_message(
-            diff, conventional=False, classify_type=False, classify_scope=True
-        )
-        logger.log(f"Debug - AI suggested scope: '{suggested_scope}'")
-
-        if suggested_scope == "none" or not suggested_scope:
-            suggested_scope = None
-    except AIModelHandlerError as e:
-        logger.log(f"Error suggesting scope: {e}")
-        suggested_scope = None
-
-    try:
-        ai_commit_msg = generate_commit_message(diff, conventional=True)
     except AIModelHandlerError as e:
         logger.log(f"Error generating commit message: {e}")
+        suggested_type = None
+        suggested_scope = None
         logger.log("Please enter your commit message manually:")
         ai_commit_msg = input().strip()
         if not ai_commit_msg:
@@ -162,6 +144,6 @@ Would you like to commit your changes? (y/n): """
         logger.log("🚨 Invalid input. Exiting.")
         return
 
-    execute_cli_command(["git", "commit", "-m", f'"{formatted_commit}"'], output=True)
+    execute_cli_command(["git", "commit", "-m", formatted_commit], output=True)
 
     handle_git_push()

@@ -1,4 +1,6 @@
+import os
 import time
+import semver
 
 from ai_commit_msg.services.local_db_service import (
     ConfigKeysEnum,
@@ -16,7 +18,9 @@ class ConfigService:
     ollama_url = "http://localhost:11434/api/chat"
     last_updated_at = ""
     prefix = ""
-    max_length = 50
+    max_length = 120
+    commit_template = ""
+    project_version = ""
 
     def __init__(self):
         config = ConfigService.get_config()
@@ -37,6 +41,10 @@ class ConfigService:
             self.prefix = config["prefix"]
         if ConfigKeysEnum.MAX_LENGTH.value in config:
             self.max_length = config[ConfigKeysEnum.MAX_LENGTH.value]
+        if "commit_template" in config:
+            self.commit_template = config["commit_template"]
+        if ConfigKeysEnum.PROJECT_VERSION.value in config:
+            self.project_version = config[ConfigKeysEnum.PROJECT_VERSION.value]
 
     @staticmethod
     def get_config():
@@ -45,6 +53,10 @@ class ConfigService:
 
     @staticmethod
     def get_model():
+        env_model = os.environ.get("MODEL")
+        if env_model:
+            return env_model
+
         raw_json_db = LocalDbService().get_db()[CONFIG_COLLECTION_KEY]
         return raw_json_db["model"]
 
@@ -78,7 +90,7 @@ class ConfigService:
         self.openai_api_key = api_key
 
     def set_model(self, model):
-        if not ConfigService.is_supported_model(model) and model is not "":
+        if not ConfigService.is_supported_model(model) and model != "":
             raise Exception(f"Model {model} is not supported")
 
         config = ConfigService.get_config()
@@ -109,6 +121,54 @@ class ConfigService:
         config[ConfigKeysEnum.MAX_LENGTH.value] = int(max_length)
         LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
         self.max_length = max_length
+
+    def set_commit_template(self, template):
+        config = ConfigService.get_config()
+        config["commit_template"] = template
+        LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
+        self.commit_template = template
+
+    def set_project_version(self, version):
+        """设置项目版本号，验证 SemVer 格式"""
+        if version:  # 非空时验证
+            try:
+                semver.Version.parse(version)
+            except ValueError:
+                raise Exception(
+                    f"版本号格式无效: '{version}'\n"
+                    f"请使用 SemVer 格式，例如: 1.9.1, 2.0.0-beta, 1.0.0+build123"
+                )
+
+        config = ConfigService.get_config()
+        config[ConfigKeysEnum.PROJECT_VERSION.value] = version
+        LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
+        self.project_version = version
+
+    def get_project_version(self):
+        """获取项目版本号，未配置时返回空字符串"""
+        config = ConfigService.get_config()
+        return config.get(ConfigKeysEnum.PROJECT_VERSION.value, "")
+
+    def get_next_temp_task_id(self):
+        """生成下一个临时任务号，格式: TEMP-001"""
+        config = ConfigService.get_config()
+        counter = config.get(ConfigKeysEnum.TEMP_TASK_COUNTER.value, 1)
+
+        # 生成任务号
+        task_id = f"TEMP-{counter:03d}"
+
+        # 递增计数器（循环到 999 后重置）
+        next_counter = (counter % 999) + 1
+        config[ConfigKeysEnum.TEMP_TASK_COUNTER.value] = next_counter
+        LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
+
+        return task_id
+
+    def reset_temp_task_counter(self):
+        """重置临时任务号计数器（用户手动调用）"""
+        config = ConfigService.get_config()
+        config[ConfigKeysEnum.TEMP_TASK_COUNTER.value] = 1
+        LocalDbService().set_db({CONFIG_COLLECTION_KEY: config})
 
     @staticmethod
     def is_supported_model(model):
