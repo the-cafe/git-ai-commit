@@ -1,5 +1,4 @@
 import subprocess
-import pkg_resources
 
 
 # TODO - get repo root directory without using git command
