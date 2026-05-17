@@ -1,5 +1,5 @@
 import requests
-import pkg_resources
+from importlib.metadata import version
 
 from ai_commit_msg.utils.logger import Logger
 
@@ -20,7 +20,7 @@ class PipService:
 
     @staticmethod
     def get_version():
-        return pkg_resources.get_distribution(PACKAGE_NAME).version
+        return version(PACKAGE_NAME)
 
     @staticmethod
     def version_is_older(current_version: str, latest_version: str) -> bool:
